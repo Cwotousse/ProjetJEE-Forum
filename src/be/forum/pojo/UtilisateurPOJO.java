@@ -3,23 +3,26 @@ package be.forum.pojo;
 import java.util.Date;
 
 public class UtilisateurPOJO {
-	private int id;
-	private String pseudo;
-	private String motdepasse;
-	private String nom;
-	private String prenom;
-	private Date dateNaissance;
-	private String mail;
-	private String type;
+	/**
+	 * Variables
+	 */
+	private int 	idUtilisateur;
+	private String 	pseudo;
+	private String 	motdepasse;
+	private String 	nom;
+	private String 	prenom;
+	private Date 	dateNaissance;
+	private String 	mail;
+	private String 	type;
 	
 	/**
 	 * Getters and setters
 	 */
 	public int getID() {
-		return id;
+		return idUtilisateur;
 	}
-	public void setID(int id) {
-		this.id = id;
+	public void setID(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 	public String getPseudo() {
 		return pseudo;
@@ -64,9 +67,10 @@ public class UtilisateurPOJO {
 		this.type = type;
 	}
 	
+	public UtilisateurPOJO(){}
 	/**
 	 * Constructeur de la classe UtilisateurPOJO
-	 * @param id
+	 * @param idUtilisateur
 	 * @param pseudo
 	 * @param motdepasse
 	 * @param nom
@@ -75,8 +79,8 @@ public class UtilisateurPOJO {
 	 * @param mail
 	 * @param type
 	 */
-	public UtilisateurPOJO(int id, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String type) {
-		this.id 			= id;
+	public UtilisateurPOJO(int idUtilisateur, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String type) {
+		this.idUtilisateur 	= idUtilisateur;
 		this.pseudo			= pseudo;
 		this.motdepasse 	= motdepasse;
 		this.nom 			= nom;

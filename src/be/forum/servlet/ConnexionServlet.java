@@ -53,7 +53,7 @@ public class ConnexionServlet extends HttpServlet {
 			//response.sendRedirect("\\..\\index.jsp"); 
 		} else {
 			out.println("Authentification correcte, bienvenu(e) " + pseudo);
-			HttpSession session=request.getSession();
+			HttpSession session = request.getSession();
 			 //si pas de session, destruction et création d’une nouvelle 
 			if(!session.isNew()) { 
 				session.invalidate(); 

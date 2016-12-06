@@ -15,9 +15,9 @@ public class SingletonConnection {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			connect = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ecoledao", "pwd");
 		} catch (SQLException ex) {
-			System.out.println("Erreur JDBC: " + ex.getMessage());
+			//System.out.println("Erreur JDBC: " + ex.getMessage());
 		} catch (ClassNotFoundException ex) {
-			System.out.println("Classe de driver introuvable : " + ex.getMessage());
+			//System.out.println("Classe de driver introuvable : " + ex.getMessage());
 			System.exit(0);
 		}
 	}
