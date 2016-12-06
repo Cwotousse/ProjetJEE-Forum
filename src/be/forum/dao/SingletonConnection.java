@@ -5,31 +5,30 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SingletonConnection {
-    private static Connection snglConnection = null;
+	// Objet de connexion
+	private static Connection connect = getInstance();
 
-    private SingletonConnection() {
-        try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	// Caractéristique du singleton ! Le constructeur privé :
+	private SingletonConnection() {
+		try {
+			// Chargement de la classe du driver par la JVM
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connect = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ecoledao", "pwd");
+		} catch (SQLException ex) {
+			System.out.println("Erreur JDBC: " + ex.getMessage());
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Classe de driver introuvable : " + ex.getMessage());
+			System.exit(0);
+		}
+	}
 
-            String url = "jdbc:ucanaccess://SocialNetwork.accdb";
-            snglConnection = DriverManager.getConnection(url);
-        } catch (ClassNotFoundException e) {
-            //Log.putErrorInLog("Erreur Class Not Found :" +e.getMessage());
-            System.out.println("Classe de driver introuvable : " + e.getMessage());
-        } catch (SQLException e) {
-        	//Log.putErrorInLog("Erreur SQL Exception :" + e.getMessage());
-        	System.out.println("Erreur JDBC: " + e.getMessage());
-        }
-
-        if (snglConnection == null) {
-        	//Log.putErrorInLog("Le serveur s'est interrompu !");
-        }
-    }
-
-    public static Connection getInstance() {
-        if (snglConnection == null) {
-            new SingletonConnection();
-        }
-        return snglConnection;
-    }
+	// Méthode qui va nous retourner notre instance et la créer si elle n'existe pas
+	public static Connection getInstance() {
+		if (connect == null) {
+			//System.out.println("Instanciation de la connexion.");
+			new SingletonConnection();
+			//System.out.println("Connexion réussie!");
+		}
+		return connect;
+	}
 }

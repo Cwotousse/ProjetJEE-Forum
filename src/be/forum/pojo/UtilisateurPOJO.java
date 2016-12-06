@@ -82,7 +82,7 @@ public class UtilisateurPOJO {
 		this.nom 			= nom;
 		this.prenom 		= prenom;
 		this.dateNaissance 	= dateNaissance;
-		this.mail 			= mail;
 		this.type 			= type;
+		this.mail 			= mail;
 	}
 }
