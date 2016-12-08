@@ -1,15 +1,15 @@
-package be.forum.metier;
+package be.forum.modele;
 
 import java.util.Date;
 
 public class Utilisateur {
-	private String pseudo;
-	private String motdepasse;
-	private String nom;
-	private String prenom;
-	private Date dateNaissance;
-	private String mail;
-	private String type;
+	private String 	pseudo;
+	private String 	motdepasse;
+	private String 	nom;
+	private String 	prenom;
+	private Date 	dateNaissance;
+	private String 	mail;
+	private String 	type;
 	
 	/**
 	 * Getters and setters
@@ -76,4 +76,8 @@ public class Utilisateur {
 		this.mail 			= mail;
 		this.type 			= type;
 	}
+	
+	/**
+	 * Méthodes
+	 */
 }

@@ -1,5 +1,6 @@
 package be.forum.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.forum.pojo.UtilisateurPOJO;
+import be.forum.sgbd.Sprocs;
 
 public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	public UtilisateurDAO(Connection conn) {
@@ -16,28 +18,26 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 
 	@Override
 	public void create(UtilisateurPOJO utilisateurPOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement(
-					"INSERT INTO Utilisateur (pseudo, motdepasse, nom, prenom, dateNaissance, type, mail) "
-							+ "VALUES (?,?,?,?,?,?,?)");
-
-			pst.setString(1, utilisateurPOJO.getPseudo());
-			pst.setString(2, utilisateurPOJO.getMotdepasse());
-			pst.setString(3, utilisateurPOJO.getNom());
-			pst.setString(4, utilisateurPOJO.getPrenom());
-			pst.setDate(5, (Date) utilisateurPOJO.getDateNaissance());
-			pst.setString(6, utilisateurPOJO.getType());
-			pst.setString(7, utilisateurPOJO.getMail());
-
-			pst.executeUpdate();
-
+			//Appel de la procédure stockée pour ajouter un utilisateur
+			cst = connect.prepareCall(Sprocs.INSERTUTILISATEUR);
+			
+			cst.setString	(1, utilisateurPOJO.getPseudo());
+			cst.setString	(2, utilisateurPOJO.getMotdepasse());
+			cst.setString	(3, utilisateurPOJO.getNom());
+			cst.setString	(4, utilisateurPOJO.getPrenom());
+			cst.setDate		(5, (Date) utilisateurPOJO.getDateNaissance());
+			cst.setString	(6, utilisateurPOJO.getType());
+			cst.setString	(7, utilisateurPOJO.getMail());
+			
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -47,18 +47,18 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 
 	@Override
 	public void delete(UtilisateurPOJO utilisateurPOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("DELETE FROM Utilisateur WHERE pseudo = ?");
-
-			pst.setString(1, utilisateurPOJO.getPseudo());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour supprimer un utilisateur
+			cst = connect.prepareCall(Sprocs.DELETEUTILISATEUR);
+			cst.setString	(1, utilisateurPOJO.getPseudo());	
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -68,24 +68,26 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 
 	@Override
 	public void update(UtilisateurPOJO utilisateurPOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement(
-					"UPDATE Utilisateur SET motdepasse = ?, nom = ?, prenom = ?, dateNaissance = ?, type = ?, mail = ? WHERE pseudo = ?");
-			pst.setString	(1, utilisateurPOJO.getMotdepasse());
-			pst.setString	(2, utilisateurPOJO.getNom());
-			pst.setString	(3, utilisateurPOJO.getPrenom());
-			pst.setDate		(4, (Date) utilisateurPOJO.getDateNaissance());
-			pst.setString	(5, utilisateurPOJO.getType());
-			pst.setString	(6, utilisateurPOJO.getMail());
-			pst.setString	(7, utilisateurPOJO.getPseudo());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour modifier un utilisateur
+			cst = connect.prepareCall(Sprocs.UPDATEUTILISATEUR);
+			
+			cst.setString	(1, utilisateurPOJO.getMotdepasse());
+			cst.setString	(2, utilisateurPOJO.getNom());
+			cst.setString	(3, utilisateurPOJO.getPrenom());
+			cst.setDate		(4, (Date) utilisateurPOJO.getDateNaissance());
+			cst.setString	(5, utilisateurPOJO.getType());
+			cst.setString	(6, utilisateurPOJO.getMail());
+			cst.setString	(7, utilisateurPOJO.getPseudo());
+			
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -96,30 +98,40 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	@Override
 	public UtilisateurPOJO find(int id) {
 		UtilisateurPOJO 	utilisateurPOJO = null;
-		PreparedStatement 	pst 			= null;
-		ResultSet 			rs 				= null;
+		CallableStatement 	cst 			= null;
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Utilisateur WHERE idUtilisateur = ?");
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				utilisateurPOJO = new UtilisateurPOJO(
-						rs.getInt	("idUtilisateur"), 
-						rs.getString("pseudo"),
-						rs.getString("motdepasse"), 
-						rs.getString("nom"), 
-						rs.getString("prenom"),
-						rs.getDate	("dateNaissance"), 
-						rs.getString("type"), 
-						rs.getString("mail")
-					);
-			}
+			//Appel de la procédure stockée pour sélectionner un utilisateur
+			cst = connect.prepareCall(Sprocs.SELECTUTILISATEUR);
+			
+			//J'insère le paramètre entrant
+			cst.setInt(1, id);
+			//Je récupère les paramètres sortants de la procédures stockées
+			cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(4, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(5, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(6, java.sql.Types.DATE);
+			cst.registerOutParameter(7, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(8, java.sql.Types.VARCHAR);
+
+			cst.executeUpdate();
+			
+			utilisateurPOJO = new UtilisateurPOJO(
+					id, 
+					cst.getString	("pseudo"),
+					cst.getString	("motdepasse"), 
+					cst.getString	("nom"), 
+					cst.getString	("prenom"),
+					cst.getDate		("dateNaissance"), 
+					cst.getString	("type"), 
+					cst.getString	("mail")
+				);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="be.forum.modele.SousCategorie"%>
+<%@ page import="be.forum.pojo.SousCategoriePOJO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -50,18 +53,19 @@
 				<li class="active"><a href="#accueil">Accueil</a></li>
 				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Sports <span class="caret"></span></a>
+					aria-expanded="false">Sports<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Football</a></li>
-						<li><a href="#">Cyclisme</a></li>
-						<li><a href="#">Handball</a></li>
-						<li><a href="#">Basketball</a></li>
-						<li><a href="#">Hockey</a></li>
-						<li><a href="#">Boxe</a></li>
+					<%
+						SousCategorie sousCategorie = new SousCategorie();
+	 					ArrayList<SousCategoriePOJO> listSousCategorie = sousCategorie.getList();
+						for (int i = 0; i < listSousCategorie.size(); i++) {
+							out.println("<li><a href=\"#\">" + listSousCategorie.get(i).getTitre() + "</a></li>");
+						}
+					%>
 					</ul></li>
 				<li class="dropdown"><a href="#jeuxvideos"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false">Jeux vidéos <span
+					aria-haspopup="true" aria-expanded="false">Jeux vidéos<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">PS4</a></li>
@@ -74,7 +78,7 @@
 					</ul></li>
 				<li class="dropdown"><a href="#technologie"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false">Technologie <span
+					aria-haspopup="true" aria-expanded="false">Technologie<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Programmation</a></li>
@@ -84,7 +88,7 @@
 					</ul></li>
 				<li class="dropdown"><a href="#blabla" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Blabla <span class="caret"></span></a>
+					aria-expanded="false">Blabla<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Moins de 15 ans</a></li>
 						<li><a href="#">15 - 18 ans</a></li>

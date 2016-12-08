@@ -13,7 +13,7 @@ public class SingletonConnection {
 		try {
 			// Chargement de la classe du driver par la JVM
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			connect = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ecoledao", "pwd");
+			connect = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "forum", "pwd");
 		} catch (SQLException ex) {
 			//System.out.println("Erreur JDBC: " + ex.getMessage());
 		} catch (ClassNotFoundException ex) {
