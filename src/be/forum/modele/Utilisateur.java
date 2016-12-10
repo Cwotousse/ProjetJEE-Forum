@@ -1,6 +1,11 @@
 package be.forum.modele;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import be.forum.dao.DAO;
+import be.forum.dao.DAOFactory;
+import be.forum.pojo.UtilisateurPOJO;
 
 public class Utilisateur {
 	private String 	pseudo;
@@ -57,6 +62,7 @@ public class Utilisateur {
 		this.type = type;
 	}
 	
+	public Utilisateur(){}
 	/**
 	 * Constructeur de la classe Utilisateur
 	 * @param pseudo
@@ -80,4 +86,17 @@ public class Utilisateur {
 	/**
 	 * Méthodes
 	 */
+	
+	
+	public UtilisateurPOJO connexion(String pseudo, String connexion){
+		DAO<UtilisateurPOJO> 		utilisateurDAO 	= new DAOFactory().getUtilisateurDAO();
+		ArrayList<UtilisateurPOJO>	listUtilisateur = utilisateurDAO.getList();
+		UtilisateurPOJO utilisateurTrouve = listUtilisateur
+				.stream()
+				.filter(x -> x.getPseudo().equals(pseudo) 
+						&& x.getMotdepasse().equals(motdepasse))
+				.findAny()
+				.orElse(null);
+		return utilisateurTrouve;
+	}
 }

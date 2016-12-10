@@ -2,7 +2,6 @@ package be.forum.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,35 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.forum.dao.DAO;
-import be.forum.dao.DAOFactory;
+import be.forum.modele.Utilisateur;
 import be.forum.pojo.UtilisateurPOJO;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Utilisateur utilisateur = new Utilisateur();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		DAOFactory 					df 				= new DAOFactory();
-		DAO<UtilisateurPOJO> 		utilisateurDAO 	= df.getUtilisateurDAO();
-		ArrayList<UtilisateurPOJO>	listUtilisateur = utilisateurDAO.getList();
-		
 		// récupération de l’identifiant/login dans la requête
 		String pseudo 		= request.getParameter("pseudo");
 		// récupération du mot de passe dans la requête
 		String motdepasse 	= request.getParameter("motdepasse");
 		
-		
-		//Je filtre la liste en utilisant des lambdas
-		//findAny -> si il trouve, il stock dans l'objet
-		//orElse(null) -> si il trouve rien il stock null
-		UtilisateurPOJO utilisateurTrouve = listUtilisateur
-				.stream()
-				.filter(x -> x.getPseudo().equals(pseudo) 
-						&& x.getMotdepasse().equals(motdepasse))
-				.findAny()
-				.orElse(null);
-				
+		// #TODO à changer en Utilisateur et pas pojo
+		UtilisateurPOJO utilisateurTrouve = utilisateur.connexion(pseudo, motdepasse);
+
 		// flux de sortie
 		PrintWriter out = response.getWriter();
 		out.println(pseudo + " " + motdepasse);
