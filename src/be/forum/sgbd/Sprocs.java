@@ -20,10 +20,10 @@ public class Sprocs {
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE CATEGORIEDAO
 	 */
-	public final static String INSERTCATEGORIE 		= "{CALL INSERTCATEGORIE(?,?,?,?,?,?,?)}";
-	public final static String DELETECATEGORIE 		= "{CALL DELETECATEGORIE(?,?,?,?,?,?,?)}";
-	public final static String UPDATECATEGORIE 		= "{CALL UPDATECATEGORIE(?,?,?,?,?,?,?)}";
-	public final static String SELECTCATEGORIE 		= "{CALL SELECTCATEGORIE(?,?,?,?,?,?,?)}";
+	public final static String INSERTCATEGORIE 		= "{CALL INSERTCATEGORIE(?)}";
+	public final static String DELETECATEGORIE 		= "{CALL DELETECATEGORIE(?)}";
+	public final static String UPDATECATEGORIE 		= "{CALL UPDATECATEGORIE(?,?)}";
+	public final static String SELECTCATEGORIE 		= "{CALL SELECTCATEGORIE(?,?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE SOUSCATEGORIEDAO

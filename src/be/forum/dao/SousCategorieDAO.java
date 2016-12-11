@@ -18,7 +18,7 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 		PreparedStatement pst = null;
 		try {
 			pst = connect.prepareStatement(
-					"INSERT INTO Utilisateur (idCategorie, titre) "
+					"INSERT INTO SousCategorie (SEQ_SOUSCATEGORIE.NEXTVAL, titre) "
 							+ "VALUES (?,?)");
 
 			pst.setInt		(1, sousCategoriePOJO.getID());

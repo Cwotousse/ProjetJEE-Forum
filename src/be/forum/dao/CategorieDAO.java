@@ -1,5 +1,6 @@
 package be.forum.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.forum.pojo.CategoriePOJO;
+import be.forum.sgbd.Sprocs;
 
 public class CategorieDAO extends DAO<CategoriePOJO> {
 
@@ -14,20 +16,18 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 	@Override
 	public void create(CategoriePOJO categoriePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("INSERT INTO Categorie (idCategorie, titre) " + "VALUES (?,?)");
-
-			pst.setInt(1, categoriePOJO.getID());
-			pst.setString(2, categoriePOJO.getTitre());
-			pst.executeUpdate();
-
+			cst = connect.prepareCall(Sprocs.INSERTCATEGORIE);
+			
+			cst.setString(1, categoriePOJO.getTitre());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -38,18 +38,18 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 	@Override
 	public void delete(CategoriePOJO categoriePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("DELETE FROM Categorie WHERE titre = ?");
-
-			pst.setString(1, categoriePOJO.getTitre());
-			pst.executeUpdate();
+			cst = connect.prepareCall(Sprocs.DELETECATEGORIE);
+			
+			cst.setString(1, categoriePOJO.getTitre());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -60,18 +60,19 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 	@Override
 	public void update(CategoriePOJO categoriePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("UPDATE Categorie SET titre = ? WHERE idCategorie = ?");
-			pst.setString(1, categoriePOJO.getTitre());
-			pst.setInt(2, categoriePOJO.getID());
-			pst.executeUpdate();
+			cst = connect.prepareCall(Sprocs.UPDATECATEGORIE);
+			cst.setInt		(1, categoriePOJO.getID());
+			cst.setString	(2, categoriePOJO.getTitre());
+			
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -81,23 +82,29 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 	@Override
 	public CategoriePOJO find(int id) {
-		CategoriePOJO categoriePOJO = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
+		CategoriePOJO 		categoriePOJO 	= null;
+		CallableStatement 	cst 			= null;
 
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Categorie WHERE idCategorie = ?");
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				categoriePOJO = new CategoriePOJO(rs.getInt("idCategorie"), rs.getString("titre"));
-			}
+			cst = connect.prepareCall(Sprocs.SELECTCATEGORIE);
+			
+			//J'insère le paramètre entrant
+			cst.setInt(1, id);
+			//Je récupère les paramètres sortants de la procédures stockées
+			cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+
+			cst.executeUpdate();
+			
+			categoriePOJO = new CategoriePOJO(
+					id, 
+					cst.getString(2)
+				);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -51,7 +51,7 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 		try {
 			//Appel de la procédure stockée pour supprimer un utilisateur
 			cst = connect.prepareCall(Sprocs.DELETEUTILISATEUR);
-			cst.setString	(1, utilisateurPOJO.getPseudo());	
+			cst.setString(1, utilisateurPOJO.getPseudo());	
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
