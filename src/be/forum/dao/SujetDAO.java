@@ -1,6 +1,8 @@
 package be.forum.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import be.forum.pojo.SousCategoriePOJO;
 import be.forum.pojo.SujetPOJO;
 import be.forum.pojo.UtilisateurPOJO;
+import be.forum.sgbd.Sprocs;
 
 public class SujetDAO extends DAO<SujetPOJO> {
 
@@ -16,24 +19,23 @@ public class SujetDAO extends DAO<SujetPOJO> {
 
 	@Override
 	public void create(SujetPOJO sujetPOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement(
-					"INSERT INTO Sujet (idSousCategorie, titre, dateSujet, idUtilisateur) "
-							+ "VALUES (?,?,?,?)");
-
-			pst.setInt		(1, sujetPOJO.getSousCategoriePOJO().getID());
-			pst.setString	(2, sujetPOJO.getTitre());
-			pst.setDate		(3, sujetPOJO.getDateSujet());
-			pst.setInt		(4, sujetPOJO.getUtilisateurPOJO().getID());
-			pst.executeUpdate();
+			cst = connect.prepareCall(Sprocs.INSERTSUJET);
+			
+			cst.setInt		(1, sujetPOJO.getSousCategoriePOJO().getID());
+			cst.setString	(2, sujetPOJO.getTitre());
+			cst.setDate		(3, (Date)sujetPOJO.getDateSujet());
+			cst.setInt		(4, sujetPOJO.getUtilisateurPOJO().getID());
+			
+			cst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -43,20 +45,19 @@ public class SujetDAO extends DAO<SujetPOJO> {
 
 	@Override
 	public void delete(SujetPOJO sujetPOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			// On supprime les données nécessaires dans la table Utilisateur
-			pst = connect.prepareStatement("DELETE FROM Sujet WHERE titre = ? AND dateSujet = ?");
-
-			pst.setString	(1, sujetPOJO.getTitre());
-			pst.setDate		(2, sujetPOJO.getDateSujet());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour supprimer un utilisateur
+			cst = connect.prepareCall(Sprocs.DELETEUTILISATEUR);
+			cst.setString	(1, sujetPOJO.getTitre());	
+			cst.setDate	(2, sujetPOJO.getDateSujet());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -66,23 +67,25 @@ public class SujetDAO extends DAO<SujetPOJO> {
 
 	@Override
 	public void update(SujetPOJO sujetPOJO) {
-		PreparedStatement pst = null;
+		
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement(
-					"UPDATE Sujet SET idSousCategorie = ?, titre = ?, dateSujet = ?, idUtilisateur = ? WHERE titre = ? AND dateSujet = ?");
-			pst.setInt		(1, sujetPOJO.getSousCategoriePOJO().getID());
-			pst.setString	(2, sujetPOJO.getTitre());
-			pst.setDate		(3, sujetPOJO.getDateSujet());
-			pst.setInt		(4, sujetPOJO.getUtilisateurPOJO().getID());
-			pst.setString	(5, sujetPOJO.getTitre());
-			pst.setDate		(6, sujetPOJO.getDateSujet());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour modifier un sujet
+			cst = connect.prepareCall(Sprocs.UPDATESUJET);
+
+			cst.setInt		(1, sujetPOJO.getID());
+			cst.setInt		(2, sujetPOJO.getSousCategoriePOJO().getID());
+			cst.setString	(3, sujetPOJO.getTitre());
+			cst.setDate		(4, (Date)sujetPOJO.getDateSujet());
+			cst.setInt		(5, sujetPOJO.getUtilisateurPOJO().getID());
+			
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -92,31 +95,37 @@ public class SujetDAO extends DAO<SujetPOJO> {
 
 	@Override
 	public SujetPOJO find(int id) {
+		CallableStatement 	cst 			= null;
 		SujetPOJO	 	 	 	sujetPOJO		 	= null;
-		PreparedStatement 	 	pst			 		= null;
-		ResultSet			 	rs					= null;
 		DAO<UtilisateurPOJO> 	utilisateurDAO		= new DAOFactory().getUtilisateurDAO();
 		DAO<SousCategoriePOJO> 	sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
 		
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Sujet WHERE idSujet = ?");
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				sujetPOJO = new SujetPOJO(
-										rs.getInt				("idSujet"),
-										sousCategorieDAO.find	(rs.getInt("idSousCategorie")),
-										rs.getString			("titre"),
-										rs.getDate				("dateSujet"),
-										utilisateurDAO.find		(rs.getInt("idUtilisateur"))
-									);
-			}
+			cst = connect.prepareCall(Sprocs.SELECTSUJET);
+			cst.setInt(1, id);
+			
+			//Je récupère les paramètres sortants de la procédures stockées
+			cst.registerOutParameter(2, java.sql.Types.NUMERIC);
+			cst.registerOutParameter(3, java.sql.Types.NUMERIC);
+			cst.registerOutParameter(4, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(5, java.sql.Types.DATE);
+			cst.registerOutParameter(6, java.sql.Types.NUMERIC);
+	
+			cst.executeUpdate();
+			sujetPOJO = new SujetPOJO(
+					id, 
+					sousCategorieDAO.find	(3),
+					cst.getString			(4), 
+					cst.getDate				(5), 
+					utilisateurDAO.find		(6)
+			);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

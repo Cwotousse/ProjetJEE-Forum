@@ -65,9 +65,10 @@ public class HistoriqueDAO extends DAO<HistoriquePOJO> {
 		PreparedStatement pst = null;
 		try {
 			pst = connect.prepareStatement(
-					"UPDATE Historique SET dateConnexion = ?, idUtilisateur = ? WHERE dateConnexion = ? AND idUtilisateur = ?");
+					"UPDATE Historique SET dateConnexion = ?, idUtilisateur = ? WHERE idHistorique = ?");
 			pst.setDate	(1, historiquePOJO.getDateConnexion());
 			pst.setInt	(2, historiquePOJO.getUtilisateurPOJO().getID());
+			pst.setInt	(3, historiquePOJO.getID());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -13,7 +13,7 @@ public class UtilisateurPOJO {
 	private String 	prenom;
 	private Date 	dateNaissance;
 	private String 	mail;
-	private String 	type;
+	private String 	typeUtilisateur;
 	
 	/**
 	 * Getters and setters
@@ -61,10 +61,10 @@ public class UtilisateurPOJO {
 		this.mail = mail;
 	}
 	public String getType() {
-		return type;
+		return typeUtilisateur;
 	}
 	public void setType(String type) {
-		this.type = type;
+		this.typeUtilisateur = type;
 	}
 	
 	public UtilisateurPOJO(){}
@@ -79,14 +79,14 @@ public class UtilisateurPOJO {
 	 * @param mail
 	 * @param type
 	 */
-	public UtilisateurPOJO(int idUtilisateur, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String type) {
-		this.idUtilisateur 	= idUtilisateur;
-		this.pseudo			= pseudo;
-		this.motdepasse 	= motdepasse;
-		this.nom 			= nom;
-		this.prenom 		= prenom;
-		this.dateNaissance 	= dateNaissance;
-		this.type 			= type;
-		this.mail 			= mail;
+	public UtilisateurPOJO(int idUtilisateur, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String typeUtilisateur) {
+		this.idUtilisateur 		= idUtilisateur;
+		this.pseudo				= pseudo;
+		this.motdepasse 		= motdepasse;
+		this.nom 				= nom;
+		this.prenom 			= prenom;
+		this.dateNaissance 		= dateNaissance;
+		this.typeUtilisateur	= typeUtilisateur;
+		this.mail 				= mail;
 	}
 }
