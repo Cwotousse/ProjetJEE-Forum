@@ -20,7 +20,7 @@ public class HistoriquePOJO {
 	 * @param utilisateurPOJO
 	 * @param dateConnexion
 	 */
-	public HistoriquePOJO(int idHistorique, UtilisateurPOJO utilisateurPOJO, Date dateConnexion)
+	public HistoriquePOJO(int idHistorique, Date dateConnexion, UtilisateurPOJO utilisateurPOJO)
 	{
 		this.idHistorique = idHistorique;
 		this.utilisateurPOJO = utilisateurPOJO;

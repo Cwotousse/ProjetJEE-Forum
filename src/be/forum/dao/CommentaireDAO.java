@@ -1,5 +1,6 @@
 package be.forum.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import be.forum.pojo.CommentairePOJO;
 import be.forum.pojo.SujetPOJO;
 import be.forum.pojo.UtilisateurPOJO;
+import be.forum.sgbd.Sprocs;
 
 public class CommentaireDAO extends DAO<CommentairePOJO> {
 
@@ -16,25 +18,24 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 
 	@Override
 	public void create(CommentairePOJO commentairePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement(
-					"INSERT INTO Commentaire (idCommentaire, idSujet, texte, dateCommentaire, idUtilisateur)"
-							+ " VALUES (?,?,?,?,?)");
+			//Appel de la procédure stockée pour ajouter un utilisateur
+			cst = connect.prepareCall(Sprocs.INSERTCOMMENTAIRE);
 
-			pst.setInt(1, commentairePOJO.getID());
-			pst.setInt(2, commentairePOJO.getSujetPOJO().getID());
-			pst.setString(3, commentairePOJO.getTexte());
-			pst.setDate(4, commentairePOJO.getDateCommentaire());
-			pst.setInt(5, commentairePOJO.getUtilisateurPOJO().getID());
-			pst.executeUpdate();
+			//cst.setInt		(1, commentairePOJO.getID());
+			cst.setInt		(1, commentairePOJO.getSujetPOJO().getID());
+			cst.setString	(2, commentairePOJO.getTexte());
+			cst.setDate		(3, commentairePOJO.getDateCommentaire());
+			cst.setInt		(4, commentairePOJO.getUtilisateurPOJO().getID());
+			cst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -45,18 +46,19 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 
 	@Override
 	public void delete(CommentairePOJO commentairePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("DELETE FROM Categorie WHERE texte = ? AND dateCommentaire = ?");
-			pst.setString(1, commentairePOJO.getTexte());
-			pst.setDate(2, commentairePOJO.getDateCommentaire());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour modifier un utilisateur
+			cst = connect.prepareCall(Sprocs.DELETECOMMENTAIRE);
+			cst.setString	(1, commentairePOJO.getTexte());
+			cst.setDate		(2, commentairePOJO.getDateCommentaire());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -67,20 +69,21 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 
 	@Override
 	public void update(CommentairePOJO commentairePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect
-					.prepareStatement("UPDATE Categorie SET texte = ?, dateCommentaire = ? WHERE idCommentaire = ?");
-			pst.setString(1, commentairePOJO.getTexte());
-			pst.setDate(2, commentairePOJO.getDateCommentaire());
-			pst.setInt(3, commentairePOJO.getID());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour modifier un utilisateur
+			cst = connect.prepareCall(Sprocs.UPDATECOMMENTAIRE);
+			
+			cst.setString	(1, commentairePOJO.getTexte());
+			cst.setDate		(2, commentairePOJO.getDateCommentaire());
+			cst.setInt		(3, commentairePOJO.getID());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -91,28 +94,35 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 	@Override
 	public CommentairePOJO find(int id) {
 		CommentairePOJO commentairePOJO = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
+		CallableStatement cst = null;
 		DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
 		DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
 
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Commentaire WHERE idCommentaire = ?");
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				commentairePOJO = new CommentairePOJO(rs.getInt("idCommentaire"), sujetDAO.find(rs.getInt("idSujet")),
-						utilisateurDAO.find(rs.getInt("idUtilisateur")), rs.getString("texte"),
-						rs.getDate("dateCommentaire")
-
-				);
-			}
+			cst = connect.prepareCall(Sprocs.SELECTCOMMENTAIRE);
+			//J'insère le paramètre entrant
+			cst.setInt(1, id);
+			//Je récupère les paramètres sortants de la procédures stockées
+			cst.registerOutParameter(2, java.sql.Types.NUMERIC);
+			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(4, java.sql.Types.DATE);
+			cst.registerOutParameter(5, java.sql.Types.NUMERIC);
+			cst.executeQuery();
+			
+			commentairePOJO = new CommentairePOJO(
+					id,
+					sujetDAO.find		(cst.getInt(2)),
+					cst.getString		(3),
+					cst.getDate			(4),
+					utilisateurDAO.find	(cst.getInt(5))
+			);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -133,9 +143,12 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 			pst = this.connect.prepareStatement("SELECT * FROM Categorie");
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				commentairePOJO = new CommentairePOJO(rs.getInt("idCommentaire"), sujetDAO.find(rs.getInt("idSujet")),
-						utilisateurDAO.find(rs.getInt("idUtilisateur")), rs.getString("texte"),
-						rs.getDate("dateCommentaire"));
+				commentairePOJO = new CommentairePOJO(
+						rs.getInt("idCommentaire"),
+						sujetDAO.find(rs.getInt("idSujet")),
+						rs.getString("texte"),
+						rs.getDate("dateCommentaire"),
+						utilisateurDAO.find(rs.getInt("idUtilisateur")));
 				listcommentairePOJO.add(commentairePOJO);
 			}
 		} catch (SQLException e) {

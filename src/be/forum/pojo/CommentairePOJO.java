@@ -18,8 +18,7 @@ public class CommentairePOJO {
 	public CommentairePOJO() {
 	}
 
-	public CommentairePOJO(int idCommentaire, SujetPOJO sujetPOJO, UtilisateurPOJO utilisateurPOJO, String texte,
-			Date dateCommentaire) {
+	public CommentairePOJO(int idCommentaire, SujetPOJO sujetPOJO, String texte, Date dateCommentaire, UtilisateurPOJO utilisateurPOJO) {
 		this.setID(idCommentaire);
 		this.setSujetPOJO(sujetPOJO);
 		this.setUtilisateurPOJO(utilisateurPOJO);

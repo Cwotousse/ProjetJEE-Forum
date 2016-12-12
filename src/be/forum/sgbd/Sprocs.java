@@ -12,10 +12,10 @@ public class Sprocs {
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE ACTUALITEDAO
 	 */
-	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?,?,?,?,?,?)}";
-	public final static String DELETEACTUALITE 		= "{CALL DELETEACTUALITE(?,?,?,?,?,?,?)}";
-	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?,?,?,?,?)}";
-	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?,?,?,?,?)}";
+	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?)}";
+	public final static String DELETEACTUALITE 		= "{CALL DELETEACTUALITE(?,?)}";
+	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?)}";
+	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE CATEGORIEDAO
@@ -28,32 +28,32 @@ public class Sprocs {
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE SOUSCATEGORIEDAO
 	 */
-	public final static String INSERTSOUSCATEGORIE 	= "{CALL INSERTSOUSCATEGORIE(?,?,?,?,?,?,?)}";
+	public final static String INSERTSOUSCATEGORIE 	= "{CALL INSERTSOUSCATEGORIE(?,?)}";
 	public final static String DELETESOUSCATEGORIE 	= "{CALL DELETESOUSCATEGORIE(?,?,?,?,?,?,?)}";
 	public final static String UPDATESOUSCATEGORIE 	= "{CALL UPDATESOUSCATEGORIE(?,?,?,?,?,?,?)}";
-	public final static String SELECTSOUSCATEGORIE 	= "{CALL SELECTSOUSCATEGORIE(?,?,?,?,?,?,?)}";
+	public final static String SELECTSOUSCATEGORIE 	= "{CALL SELECTSOUSCATEGORIE(?,?,?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE SUJETDAO
 	 */
-	public final static String INSERTSUJET 			= "{CALL INSERTSUJET(?,?,?,?)}";//
-	public final static String DELETESUJET 			= "{CALL DELETESUJET(?,?)}";//
-	public final static String UPDATESUJET 			= "{CALL UPDATESUJET(?,?,?,?,?)}";//
-	public final static String SELECTSUJET 			= "{CALL SELECTSUJET(?,?,?,?,?,?)}";//
+	public final static String INSERTSUJET 			= "{CALL INSERTSUJET(?,?,?,?)}";
+	public final static String DELETESUJET 			= "{CALL DELETESUJET(?,?)}";
+	public final static String UPDATESUJET 			= "{CALL UPDATESUJET(?,?,?,?,?)}";
+	public final static String SELECTSUJET 			= "{CALL SELECTSUJET(?,?,?,?,?,?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE COMMENTAIREDAO
 	 */
-	public final static String INSERTCOMMENTAIRE 	= "{CALL INSERTCOMMENTAIRE(?,?,?,?,?,?,?)}";
-	public final static String DELETECOMMENTAIRE 	= "{CALL DELETECOMMENTAIRE(?,?,?,?,?,?,?)}";
-	public final static String UPDATECOMMENTAIRE 	= "{CALL UPDATECOMMENTAIRE(?,?,?,?,?,?,?)}";
-	public final static String SELECTCOMMENTAIRE 	= "{CALL SELECTCOMMENTAIRE(?,?,?,?,?,?,?)}";
+	public final static String INSERTCOMMENTAIRE 	= "{CALL INSERTCOMMENTAIRE(?,?,?,?)}";
+	public final static String DELETECOMMENTAIRE 	= "{CALL DELETECOMMENTAIRE(?,?)}";
+	public final static String UPDATECOMMENTAIRE 	= "{CALL UPDATECOMMENTAIRE(?,?,?)}";
+	public final static String SELECTCOMMENTAIRE 	= "{CALL SELECTCOMMENTAIRE(?,?,?,?,?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE HISTORIQUEDAO
 	 */
-	public final static String INSERTHISTORIQUE 	= "{CALL INSERTHISTORIQUE(?,?,?,?,?,?,?)}";
-	public final static String DELETEHISTORIQUE 	= "{CALL DELETEHISTORIQUE(?,?,?,?,?,?,?)}";
-	public final static String UPDATEHISTORIQUE 	= "{CALL UPDATEHISTORIQUE(?,?,?,?,?,?,?)}";
-	public final static String SELECTHISTORIQUE 	= "{CALL SELECTHISTORIQUE(?,?,?,?,?,?,?)}";	
+	public final static String INSERTHISTORIQUE 	= "{CALL INSERTHISTORIQUE(?,?)}";
+	public final static String DELETEHISTORIQUE 	= "{CALL DELETEHISTORIQUE(?,?)}";
+	public final static String UPDATEHISTORIQUE 	= "{CALL UPDATEHISTORIQUE(?,?,?)}";
+	public final static String SELECTHISTORIQUE 	= "{CALL SELECTHISTORIQUE(?,?,?)}";
 }

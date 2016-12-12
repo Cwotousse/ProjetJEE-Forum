@@ -1,5 +1,6 @@
 package be.forum.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.forum.pojo.ActualitePOJO;
+import be.forum.sgbd.Sprocs;
 
 public class ActualiteDAO extends DAO<ActualitePOJO> {
 
@@ -14,22 +16,21 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 
 	@Override
 	public void create(ActualitePOJO actualitePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect
-					.prepareStatement("INSERT INTO Actualite (idActualite, titre, description) " + "VALUES (?,?,?)");
+			//Appel de la procédure stockée pour créer une actualité
+			cst = connect.prepareCall(Sprocs.INSERTACTUALITE);
 
-			pst.setInt(1, actualitePOJO.getID());
-			pst.setString(2, actualitePOJO.getTitre());
-			pst.setString(3, actualitePOJO.getDescription());
-			pst.executeUpdate();
+			cst.setString	(1, actualitePOJO.getTitre());
+			cst.setString	(2, actualitePOJO.getDescription());
+			cst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -40,19 +41,20 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 
 	@Override
 	public void delete(ActualitePOJO actualitePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("DELETE FROM Actualite WHERE titre = ? AND description = ?");
+			//Appel de la procédure stockée pour supprimer une actualité
+			cst = connect.prepareCall(Sprocs.DELETEACTUALITE);
 
-			pst.setString(1, actualitePOJO.getTitre());
-			pst.setString(2, actualitePOJO.getDescription());
-			pst.executeUpdate();
+			cst.setString(1, actualitePOJO.getTitre());
+			cst.setString(2, actualitePOJO.getDescription());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -63,19 +65,21 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 
 	@Override
 	public void update(ActualitePOJO actualitePOJO) {
-		PreparedStatement pst = null;
+		CallableStatement cst = null;
 		try {
-			pst = connect.prepareStatement("UPDATE Actualite SET titre = ?, description = ? WHERE idActualite = ?");
-			pst.setString(1, actualitePOJO.getTitre());
-			pst.setString(2, actualitePOJO.getDescription());
-			pst.setInt(3, actualitePOJO.getID());
-			pst.executeUpdate();
+			//Appel de la procédure stockée pour modifier une actualite
+			cst = connect.prepareCall(Sprocs.UPDATEACTUALITE);
+			
+			cst.setInt		(1, actualitePOJO.getID());
+			cst.setString	(2, actualitePOJO.getTitre());
+			cst.setString	(3, actualitePOJO.getDescription());
+			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -86,26 +90,30 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 	@Override
 	public ActualitePOJO find(int id) {
 		ActualitePOJO 	 	 actualitePOJO 	= null;
-		PreparedStatement 	 pst			= null;
-		ResultSet			 rs				= null;
+		CallableStatement cst = null;
 		
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Actualite WHERE idActualite = ?");
-			pst.setInt(1, id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				actualitePOJO = new ActualitePOJO(
-										rs.getInt		("idActualite"),
-										rs.getString 	("titre"),
-										rs.getString	("description")
-									);
-			}
+			//Appel de la procédure stockée pour trouver une actualite
+			cst = connect.prepareCall(Sprocs.SELECTACTUALITE);
+			//pst = this.connect.prepareStatement("SELECT * FROM Actualite WHERE idActualite = ?");
+			//J'insère le paramètre entrant
+			cst.setInt(1, id);
+			//Je récupère les paramètres sortants de la procédures stockées
+			cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cst.executeQuery();
+			
+			actualitePOJO = new ActualitePOJO(
+					id,
+					cst.getString 	(2),
+					cst.getString	(3)
+			);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

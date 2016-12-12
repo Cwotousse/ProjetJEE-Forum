@@ -1,3 +1,6 @@
+import java.util.Calendar;
+
+import be.forum.dao.CategorieDAO;
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
 import be.forum.pojo.ActualitePOJO;
@@ -11,6 +14,9 @@ import be.forum.pojo.UtilisateurPOJO;
 public class Test {
 
 	public static void main(String[] args) {
+		// La date du jour, pour les tests
+		java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		
 		/*DAOFactory 						df 					= new DAOFactory();
 		DAO<SousCategoriePOJO> 			sousCategorieDAO 	= df.getSousCategorieDAO();
 		ArrayList<SousCategoriePOJO> 	listSousCategorie	= sousCategorieDAO.getList();
@@ -55,9 +61,9 @@ public class Test {
 		DAO<CategoriePOJO> catDAO = new DAOFactory().getCategorieDAO();
 		DAO<SousCategoriePOJO> sousCatDAO = new DAOFactory().getSousCategorieDAO();
 		DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
-		DAO<HistoriquePOJO> histoDAO = new DAOFactory().getHistoriqueDAO();
-		DAO<ActualitePOJO> actuDAO = new DAOFactory().getActualiteDAO();
-		DAO<CommentairePOJO> commDAO = new DAOFactory().getCommentaireDAO();
+		DAO<HistoriquePOJO> historiqueDAO = new DAOFactory().getHistoriqueDAO();
+		DAO<ActualitePOJO> actualiteDAO = new DAOFactory().getActualiteDAO();
+		DAO<CommentairePOJO> commentaireDAO = new DAOFactory().getCommentaireDAO();
 		
 		//Utilisateur
 		/**
@@ -84,9 +90,9 @@ public class Test {
 		 * DELETE -> FONCTIONNE
 		 * SELECT (FIND) -> FONCTIONNE
 		 */
-		CategoriePOJO cat = new CategoriePOJO();
-		cat.setTitre("cat qui GFDGDGGDletedD");
-		
+		//CategoriePOJO cat = new CategoriePOJO();
+		//cat.setTitre("cat qui GFDGDGGDletedD");
+		CategoriePOJO cat = catDAO.find(2);
 		
 		//catDAO.create(cat);
 		//catDAO.delete(cat);
@@ -121,8 +127,7 @@ public class Test {
 		sousCat.setTitre("sousCat qui va être delete");
 		sousCat.setCategoriePOJO(cat);
 		
-		//sousCatDAO.create(sousCat);
-		//sousCatDAO.delete(sousCat);
+		sousCatDAO.create(sousCat);
 		
 		//Sujet
 		/**
@@ -174,30 +179,61 @@ public class Test {
 		//sujetDAO.update(sujet);
 		//System.out.println(sujetDAO.find(3).getTitre());	
 		
-		// #TODO ne reteste pas les autres kheys, il risque d'avoir des erreurs à cause des updates,
-		// et aussi à cause qu'on ne possède pas la meme db
 		//ACTUALITE
-		/** A FAIRE
-		 * CREATE -> PAS ENCORE SPROCKEe
-		 * UPDATE -> PAS ENCORE SPROCKEe
+		/** 
+		 * CREATE -> FONCTIONNE
+		 * UPDATE -> FONCTIONNE
 		 * DELETE -> PAS ENCORE SPROCKEe
-		 * SELECT (FIND) -> PAS ENCORE SPROCKEe
+		 * SELECT (FIND) -> FONCTIONNE
 		 */
+		ActualitePOJO actualite = new ActualitePOJO();
+		actualite.setDescription("Description test actualite");
+		actualite.setTitre("Titre test actualite");
+		
+		//actualiteDAO.create(actualite);
+		//ActualitePOJO actualite = actualiteDAO.find(1);
+		//System.out.println(actualite.getTitre());
+		//actualite.setTitre("Titre test actualite updated");
+		//actualiteDAO.update(actualite);
+		//actualiteDAO.delete(actualite);
+		
 		
 		//HISTORIQUE
-		/** A FAIRE
-		 * CREATE -> PAS ENCORE SPROCKEe
-		 * UPDATE -> PAS ENCORE SPROCKEe
-		 * DELETE -> PAS ENCORE SPROCKEe
-		 * SELECT (FIND) -> PAS ENCORE SPROCKEe
+		/** 
+		 * CREATE -> FONCTIONNE
+		 * UPDATE -> FONCTIONNE
+		 * DELETE -> FONCTIONNE
+		 * SELECT (FIND) -> FONCTIONNE
 		 */
+		HistoriquePOJO historique = new HistoriquePOJO();
+		historique.setDateConnexion(datePourTester);
+		historique.setUtilisateurPOJO(util);
+		
+		//HistoriquePOJO historique = historiqueDAO.find(1);
+		//historique.setDateConnexion(new java.sql.Date(454));
+		//System.out.println(historique.getDateConnexion().toString());
+		//historiqueDAO.create(historique);
+		//historiqueDAO.update(historique);
+		//historiqueDAO.delete(historique);
 		
 		//COMMENTAIRE
-		/** A FAIRE
-		 * CREATE -> PAS ENCORE SPROCKEe
-		 * UPDATE -> PAS ENCORE SPROCKEe
-		 * DELETE -> PAS ENCORE SPROCKEe
-		 * SELECT (FIND) -> PAS ENCORE SPROCKEe
+		/** 
+		 * CREATE -> FONCTIONNE
+		 * UPDATE -> FONCTIONNE
+		 * DELETE -> FONCTIONNE
+		 * SELECT (FIND) -> FONCTIONNE
 		 */
+		CommentairePOJO commentaire = new CommentairePOJO();
+		commentaire.setDateCommentaire(datePourTester);
+		commentaire.setSujetPOJO(sujetDAO.find(1));
+		commentaire.setTexte("commentaire qui va etre delete");
+		
+		//commentaire.setUtilisateurPOJO(utilisateurDAO.find(5));
+		//commentaireDAO.create(commentaire);
+		//CommentairePOJO commentaire = commentaireDAO.find(1);
+		//commentaire.setTexte("Commentaire à update");
+		//System.out.println(commentaire.getTexte());
+		//commentaireDAO.update(commentaire);
+		//commentaireDAO.delete(commentaire);
 	}
 }
