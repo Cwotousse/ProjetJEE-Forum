@@ -6,9 +6,9 @@ public class HistoriquePOJO {
 	/**
 	 * Variables
 	 */
-	private int idHistorique;
+	private int 			idHistorique;
 	private UtilisateurPOJO utilisateurPOJO;
-	private Date dateConnexion;
+	private Date 			dateConnexion;
 	
 	/**
 	 * 
@@ -22,9 +22,9 @@ public class HistoriquePOJO {
 	 */
 	public HistoriquePOJO(int idHistorique, Date dateConnexion, UtilisateurPOJO utilisateurPOJO)
 	{
-		this.idHistorique = idHistorique;
-		this.utilisateurPOJO = utilisateurPOJO;
-		this.dateConnexion = dateConnexion;
+		this.idHistorique 		= idHistorique;
+		this.utilisateurPOJO 	= utilisateurPOJO;
+		this.dateConnexion 		= dateConnexion;
 	}
 	
 	/**

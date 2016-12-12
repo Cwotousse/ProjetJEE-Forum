@@ -89,4 +89,36 @@ public class UtilisateurPOJO {
 		this.typeUtilisateur	= typeUtilisateur;
 		this.mail 				= mail;
 	}
+	
+	//equals nécessite l'hashcode override
+	// pas sur pour la date
+	@Override
+	public boolean equals(Object obj) {
+		UtilisateurPOJO utilisateurPOJO;
+		// vérification si obj est null ou référence une instance d’une autre
+		// classe
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			utilisateurPOJO = (UtilisateurPOJO) obj;
+			if (utilisateurPOJO.getPseudo().equals(this.getPseudo())
+					&& utilisateurPOJO.getMotdepasse().equals(this.getMotdepasse())
+					&& utilisateurPOJO.getNom().equals(this.getNom())
+					&& utilisateurPOJO.getPrenom().equals(this.getPrenom())
+					&& utilisateurPOJO.getDateNaissance().equals(this.getDateNaissance())
+					&& utilisateurPOJO.getMail().equals(this.getMail())
+					&& utilisateurPOJO.getType().equals(this.getType())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getPseudo().hashCode() + this.getMotdepasse().hashCode() + this.getNom().hashCode()
+				+ this.getPrenom().hashCode() + this.getDateNaissance().hashCode() + this.getMail().hashCode()
+				+ this.getType().hashCode();
+	}
 }

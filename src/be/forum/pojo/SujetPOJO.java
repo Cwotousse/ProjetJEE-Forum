@@ -14,7 +14,7 @@ public class SujetPOJO {
 	public SujetPOJO(int idSujet, SousCategoriePOJO sousCategoriePOJO, String titre, Date dateSujet,
 			UtilisateurPOJO utilisateurPOJO) {
 		this.setID(idSujet);
-		this.sousCategoriePOJO = sousCategoriePOJO;
+		this.setSousCategoriePOJO(sousCategoriePOJO);
 		this.setTitre(titre);
 		this.setDateSujet(dateSujet);
 		this.setUtilisateurPOJO(utilisateurPOJO);
@@ -58,5 +58,33 @@ public class SujetPOJO {
 
 	public void setUtilisateurPOJO(UtilisateurPOJO utilisateurPOJO) {
 		this.utilisateurPOJO = utilisateurPOJO;
-	}	
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		SujetPOJO sujetPOJO;
+		// vérification si obj est null ou référence une instance d’une autre
+		// classe
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			sujetPOJO = (SujetPOJO) obj;
+			if (sujetPOJO.getTitre().equals(this.getTitre())
+					&& sujetPOJO.getSousCategoriePOJO().equals(this.getSousCategoriePOJO())
+					&& sujetPOJO.getDateSujet().equals(this.getDateSujet())
+					&& sujetPOJO.getUtilisateurPOJO().equals(this.getUtilisateurPOJO())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getTitre().hashCode() 
+				+ this.getSousCategoriePOJO().hashCode() 
+				+ this.getDateSujet().hashCode() 
+				+ this.getUtilisateurPOJO().hashCode();
+	}
 }
