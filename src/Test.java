@@ -117,17 +117,23 @@ public class Test {
 		//System.out.println(catDAO.find(5).getTitre());
 		
 		//SousCategorie
-		/** A FAIRE
-		 * CREATE -> PAS ENCORE SPROCKE
-		 * UPDATE -> PAS ENCORE SPROCKE
-		 * DELETE -> PAS ENCORE SPROCKE
-		 * SELECT (FIND) -> PAS ENCORE SPROCKE
+		/**
+		 * CREATE -> FONCTIONNE
+		 * UPDATE -> FONCTIONNE
+		 * DELETE -> FONCTIONNE
+		 * SELECT (FIND) -> FONCTIONNE
 		 */
 		SousCategoriePOJO sousCat = new SousCategoriePOJO();
-		sousCat.setTitre("sousCat qui va être delete");
+		sousCat.setTitre("sousCat qui va être testee");
 		sousCat.setCategoriePOJO(cat);
 		
-		sousCatDAO.create(sousCat);
+		//sousCatDAO.create(sousCat);
+		//SousCategoriePOJO sousCat = sousCatDAO.find(5);
+		//System.out.println(sousCat.getTitre());
+		//sousCat.setTitre("Updated");
+		//sousCatDAO.update(sousCat);		
+		//sousCatDAO.delete(sousCat);
+		
 		
 		//Sujet
 		/**

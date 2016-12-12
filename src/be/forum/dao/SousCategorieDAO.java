@@ -45,9 +45,6 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 		try {
 			//Appel de la procédure stockée pour supprimer une sous catégorie
 			cst = connect.prepareCall(Sprocs.DELETESOUSCATEGORIE);
-			// On supprime les données nécessaires dans la table Utilisateur
-			//pst = connect.prepareStatement("DELETE FROM SousCategorie WHERE titre = ?");
-
 			cst.setString(1, sousCategoriePOJO.getTitre());
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -69,11 +66,10 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 		try {
 			//Appel de la procédure stockée pour modifier une sous catégorie
 			cst = connect.prepareCall(Sprocs.UPDATESOUSCATEGORIE);
-			//pst = connect.prepareStatement(
-			//		"UPDATE SousCategorie SET idCategorie = ?, titre = ? WHERE idCategorie = ?");
-			cst.setInt		(1, sousCategoriePOJO.getCategoriePOJO().getID());
-			cst.setString	(2, sousCategoriePOJO.getTitre());
+			
 			cst.setInt		(1, sousCategoriePOJO.getID());
+			cst.setInt		(2, sousCategoriePOJO.getCategoriePOJO().getID());
+			cst.setString	(3, sousCategoriePOJO.getTitre());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,18 +93,17 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 		try {
 			//Appel de la procédure stockée pour trouver une sous catégorie
 			cst = connect.prepareCall(Sprocs.SELECTSOUSCATEGORIE);
-			//pst = this.connect.prepareStatement("SELECT * FROM Actualite WHERE idActualite = ?");
 			//J'insère le paramètre entrant
 			cst.setInt(1, id);
 			//Je récupère les paramètres sortants de la procédures stockées
-			cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(2, java.sql.Types.NUMERIC);
 			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
 			cst.executeQuery();
 			
 			sousCategoriePOJO = new SousCategoriePOJO(
 				id,
-				categorieDAO.find	(cst.getInt("idCategorie")),
-				cst.getString		("titre")
+				categorieDAO.find	(cst.getInt(2)),
+				cst.getString		(3)
 			);
 			
 		} catch (SQLException e) {
