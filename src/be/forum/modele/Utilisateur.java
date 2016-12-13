@@ -1,6 +1,7 @@
 package be.forum.modele;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import be.forum.dao.DAO;
@@ -85,33 +86,83 @@ public class Utilisateur {
 	}
 	
 	/**
+	 * Constructeur qui convertit un objet d'UtilisateurPOJO en objet d'Utilisateur
+	 * @param utilisateurPOJO
+	 */
+	public Utilisateur(UtilisateurPOJO utilisateurPOJO){
+		this.setPseudo			(utilisateurPOJO.getPseudo());
+		this.setMotdepasse		(utilisateurPOJO.getMotdepasse());
+		this.setNom				(utilisateurPOJO.getNom());
+		this.setPrenom			(utilisateurPOJO.getPrenom());
+		this.setDateNaissance	(utilisateurPOJO.getDateNaissance());
+		this.setMail			(utilisateurPOJO.getMail());
+		this.setType			(utilisateurPOJO.getType());
+	}
+	
+	/**
 	 * Méthodes
 	 */
 	
-	// #TODO convertir en Utilisateur
-	public UtilisateurPOJO connexion(String pseudo, String connexion){
-		ArrayList<UtilisateurPOJO> listUtilisateur = utilisateurDAO.getList();
-		UtilisateurPOJO utilisateurTrouve = listUtilisateur
+	/**
+	 * Récupère la liste des utilisateurs
+	 * @return listUtilisateur
+	 */
+	public ArrayList<Utilisateur> getList(){
+		ArrayList<UtilisateurPOJO>	 listUtilisateurPOJO 	= utilisateurDAO.getList();
+		ArrayList<Utilisateur> 		 listUtilisateur 		= new ArrayList<Utilisateur>();
+		
+		for(int i = 0; i < listUtilisateurPOJO.size(); i++){
+			Utilisateur utilisateur = new Utilisateur(listUtilisateurPOJO.get(i));
+			listUtilisateur.add	(utilisateur);
+		}
+		return listUtilisateur;
+	}
+	
+	/**
+	 * Connecte l'utilisateur au site
+	 * - Filtre une liste, en cherchant si un pseudo et un mot de passe
+	 * correspondent à un élément de la liste.
+	 * @return objet utilisateur avec toutes les infos, sinon renvoie null
+	 */
+	public Utilisateur connexion(){
+		Utilisateur utilisateurTrouve = this.getList()
 				.stream()
-				.filter(x -> x.getPseudo().equals(pseudo) 
-						&& x.getMotdepasse().equals(motdepasse))
+				.filter(x -> x.getPseudo().equals(this.pseudo) 
+						&& x.getMotdepasse().equals(this.motdepasse))
 				.findAny()
 				.orElse(null);
 		return utilisateurTrouve;
 	}
 	
-	public void inscription(UtilisateurPOJO utilisateur){
-		if(utilisateur.getPseudo().equals("") 
-				|| utilisateur.getMotdepasse().equals("")
-				|| utilisateur.getNom().equals("")
-				|| utilisateur.getPrenom().equals("")
-				|| utilisateur.getDateNaissance().equals("")
-				|| utilisateur.getType().equals("")
-				|| utilisateur.getMail().equals(""))
-			System.out.println("Champs vide");
-		else
-			utilisateurDAO.create(utilisateur);
-	}
-	
-	
+	public boolean inscription(){
+		
+		// #TODO FAIRE UN CONVERTISSEUR METIER EN POJO
+		UtilisateurPOJO utilisateurPOJO = new UtilisateurPOJO();
+		utilisateurPOJO.setPseudo		(this.getPseudo());
+		utilisateurPOJO.setMotdepasse	(this.getMotdepasse());
+		utilisateurPOJO.setNom			(this.getNom());
+		utilisateurPOJO.setPrenom		(this.getPrenom());
+		utilisateurPOJO.setMail			(this.getMail());
+		utilisateurPOJO.setType			(this.getClass().getSimpleName());
+
+		// La date du jour, pour les tests
+		java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		utilisateurPOJO.setDateNaissance(datePourTester);
+
+		//Vérification du pseudo, si il existe déjà -> erreur
+		/*if(this.getList().stream().anyMatch(x -> x.getPseudo().equals(this.getPseudo()))) {
+			//Pas besoin de vérification des champs, car déjà fait en JS
+			System.out.println("Le pseudo utilisé existe déjà!");
+		else {
+			utilisateurDAO.create(utilisateurPOJO);
+		}*/
+		
+		//Renvoie true si la condition est positive sinon false
+		boolean flag = this.getList().stream().anyMatch(x -> x.getPseudo().equals(this.getPseudo())) ? true : false; 
+		
+		//Si false -> pas de pseudo déjà existant alors je peux inscrire
+		if(!flag)
+			utilisateurDAO.create(utilisateurPOJO);
+		return !flag;
+	}	
 }

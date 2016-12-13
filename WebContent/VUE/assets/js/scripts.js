@@ -11,7 +11,7 @@ jQuery(document)
 					});
 
 					/*
-					 * Form validation
+					 * Login form validation
 					 */
 					$(
 							'.login-form input[type="text"], .login-form input[type="password"], .login-form textarea')
@@ -23,31 +23,22 @@ jQuery(document)
 							.on(
 									'submit',
 									function(e) {
-
-										$(this)
-												.find(
-														'input[type="text"], input[type="password"], textarea')
+										$(this).find('input[type="text"], input[type="password"], textarea')
 												.each(
 														function() {
 															if ($(this).val() == "") {
-																e
-																		.preventDefault();
-																$(this)
-																		.addClass(
-																				'input-error');
+																e.preventDefault();
+																$(this).addClass('input-error');
 															} else {
-																$(this)
-																		.removeClass(
-																				'input-error');
+																$(this).removeClass('input-error');
 															}
 														});
 
 									});
 					/*
-					 * Form validation
+					 * Registration form validation
 					 */
-					$(
-							'.registration-form input[type="text"], .registration-form textarea')
+					$('.registration-form input[type="text"], input[type="password"]')
 							.on('focus', function() {
 								$(this).removeClass('input-error');
 							});
@@ -55,8 +46,7 @@ jQuery(document)
 					$('.registration-form').on(
 							'submit',
 							function(e) {
-
-								$(this).find('input[type="text"], textarea')
+								$(this).find('input[type="text"], input[type="password"]')
 										.each(
 												function() {
 													if ($(this).val() == "") {

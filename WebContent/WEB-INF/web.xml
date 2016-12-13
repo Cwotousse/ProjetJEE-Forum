@@ -9,4 +9,12 @@
     <servlet-name>connexionservlet</servlet-name>
     <url-pattern>/ConnexionServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>inscriptionservlet</servlet-name>
+    <servlet-class>be.forum.servlet.InscriptionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>inscriptionservlet</servlet-name>
+    <url-pattern>/InscriptionServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

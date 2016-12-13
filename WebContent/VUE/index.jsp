@@ -162,23 +162,26 @@
         				<p>Remplissez les champs suivants:</p>
         			</div>
         			<div class="modal-body">
-	                    <form role="form" action="" method="post" class="registration-form">
+	                    <form role="form" action="http://localhost:9090/ProjetJEE-Forum/InscriptionServlet" method="post" class="registration-form">
 	                    	<div class="form-group">
-	                    		<label class="sr-only" for="form-first-name">Prénom</label>
-	                        	<input type="text" name="form-first-name" placeholder="Prénom..." class="form-first-name form-control" id="form-first-name">
+	                    		<label class="sr-only" for="form-username">Pseudo</label>
+	                        	<input type="text" name="form-username" placeholder="Pseudo..." class="form-username form-control" id="form-username">
+	                        </div>
+	                        <div class="form-group">
+	                    		<label class="sr-only" for="form-password-register">Mot de passe</label>
+	                        	<input type="password" name="form-password-register" placeholder="Mot de passe..." class="form-password-register form-control" id="form-password-register">
 	                        </div>
 	                        <div class="form-group">
 	                        	<label class="sr-only" for="form-last-name">Nom</label>
 	                        	<input type="text" name="form-last-name" placeholder="Nom..." class="form-last-name form-control" id="form-last-name">
 	                        </div>
+	                    	<div class="form-group">
+	                    		<label class="sr-only" for="form-first-name">Prénom</label>
+	                        	<input type="text" name="form-first-name" placeholder="Prénom..." class="form-first-name form-control" id="form-first-name">
+	                        </div>
 	                        <div class="form-group">
 	                        	<label class="sr-only" for="form-email">Email</label>
 	                        	<input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
-	                        </div>
-	                        <div class="form-group">
-	                        	<label class="sr-only" for="form-about-yourself">A propos de vous</label>
-	                        	<textarea name="form-about-yourself" placeholder="A propos de vous..." 
-	                        				class="form-about-yourself form-control" id="form-about-yourself"></textarea>
 	                        </div>
 	                        <button type="submit" class="btn">S'enregistrer</button>
 	                    </form>

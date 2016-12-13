@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.forum.modele.Utilisateur;
-import be.forum.pojo.UtilisateurPOJO;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	Utilisateur utilisateur = new Utilisateur();
+	//Utilisateur utilisateur = new Utilisateur();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -22,9 +21,12 @@ public class ConnexionServlet extends HttpServlet {
 		String pseudo 		= request.getParameter("pseudo");
 		// récupération du mot de passe dans la requête
 		String motdepasse 	= request.getParameter("motdepasse");
+				
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setMotdepasse(motdepasse);
 		
-		// #TODO à changer en Utilisateur et pas pojo
-		UtilisateurPOJO utilisateurTrouve = utilisateur.connexion(pseudo, motdepasse);
+		Utilisateur utilisateurConnecté = utilisateur.connexion();
 
 		// flux de sortie
 		PrintWriter out = response.getWriter();
@@ -35,7 +37,7 @@ public class ConnexionServlet extends HttpServlet {
 			//response.sendRedirect("\\..\\index.jsp"); 
 		}
 
-		if(utilisateurTrouve == null){
+		if(utilisateurConnecté == null){
 			out.println("Authentification incorrecte, mauvaise saisie des informations.");
 			//response.sendRedirect("\\..\\index.jsp"); 
 		} else {
