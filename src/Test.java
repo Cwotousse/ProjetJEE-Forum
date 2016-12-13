@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import be.forum.dao.DAO;
@@ -102,14 +103,23 @@ public class Test {
 		 * DELETE -> FONCTIONNE AVEC DES FILTERS
 		 * SELECT (FIND) -> FONCTIONNE
 		 */
-		SujetPOJO sujet = new SujetPOJO();
-		sujet.setTitre("sujet qui va etre delete");
-		/*sujet.setSousCategoriePOJO(sousCatDAO.find(7));
-		sujet.setDateSujet(new java.sql.Date(45754));
-		sujet.setUtilisateurPOJO(utilisateurDAO.find(1));*/
+		try {
+			SujetPOJO sujet = new SujetPOJO();
+			sujet.setTitre(null);
+			sujet.setSousCategoriePOJO(sousCatDAO.find(1));
+			sujet.setDateSujet(datePourTester);
+			sujet.setUtilisateurPOJO(utilisateurDAO.find(5));
+			
+			sujetDAO.create(sujet);
+			//sujetDAO.delete(sujet);
+			
+		}
+		catch (Exception e) {
+			
+			System.out.println(e.getMessage());
+		}
 		
-		//sujetDAO.create(sujet);
-		//sujetDAO.delete(sujet);
+		
 
 		/*System.out.println(sujet.getUtilisateurPOJO().getPseudo());
 		System.out.println(sujet.getUtilisateurPOJO().getMotdepasse());
@@ -202,7 +212,7 @@ public class Test {
 		//commentaireDAO.update(commentaire);
 		//commentaireDAO.delete(commentaire);
 		
-		UtilisateurPOJO util1 = new UtilisateurPOJO();
+		/*UtilisateurPOJO util1 = new UtilisateurPOJO();
 		util1.setPseudo("testpseudo");
 		util1.setMotdepasse("testmdp");
 		util1.setPrenom("testprenom");
@@ -225,8 +235,8 @@ public class Test {
 		else
 			System.out.println("pas égal");*/
 		
-		for(UtilisateurPOJO util3 : utilisateurDAO.getList()){
+		/*for(UtilisateurPOJO util3 : utilisateurDAO.getList()){
 			System.out.println(util3.getPseudo());
-		}
+		}*/
 	}
 }

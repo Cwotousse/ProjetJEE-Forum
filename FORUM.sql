@@ -402,10 +402,25 @@ create or replace PROCEDURE INSERTSUJET(
      P_DATESUJET IN SUJET.DATESUJET%TYPE,
      P_IDUTILISATEUR IN SUJET.IDUTILISATEUR%TYPE)
 IS
-BEGIN
-  INSERT INTO SUJET
-  VALUES (SEQ_SUJET.NEXTVAL, P_IDSOUSCATEGORIE, P_TITRE, P_DATESUJET, P_IDUTILISATEUR);
-  
+  BEGIN
+    DECLARE
+      -- Exception
+      parametre_null exception;
+    BEGIN
+      -- Si les valeurs sont nulles on throw une exception
+      IF P_IDSOUSCATEGORIE IS NULL OR P_TITRE IS NULL OR P_DATESUJET IS NULL OR P_IDUTILISATEUR IS NULL then 
+        -- Déclenche l'exception
+        RAISE parametre_null; 
+      ELSE
+        -- Sinon on commit
+        INSERT INTO SUJET
+        VALUES (SEQ_SUJET.NEXTVAL, P_IDSOUSCATEGORIE, P_TITRE, P_DATESUJET, P_IDUTILISATEUR);
+      END IF;
+      
+      EXCEPTION
+        WHEN parametre_null THEN
+        DBMS_OUTPUT.PUT_LINE('les parametres sont nulls.');
+      END;
   COMMIT;
 END;
 
