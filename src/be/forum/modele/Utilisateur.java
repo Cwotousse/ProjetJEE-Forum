@@ -15,6 +15,7 @@ public class Utilisateur {
 	private Date 	dateNaissance;
 	private String 	mail;
 	private String 	type;
+	DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
 	
 	/**
 	 * Getters and setters
@@ -87,10 +88,9 @@ public class Utilisateur {
 	 * Méthodes
 	 */
 	
-	
+	// #TODO convertir en Utilisateur
 	public UtilisateurPOJO connexion(String pseudo, String connexion){
-		DAO<UtilisateurPOJO> 		utilisateurDAO 	= new DAOFactory().getUtilisateurDAO();
-		ArrayList<UtilisateurPOJO>	listUtilisateur = utilisateurDAO.getList();
+		ArrayList<UtilisateurPOJO> listUtilisateur = utilisateurDAO.getList();
 		UtilisateurPOJO utilisateurTrouve = listUtilisateur
 				.stream()
 				.filter(x -> x.getPseudo().equals(pseudo) 
@@ -99,4 +99,19 @@ public class Utilisateur {
 				.orElse(null);
 		return utilisateurTrouve;
 	}
+	
+	public void inscription(UtilisateurPOJO utilisateur){
+		if(utilisateur.getPseudo().equals("") 
+				|| utilisateur.getMotdepasse().equals("")
+				|| utilisateur.getNom().equals("")
+				|| utilisateur.getPrenom().equals("")
+				|| utilisateur.getDateNaissance().equals("")
+				|| utilisateur.getType().equals("")
+				|| utilisateur.getMail().equals(""))
+			System.out.println("Champs vide");
+		else
+			utilisateurDAO.create(utilisateur);
+	}
+	
+	
 }

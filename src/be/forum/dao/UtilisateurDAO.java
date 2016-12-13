@@ -3,13 +3,13 @@ package be.forum.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.forum.pojo.UtilisateurPOJO;
 import be.forum.sgbd.Sprocs;
+import oracle.jdbc.OracleTypes;
 
 public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	public UtilisateurDAO(Connection conn) {
@@ -149,11 +149,16 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	public ArrayList<UtilisateurPOJO> getList() {
 		UtilisateurPOJO 			utilisateurPOJO = null;
 		ArrayList<UtilisateurPOJO> 	listUtilisateur = new ArrayList<UtilisateurPOJO>();
-		PreparedStatement 			pst 			= null;
+		CallableStatement			cst				= null;
 		ResultSet 					rs 				= null;
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Utilisateur");
-			rs = pst.executeQuery();
+			cst = connect.prepareCall(Sprocs.GETLISTUTILISATEUR);
+
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.executeUpdate();
+
+			// On récupère le curseur et on le cast à ResultSet
+			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
 				utilisateurPOJO = new UtilisateurPOJO(
 							rs.getInt	("idUtilisateur"), 
@@ -170,9 +175,9 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

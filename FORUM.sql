@@ -207,6 +207,14 @@ BEGIN
   FROM UTILISATEUR WHERE IDUTILISATEUR = P_IDUTILISATEUR;
 END;
 
+create or replace PROCEDURE GETLISTUTILISATEUR(
+	   CUR_UTILISATEUR OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_UTILISATEUR FOR
+  SELECT * FROM UTILISATEUR;
+END;
 
 /*==============================================================*/
 /* PROCEDURES STOCKEES - ACTUALITE                              */
@@ -259,6 +267,14 @@ BEGIN
   FROM ACTUALITE WHERE IDACTUALITE = P_IDACTUALITE;
 END;
 
+create or replace PROCEDURE GETLISTACTUALITE(
+	   CUR_ACTUALITE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_ACTUALITE FOR
+  SELECT * FROM ACTUALITE;
+END;
 
 /*==============================================================*/
 /* PROCEDURES STOCKEES - CATEGORIE                              */
@@ -305,6 +321,15 @@ BEGIN
   SELECT TITRE
   INTO O_TITRE
   FROM CATEGORIE WHERE IDCATEGORIE = P_IDCATEGORIE;
+END;
+
+create or replace PROCEDURE GETLISTCATEGORIE(
+	   CUR_CATEGORIE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_CATEGORIE FOR
+  SELECT * FROM CATEGORIE;
 END;
 
 /*==============================================================*/
@@ -356,6 +381,15 @@ BEGIN
   SELECT IDCATEGORIE, TITRE
   INTO O_IDCATEGORIE, O_TITRE
   FROM SOUSCATEGORIE WHERE IDSOUSCATEGORIE = P_IDSOUSCATEGORIE;
+END;
+
+create or replace PROCEDURE GETLISTSOUSCATEGORIE(
+	   CUR_SOUSCATEGORIE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_SOUSCATEGORIE FOR
+  SELECT * FROM SOUSCATEGORIE;
 END;
 
 /*==============================================================*/
@@ -417,6 +451,15 @@ BEGIN
   FROM SUJET WHERE IDSUJET = P_IDSUJET;
 END;
 
+create or replace PROCEDURE GETLISTSUJET(
+	   CUR_SUJET OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_SUJET FOR
+  SELECT * FROM SUJET;
+END;
+
 /*==============================================================*/
 /* PROCEDURES STOCKEES - HISTORIQUE                             */
 /*==============================================================*/
@@ -467,6 +510,15 @@ BEGIN
   SELECT DATECONNEXION, IDUTILISATEUR
   INTO O_DATECONNEXION,  O_IDUTILISATEUR
   FROM HISTORIQUE WHERE IDHISTORIQUE = P_IDHISTORIQUE;
+END;
+
+create or replace PROCEDURE GETLISTHISTORIQUE(
+	   CUR_HISTORIQUE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_HISTORIQUE FOR
+  SELECT * FROM HISTORIQUE;
 END;
 
 /*==============================================================*/
@@ -525,3 +577,12 @@ BEGIN
   FROM COMMENTAIRE WHERE IDCOMMENTAIRE = P_IDCOMMENTAIRE;
 END;
 /
+
+create or replace PROCEDURE GETLISTCOMMENTAIRE(
+	   CUR_COMMENTAIRE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_COMMENTAIRE FOR
+  SELECT * FROM COMMENTAIRE;
+END;

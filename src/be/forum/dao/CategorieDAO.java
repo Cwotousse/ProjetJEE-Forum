@@ -2,13 +2,13 @@ package be.forum.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.forum.pojo.CategoriePOJO;
 import be.forum.sgbd.Sprocs;
+import oracle.jdbc.OracleTypes;
 
 public class CategorieDAO extends DAO<CategoriePOJO> {
 
@@ -115,13 +115,18 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 	@Override
 	public ArrayList<CategoriePOJO> getList() {
-		CategoriePOJO categoriePOJO = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		ArrayList<CategoriePOJO> listcategoriePOJO = new ArrayList<CategoriePOJO>();
+		CategoriePOJO 				categoriePOJO 		= null;
+		CallableStatement 			cst 				= null;
+		ResultSet 					rs 					= null;
+		ArrayList<CategoriePOJO> 	listcategoriePOJO 	= new ArrayList<CategoriePOJO>();
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Categorie");
-			rs = pst.executeQuery();
+			cst = connect.prepareCall(Sprocs.GETLISTCATEGORIE);
+
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.executeUpdate();
+
+			// On récupère le curseur et on le cast à ResultSet
+			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
 				categoriePOJO = new CategoriePOJO(rs.getInt("idCategorie"), rs.getString("titre"));
 				listcategoriePOJO.add(categoriePOJO);
@@ -129,9 +134,9 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

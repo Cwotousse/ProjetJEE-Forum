@@ -3,7 +3,6 @@ package be.forum.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import be.forum.pojo.SousCategoriePOJO;
 import be.forum.pojo.SujetPOJO;
 import be.forum.pojo.UtilisateurPOJO;
 import be.forum.sgbd.Sprocs;
+import oracle.jdbc.OracleTypes;
 
 public class SujetDAO extends DAO<SujetPOJO> {
 
@@ -135,14 +135,20 @@ public class SujetDAO extends DAO<SujetPOJO> {
 	@Override
 	public ArrayList<SujetPOJO> getList() {
 		SujetPOJO 					sujetPOJO 			= null;
-		PreparedStatement 			pst 				= null;
+		CallableStatement 			cst 				= null;
 		ResultSet 					rs 					= null;
 		ArrayList<SujetPOJO> 		listSujet 			= new ArrayList<SujetPOJO>();
 		DAO<UtilisateurPOJO> 	 	utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
 		DAO<SousCategoriePOJO> 		sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Sujet");
-			rs = pst.executeQuery();
+			cst = connect.prepareCall(Sprocs.GETLISTSUJET);
+
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.executeUpdate();
+
+			// On récupère le curseur et on le cast à ResultSet
+			rs = (ResultSet) cst.getObject(1);
+
 			while (rs.next()) {
 				sujetPOJO = new SujetPOJO(
 								rs.getInt				("idSujet"),
@@ -156,9 +162,9 @@ public class SujetDAO extends DAO<SujetPOJO> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

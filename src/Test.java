@@ -1,6 +1,5 @@
 import java.util.Calendar;
 
-import be.forum.dao.CategorieDAO;
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
 import be.forum.pojo.ActualitePOJO;
@@ -16,45 +15,6 @@ public class Test {
 	public static void main(String[] args) {
 		// La date du jour, pour les tests
 		java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		
-		/*DAOFactory 						df 					= new DAOFactory();
-		DAO<SousCategoriePOJO> 			sousCategorieDAO 	= df.getSousCategorieDAO();
-		ArrayList<SousCategoriePOJO> 	listSousCategorie	= sousCategorieDAO.getList();
-		for (int i = 0; i < listSousCategorie.size(); i++) {
-			System.out.println("<li><a href=\"#>" + listSousCategorie.get(i).getTitre() + "</a></li>");
-		}
-		System.out.println(listSousCategorie.size());
-		DAO<UtilisateurPOJO> utilisateurPOJO 	= df.getUtilisateurDAO();
-		System.out.println(utilisateurPOJO.find(2).getNom());
-		System.out.println(sousCategorieDAO.find(1).getTitre());*/
-
-		/*UtilisateurPOJO testSprocCreate = new UtilisateurPOJO();
-		testSprocCreate.setPseudo("testSproc2");
-		testSprocCreate.setMotdepasse("testdfsfMODIFIE");
-		testSprocCreate.setNom("testPaulMODIFIE");
-		testSprocCreate.setPrenom("testJeanMODIFIE");
-		testSprocCreate.setType("ModérateurMODIFIE");
-		testSprocCreate.setMail("test@test.beMODIFIE");
-		testSprocCreate.setDateNaissance(new java.sql.Date(925214));
-		new DAOFactory().getUtilisateurDAO().find(2);*/
-		
-		// User
-		/*UtilisateurPOJO testSprocCreateUser = new UtilisateurPOJO();
-		testSprocCreateUser.setPseudo("testSproc2");
-		testSprocCreateUser.setMotdepasse("testdfsfMODIFIE");
-		testSprocCreateUser.setNom("testPaulMODIFIE");
-		testSprocCreateUser.setPrenom("testJeanMODIFIE");
-		testSprocCreateUser.setType("ModérateurMODIFIE");
-		testSprocCreateUser.setMail("test@test.beMODIFIE");
-		testSprocCreateUser.setDateNaissance(new java.sql.Date(925214));
-		new DAOFactory().getUtilisateurDAO().create(testSprocCreateUser);*/
-
-		//FIND UTILISATEUR ID 2 = WORK
-		//System.out.println(new DAOFactory().getUtilisateurDAO().find(2).getPseudo());
-		//AFFICHER LE TITRE DU SUJET ID 1 = WORK
-		//System.out.println(new DAOFactory().getSujetDAO().find(1).getTitre());
-		//AFFICHER LE PSEUDO DE L'UTILISATEUR QUI A CREE LE SUJET ID 1 = WORK
-		//System.out.println(new DAOFactory().getSujetDAO().find(1).getUtilisateurPOJO().getPseudo());
 
 		//Les DAO
 		DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
@@ -151,24 +111,24 @@ public class Test {
 		//sujetDAO.create(sujet);
 		//sujetDAO.delete(sujet);
 
-		/**
-		 #TODO
-		 FILTER SUR LES ID UN PEU CHELOU
-		 SI ON ARRIVE A COMPARER LES OBJETS, EN GROS FAUDRAIT OVERRIDE COMPARETO OU LES EQUALS IDK
-		 COMPARER CHAQUE VAR (COMME EN COURS) SAUF ID PCQ IL Y EN AURA UN QUI N'EN AURA PAS FORCEMENT VU QUON LE SET PAS 
-		 
-		 LE FILTER ICI 
-		 JE SAIS PAS SI IL FONCTIONNERA QUAND ON LE METTRA EN OEUVRE DANS NOTRE SITE CAR IL NECESSITE DES ID
-		 POUR LES == VOIR CE QUE JE DIS AU DESSUS
-		 */
-		
-		/*SujetPOJO sujetTrouve = sujetDAO
+		/*System.out.println(sujet.getUtilisateurPOJO().getPseudo());
+		System.out.println(sujet.getUtilisateurPOJO().getMotdepasse());
+		System.out.println(sujet.getUtilisateurPOJO().getNom());
+		System.out.println(sujet.getUtilisateurPOJO().getPrenom());
+		System.out.println(sujet.getUtilisateurPOJO().getDateNaissance());
+		System.out.println(sujet.getUtilisateurPOJO().getType());
+		System.out.println(sujet.getUtilisateurPOJO().getMail());
+		//sujetDAO.create(sujet);
+		//sujetDAO.delete(sujet);
+
+		SujetPOJO sujetTrouve = sujetDAO
 				.getList()
 				.stream()
 				.filter(x -> x.getTitre().equals(sujet.getTitre())
-						//&& x.getDateSujet() == sujet.getDateSujet()
-						&& x.getSousCategoriePOJO().getID() == sujet.getSousCategoriePOJO().getID()
-						&& x.getUtilisateurPOJO().getID() == sujet.getUtilisateurPOJO().getID()
+						//date marche pas mais les equals sont bons!
+						//&& x.getDateSujet().equals(sujet.getDateSujet())
+						&& x.getSousCategoriePOJO().equals(sujet.getSousCategoriePOJO())
+						&& x.getUtilisateurPOJO().equals(sujet.getUtilisateurPOJO())
 				).findAny()
 				.orElse(null);
 		if(sujetTrouve == null)
@@ -241,5 +201,32 @@ public class Test {
 		//System.out.println(commentaire.getTexte());
 		//commentaireDAO.update(commentaire);
 		//commentaireDAO.delete(commentaire);
+		
+		UtilisateurPOJO util1 = new UtilisateurPOJO();
+		util1.setPseudo("testpseudo");
+		util1.setMotdepasse("testmdp");
+		util1.setPrenom("testprenom");
+		util1.setNom("testnom");
+		//util1.setDateNaissance(datePourTester);
+		util1.setType("admin");
+		util1.setMail("testmail");
+		
+		UtilisateurPOJO util2 = new UtilisateurPOJO();
+		util2.setPseudo("testpseudo");
+		util2.setMotdepasse("testmdp");
+		util2.setPrenom("testprenom");
+		util2.setNom("testnom");
+		//util2.setDateNaissance(datePourTester);
+		util2.setType("admin");
+		util2.setMail("testmail");
+		
+		/*if(util1.equals(util2))
+			System.out.println("égal");
+		else
+			System.out.println("pas égal");*/
+		
+		for(UtilisateurPOJO util3 : utilisateurDAO.getList()){
+			System.out.println(util3.getPseudo());
+		}
 	}
 }

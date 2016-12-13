@@ -5,8 +5,8 @@
     <servlet-name>connexionservlet</servlet-name>
     <servlet-class>be.forum.servlet.ConnexionServlet</servlet-class>
   </servlet>
-  	<servlet-mapping>
-		<servlet-name>connexionservlet</servlet-name>
-		<url-pattern>/ConnexionServlet</url-pattern>
-	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>connexionservlet</servlet-name>
+    <url-pattern>/ConnexionServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

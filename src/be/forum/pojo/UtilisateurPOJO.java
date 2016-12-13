@@ -105,7 +105,7 @@ public class UtilisateurPOJO {
 					&& utilisateurPOJO.getMotdepasse().equals(this.getMotdepasse())
 					&& utilisateurPOJO.getNom().equals(this.getNom())
 					&& utilisateurPOJO.getPrenom().equals(this.getPrenom())
-					&& utilisateurPOJO.getDateNaissance().equals(this.getDateNaissance())
+					//&& utilisateurPOJO.getDateNaissance().equals(this.getDateNaissance())
 					&& utilisateurPOJO.getMail().equals(this.getMail())
 					&& utilisateurPOJO.getType().equals(this.getType())) {
 				return true;

@@ -2,7 +2,6 @@ package be.forum.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import be.forum.pojo.HistoriquePOJO;
 import be.forum.pojo.UtilisateurPOJO;
 import be.forum.sgbd.Sprocs;
+import oracle.jdbc.OracleTypes;
 
 public class HistoriqueDAO extends DAO<HistoriquePOJO> {
 
@@ -120,13 +120,18 @@ public class HistoriqueDAO extends DAO<HistoriquePOJO> {
 	@Override
 	public ArrayList<HistoriquePOJO> getList() {
 		HistoriquePOJO 				historiquePOJO 		= null;
-		PreparedStatement 			pst 				= null;
+		CallableStatement 			cst 				= null;
 		ResultSet 					rs 					= null;
 		ArrayList<HistoriquePOJO> 	listHistorique 		= new ArrayList<HistoriquePOJO>();
 		DAO<UtilisateurPOJO> 	 	utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Historique");
-			rs = pst.executeQuery();
+			cst = connect.prepareCall(Sprocs.GETLISTHISTORIQUE);
+
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.executeUpdate();
+
+			// On récupère le curseur et on le cast à ResultSet
+			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
 				historiquePOJO = new HistoriquePOJO(
 							rs.getInt			("idHistorique"), 
@@ -138,9 +143,9 @@ public class HistoriqueDAO extends DAO<HistoriquePOJO> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

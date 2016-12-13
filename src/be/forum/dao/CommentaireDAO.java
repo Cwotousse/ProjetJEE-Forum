@@ -2,7 +2,6 @@ package be.forum.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import be.forum.pojo.CommentairePOJO;
 import be.forum.pojo.SujetPOJO;
 import be.forum.pojo.UtilisateurPOJO;
 import be.forum.sgbd.Sprocs;
+import oracle.jdbc.OracleTypes;
 
 public class CommentaireDAO extends DAO<CommentairePOJO> {
 
@@ -133,15 +133,20 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 
 	@Override
 	public ArrayList<CommentairePOJO> getList() {
-		CommentairePOJO commentairePOJO = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
-		DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
-		ArrayList<CommentairePOJO> listcommentairePOJO = new ArrayList<CommentairePOJO>();
+		CommentairePOJO 			commentairePOJO 	= null;
+		CallableStatement 			cst 				= null;
+		ResultSet 					rs 					= null;
+		DAO<UtilisateurPOJO> 		utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
+		DAO<SujetPOJO> 				sujetDAO 			= new DAOFactory().getSujetDAO();
+		ArrayList<CommentairePOJO> 	listcommentairePOJO = new ArrayList<CommentairePOJO>();
 		try {
-			pst = this.connect.prepareStatement("SELECT * FROM Categorie");
-			rs = pst.executeQuery();
+			cst = connect.prepareCall(Sprocs.GETLISTCOMMENTAIRE);
+
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.executeUpdate();
+
+			// On récupère le curseur et on le cast à ResultSet
+			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
 				commentairePOJO = new CommentairePOJO(
 						rs.getInt("idCommentaire"),
@@ -154,9 +159,9 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pst != null) {
+			if (cst != null) {
 				try {
-					pst.close();
+					cst.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
