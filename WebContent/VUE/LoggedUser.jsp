@@ -116,103 +116,63 @@
 						%>
 					</ul></li>
 			</ul>
-			<!-- Partie connexion de la navigation bar -->
-			<!-- action="ConnexionServlet" -->
+
 			<form class="navbar-form navbar-right" method="POST">
 				<a class="btn btn-link-1 launch-modal" href="#"
-					data-modal-id="modal-login">Se connecter</a> <a
-					class="btn btn-link-1 launch-modal" href="#"
-					data-modal-id="modal-register">S'enregistrer</a>
+					data-modal-id="modal-profile">Mon profil</a>
+				<a class="btn btn-link-1 launch-modal" href="#"
+					data-modal-id="modal-disconnect">Se déconnecter</a>
+				</form>
+			
+
 			</form>
 		</div>
 		<!--/.navbar-collapse -->
 	</div>
 	</nav>
-	<!-- MODAL LOGIN -->
-	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog"
-		aria-labelledby="modal-login-label" aria-hidden="true">
+	<%
+		Utilisateur utilisateurConnecté = (Utilisateur) session.getAttribute("utilisateur");
+	%>
+	<!-- MODAL PROFILE-->
+	<div class="modal fade" id="modal-profile" tabindex="-1" role="dialog"
+		aria-labelledby="modal-profile-label" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
 					</button>
-					<h3 class="modal-title" id="modal-login-label">Connexion au
-						forum</h3>
-					<p>Entrez votre pseudo et votre mot de passe pour vous
-						connecter:</p>
+					<h3 class="modal-title" id="modal-profile-label">Votre profil</h3>
 				</div>
-
 				<div class="modal-body">
-					<form role="form"
-						action="http://localhost:9090/ProjetJEE-Forum/ConnexionServlet"
-						method="POST" class="login-form">
-						<div class="form-group">
-							<label class="sr-only" for="pseudo">Pseudo</label> <input
-								type="text" name="pseudo" placeholder="Pseudo..."
-								class="form-username form-control" id="pseudo">
-						</div>
-						<div class="form-group">
-							<label class="sr-only" for="motdepasse">Mot de passe</label> <input
-								type="password" name="motdepasse" placeholder="Mot de passe..."
-								class="form-password form-control" id="motdepasse">
-						</div>
-						<button type="submit" class="btn">Se connecter</button>
-					</form>
+					<div class="div-pseudo">
+						<strong>Pseudo</strong>
+						<p><%=utilisateurConnecté.getPseudo()%>
+					</div>
+					<div class="div-nom">
+						<strong>Nom</strong>
+						<p><%=utilisateurConnecté.getNom()%>
+					</div>
+					<div class="div-prenom">
+						<strong>Prénom</strong>
+						<p><%=utilisateurConnecté.getPrenom()%>
+					</div>
+					<div class="div-datenaissance">
+						<strong>Date de naissance</strong>
+						<p><%=utilisateurConnecté.getDateNaissance()%>
+					</div>
+					<div class="div-email">
+						<strong>Email</strong>
+						<p><%=utilisateurConnecté.getMail()%>
+					</div>
+					<div class="div-type">
+						<strong>Type</strong>
+						<p><%=utilisateurConnecté.getType()%>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- MODAL REGISTER-->
-	<div class="modal fade" id="modal-register" tabindex="-1" role="dialog"
-		aria-labelledby="modal-register-label" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
-					</button>
-					<h3 class="modal-title" id="modal-register-label">Enregistrez-vous
-						maintenant</h3>
-					<p>Remplissez les champs suivants:</p>
-				</div>
-				<div class="modal-body">
-					<form role="form"
-						action="http://localhost:9090/ProjetJEE-Forum/InscriptionServlet"
-						method="post" class="registration-form">
-						<div class="form-group">
-							<label class="sr-only" for="form-username">Pseudo</label> <input
-								type="text" name="form-username" placeholder="Pseudo..."
-								class="form-username form-control" id="form-username">
-						</div>
-						<div class="form-group">
-							<label class="sr-only" for="form-password-register">Mot
-								de passe</label> <input type="password" name="form-password-register"
-								placeholder="Mot de passe..."
-								class="form-password-register form-control"
-								id="form-password-register">
-						</div>
-						<div class="form-group">
-							<label class="sr-only" for="form-last-name">Nom</label> <input
-								type="text" name="form-last-name" placeholder="Nom..."
-								class="form-last-name form-control" id="form-last-name">
-						</div>
-						<div class="form-group">
-							<label class="sr-only" for="form-first-name">Prénom</label> <input
-								type="text" name="form-first-name" placeholder="Prénom..."
-								class="form-first-name form-control" id="form-first-name">
-						</div>
-						<div class="form-group">
-							<label class="sr-only" for="form-email">Email</label> <input
-								type="text" name="form-email" placeholder="Email..."
-								class="form-email form-control" id="form-email">
-						</div>
-						<button type="submit" class="btn">S'enregistrer</button>
-					</form>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<!-- Main jumbotron for a primary marketing message or call to action -->

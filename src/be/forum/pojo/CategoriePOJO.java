@@ -1,5 +1,7 @@
 package be.forum.pojo;
 
+import be.forum.modele.Categorie;
+
 public class CategoriePOJO {
 	/**
 	 * Variables
@@ -19,6 +21,14 @@ public class CategoriePOJO {
 	public CategoriePOJO(int idCategorie, String titre){
 		this.setID(idCategorie);
 		this.setTitre(titre);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet Categorie en objet CategoriePOJO
+	 * @param categorie
+	 */
+	public CategoriePOJO(Categorie categorie){
+		this.setTitre(categorie.getTitre());
 	}
 
 	

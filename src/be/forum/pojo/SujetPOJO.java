@@ -2,6 +2,8 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
+import be.forum.modele.Sujet;
+
 public class SujetPOJO {
 	private int idSujet;
 	private SousCategoriePOJO sousCategoriePOJO;
@@ -18,6 +20,17 @@ public class SujetPOJO {
 		this.setTitre(titre);
 		this.setDateSujet(dateSujet);
 		this.setUtilisateurPOJO(utilisateurPOJO);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet sujet en objet SujetPOJO
+	 * @param sujet
+	 */
+	public SujetPOJO(Sujet sujet){
+		this.setSousCategoriePOJO	(new SousCategoriePOJO(sujet.getSousCategorie()));
+		this.setTitre				(sujet.getTitre());
+		this.setDateSujet			(sujet.getDateSujet());
+		this.setUtilisateurPOJO		(new UtilisateurPOJO(sujet.getUtilisateur()));
 	}
 
 	public int getID() {

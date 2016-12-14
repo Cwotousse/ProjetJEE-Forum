@@ -1,5 +1,7 @@
 package be.forum.pojo;
 
+import be.forum.modele.SousCategorie;
+
 public class SousCategoriePOJO {
 	private int idSousCategorie;
 	private CategoriePOJO categoriePOJO;
@@ -11,6 +13,15 @@ public class SousCategoriePOJO {
 		this.setID(idSousCategorie);
 		this.setCategoriePOJO(categoriePOJO);
 		this.setTitre(titre);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet SousCategorie en objet SousCategoriePOJO
+	 * @param sousCategorie
+	 */
+	public SousCategoriePOJO(SousCategorie sousCategorie){
+		this.setCategoriePOJO	(new CategoriePOJO(sousCategorie.getCategorie()));
+		this.setTitre			(sousCategorie.getTitre());
 	}
 
 	public int getID() {

@@ -2,6 +2,8 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
+import be.forum.modele.Commentaire;
+
 public class CommentairePOJO {
 	/**
 	 * Variables
@@ -24,6 +26,17 @@ public class CommentairePOJO {
 		this.setUtilisateurPOJO(utilisateurPOJO);
 		this.setTexte(texte);
 		this.setDateCommentaire(dateCommentaire);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet Commentaire en objet CommentairePOJO
+	 * @param commentaire
+	 */
+	public CommentairePOJO(Commentaire commentaire){
+		this.setSujetPOJO(new SujetPOJO(commentaire.getSujet()));
+		this.setUtilisateurPOJO(new UtilisateurPOJO(commentaire.getUtilisateur()));
+		this.setTexte(commentaire.getTexte());
+		this.setDateCommentaire(commentaire.getDateCommentaire());
 	}
 
 	public int getID() {

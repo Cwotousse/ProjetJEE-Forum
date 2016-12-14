@@ -2,6 +2,8 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
+import be.forum.modele.Historique;
+
 public class HistoriquePOJO {
 	/**
 	 * Variables
@@ -27,6 +29,14 @@ public class HistoriquePOJO {
 		this.dateConnexion 		= dateConnexion;
 	}
 	
+	/**
+	 * Constructeur qui convertit un objet Historique en objet HistoriquePOJO
+	 * @param historique
+	 */
+	public HistoriquePOJO(Historique historique){
+		this.setUtilisateurPOJO (new UtilisateurPOJO(historique.getUtilisateur()));
+		this.setDateConnexion	(historique.getDateConnexion());
+	}
 	/**
 	 * Getters and setters
 	 */

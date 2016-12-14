@@ -2,8 +2,7 @@ package be.forum.modele;
 
 import java.sql.Date;
 
-import be.forum.modele.Sujet;
-import be.forum.modele.Utilisateur;
+import be.forum.pojo.CommentairePOJO;
 
 public class Commentaire {
 	/**
@@ -26,6 +25,17 @@ public class Commentaire {
 		this.setUtilisateur(utilisateur);
 		this.setTexte(texte);
 		this.setDateCommentaire(dateCommentaire);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet CommentairePOJO en objet Commentaire
+	 * @param commentairePOJO
+	 */
+	public Commentaire(CommentairePOJO commentairePOJO){
+		this.setSujet(new Sujet(commentairePOJO.getSujetPOJO()));
+		this.setUtilisateur(new Utilisateur(commentairePOJO.getUtilisateurPOJO()));
+		this.setTexte(commentairePOJO.getTexte());
+		this.setDateCommentaire(commentairePOJO.getDateCommentaire());
 	}
 	
 	public Sujet getSujet() {

@@ -1,5 +1,7 @@
 package be.forum.pojo;
 
+import be.forum.modele.Actualite;
+
 public class ActualitePOJO {
 	private int 	idActualite;
 	private String 	titre;
@@ -11,6 +13,15 @@ public class ActualitePOJO {
 		this.setID(idActualite);
 		this.setTitre(titre);
 		this.setDescription(description);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet Actualite en objet ActualitePOJO
+	 * @param actualite
+	 */
+	public ActualitePOJO(Actualite actualite){
+		this.setTitre		(actualite.getTitre());
+		this.setDescription	(actualite.getDescription());
 	}
 
 	public int getID() {

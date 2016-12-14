@@ -17,13 +17,20 @@
     <servlet-name>inscriptionservlet</servlet-name>
     <url-pattern>/InscriptionServlet</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>affichernavbarconnectéservlet</servlet-name>
     <servlet-class>be.forum.servlet.AfficherNavBarConnectéServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>affichernavbarconnectéservlet</servlet-name>
     <url-pattern>/AfficherNavBarConnectéServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>deconnexionservlet</servlet-name>
+    <servlet-class>be.forum.servlet.DeconnexionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deconnexionservlet</servlet-name>
+    <url-pattern>/DeconnexionServlet</url-pattern>
   </servlet-mapping>
 </web-app>

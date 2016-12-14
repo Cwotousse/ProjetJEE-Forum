@@ -2,21 +2,13 @@ package be.forum.modele;
 
 import java.sql.Date;
 
+import be.forum.pojo.SujetPOJO;
+
 public class Sujet {
 	private SousCategorie 	sousCategorie;
 	private String 			titre;
 	private Date 			dateSujet;
 	private Utilisateur 	utilisateur;
-	
-	public Sujet() { }
-
-	public Sujet(SousCategorie sousCategorie, String titre, Date dateSujet,
-			Utilisateur utilisateur) {
-		this.setSousCategorie(sousCategorie);
-		this.setTitre(titre);
-		this.setDateSujet(dateSujet);
-		this.setUtilisateur(utilisateur);
-	}
 
 	public SousCategorie getSousCategorie() {
 		return sousCategorie;
@@ -49,4 +41,25 @@ public class Sujet {
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}	
+	
+	public Sujet() { }
+
+	public Sujet(SousCategorie sousCategorie, String titre, Date dateSujet,
+			Utilisateur utilisateur) {
+		this.setSousCategorie(sousCategorie);
+		this.setTitre(titre);
+		this.setDateSujet(dateSujet);
+		this.setUtilisateur(utilisateur);
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet SujetPOJO en objet Sujet
+	 * @param SujetPOJO
+	 */
+	public Sujet(SujetPOJO sujetPOJO){
+		this.setSousCategorie	(new SousCategorie(sujetPOJO.getSousCategoriePOJO()));
+		this.setTitre			(sujetPOJO.getTitre());
+		this.setDateSujet		(sujetPOJO.getDateSujet());
+		this.setUtilisateur		(new Utilisateur(sujetPOJO.getUtilisateurPOJO()));
+	}
 }

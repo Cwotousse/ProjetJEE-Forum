@@ -60,9 +60,9 @@ public class ConnexionServlet extends HttpServlet {
 			Utilisateur test = (Utilisateur) session.getAttribute("utilisateur");
 			out.println(test.getMail());
 			
-
-			request.getRequestDispatcher("AfficherNavBarConnectéServlet").forward(request, response);
-			// response.sendRedirect("index.jsp");
+			//getServletContext().getRequestDispatcher("/VUE\\index.jsp").forward(request, response);
+			//request.getRequestDispatcher("AfficherNavBarConnectéServlet").forward(request, response);
+			response.sendRedirect("/ProjetJEE-Forum\\VUE\\LoggedUser.jsp");
 			response.setContentType("text/html");
 		}
 	}

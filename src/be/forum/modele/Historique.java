@@ -2,27 +2,14 @@ package be.forum.modele;
 
 import java.sql.Date;
 
+import be.forum.pojo.HistoriquePOJO;
+
 public class Historique {
 	/**
 	 * Variables
 	 */
 	private Utilisateur utilisateur;
 	private Date 		dateConnexion;
-	
-	/**
-	 * 
-	 */
-	public Historique(){}
-	/**
-	 * 
-	 * @param Utilisateur
-	 * @param dateConnexion
-	 */
-	public Historique(Utilisateur utilisateur, Date dateConnexion)
-	{
-		this.utilisateur = utilisateur;
-		this.dateConnexion = dateConnexion;
-	}
 	
 	/**
 	 * Getters and setters
@@ -38,5 +25,26 @@ public class Historique {
 	}
 	public void setDateConnexion(Date dateConnexion) {
 		this.dateConnexion = dateConnexion;
+	}
+	
+	public Historique(){}
+	/**
+	 * 
+	 * @param Utilisateur
+	 * @param dateConnexion
+	 */
+	public Historique(Utilisateur utilisateur, Date dateConnexion)
+	{
+		this.utilisateur = utilisateur;
+		this.dateConnexion = dateConnexion;
+	}
+	
+	/**
+	 * Constructeur qui convertit un objet HistoriquePOJO en objet Historique
+	 * @param historiquePOJO
+	 */
+	public Historique(HistoriquePOJO historiquePOJO){
+		this.setUtilisateur		(new Utilisateur(historiquePOJO.getUtilisateurPOJO()));
+		this.setDateConnexion	(historiquePOJO.getDateConnexion());
 	}
 }
