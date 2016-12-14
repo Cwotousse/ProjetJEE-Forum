@@ -24,6 +24,14 @@ public class Categorie {
 	public Categorie(String titre){
 		this.setTitre(titre);
 	}
+	
+	/**
+	 * Constructeur qui convertit un objet CategoriePOJO en objet Categorie
+	 * @param categoriePOJO
+	 */
+	public Categorie(CategoriePOJO categoriePOJO){
+		this.setTitre(categoriePOJO.getTitre());
+	}
 
 	
 	/**

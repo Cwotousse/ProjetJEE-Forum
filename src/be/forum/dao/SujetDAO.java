@@ -30,7 +30,7 @@ public class SujetDAO extends DAO<SujetPOJO> {
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} finally {
 			if (cst != null) {
 				try {

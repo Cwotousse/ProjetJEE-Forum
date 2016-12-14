@@ -2,6 +2,8 @@ package be.forum.pojo;
 
 import java.util.Date;
 
+import be.forum.modele.Utilisateur;
+
 public class UtilisateurPOJO {
 	/**
 	 * Variables
@@ -88,6 +90,16 @@ public class UtilisateurPOJO {
 		this.dateNaissance 		= dateNaissance;
 		this.typeUtilisateur	= typeUtilisateur;
 		this.mail 				= mail;
+	}
+	
+	public UtilisateurPOJO(Utilisateur utilisateur){
+		this.setPseudo			(utilisateur.getPseudo());
+		this.setMotdepasse		(utilisateur.getMotdepasse());
+		this.setNom				(utilisateur.getNom());
+		this.setPrenom			(utilisateur.getPrenom());
+		this.setDateNaissance	(utilisateur.getDateNaissance());
+		this.setMail			(utilisateur.getMail());
+		this.setType			(utilisateur.getType());
 	}
 	
 	//equals nécessite l'hashcode override

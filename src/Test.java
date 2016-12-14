@@ -1,4 +1,3 @@
-import java.sql.SQLException;
 import java.util.Calendar;
 
 import be.forum.dao.DAO;
@@ -94,7 +93,7 @@ public class Test {
 		//sousCat.setTitre("Updated");
 		//sousCatDAO.update(sousCat);		
 		//sousCatDAO.delete(sousCat);
-		
+		//System.out.println(utilisateurDAO.find(1).getPrenom());
 		
 		//Sujet
 		/**
@@ -103,21 +102,15 @@ public class Test {
 		 * DELETE -> FONCTIONNE AVEC DES FILTERS
 		 * SELECT (FIND) -> FONCTIONNE
 		 */
-		try {
 			SujetPOJO sujet = new SujetPOJO();
 			sujet.setTitre(null);
 			sujet.setSousCategoriePOJO(sousCatDAO.find(1));
 			sujet.setDateSujet(datePourTester);
-			sujet.setUtilisateurPOJO(utilisateurDAO.find(5));
+			sujet.setUtilisateurPOJO(utilisateurDAO.find(1));
 			
 			sujetDAO.create(sujet);
 			//sujetDAO.delete(sujet);
-			
-		}
-		catch (Exception e) {
-			
-			System.out.println(e.getMessage());
-		}
+	
 		
 		
 
@@ -238,5 +231,12 @@ public class Test {
 		/*for(UtilisateurPOJO util3 : utilisateurDAO.getList()){
 			System.out.println(util3.getPseudo());
 		}*/
+		
+		SujetPOJO sujetPOJO = new SujetPOJO();
+		sujetPOJO.setDateSujet(datePourTester);
+		sujetPOJO.setTitre("test");
+		sujetPOJO.setSousCategoriePOJO(sousCatDAO.find(2));
+		sujetPOJO.setUtilisateurPOJO(utilisateurDAO.find(1));
+		//sujetDAO.create(sujetPOJO);
 	}
 }

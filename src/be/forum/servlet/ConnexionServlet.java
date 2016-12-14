@@ -13,50 +13,60 @@ import be.forum.modele.Utilisateur;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//Utilisateur utilisateur = new Utilisateur();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// récupération de l’identifiant/login dans la requête
-		String pseudo 		= request.getParameter("pseudo");
+		String pseudo = request.getParameter("pseudo");
 		// récupération du mot de passe dans la requête
-		String motdepasse 	= request.getParameter("motdepasse");
-				
+		String motdepasse = request.getParameter("motdepasse");
+
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setMotdepasse(motdepasse);
-		
+
 		Utilisateur utilisateurConnecté = utilisateur.connexion();
 
 		// flux de sortie
 		PrintWriter out = response.getWriter();
 		out.println(pseudo + " " + motdepasse);
-		if(pseudo.equals("") || motdepasse.equals("")){
+		if (pseudo.equals("") || motdepasse.equals("")) {
 			out.println("Vous n'avez pas rempli les champs nécessaires.");
-			//Je redirige vers une page
-			//response.sendRedirect("\\..\\index.jsp"); 
+			// Je redirige vers une page
+			// response.sendRedirect("\\..\\index.jsp");
 		}
 
-		if(utilisateurConnecté == null){
+		if (utilisateurConnecté == null) {
 			out.println("Authentification incorrecte, mauvaise saisie des informations.");
-			//response.sendRedirect("\\..\\index.jsp"); 
+			// response.sendRedirect("\\..\\index.jsp");
 		} else {
 			out.println("Authentification correcte, bienvenu(e) " + pseudo);
 			HttpSession session = request.getSession();
-			 //si pas de session, destruction et création d’une nouvelle 
-			if(!session.isNew()) { 
-				session.invalidate(); 
-				session=request.getSession(); 
+			// si pas de session, destruction et création d’une nouvelle
+			if (!session.isNew()) {
+				session.invalidate();
+				session = request.getSession();
 			}
-		 	//stocker les paramètres de l’utilisateur dans la session 
-			session.setAttribute("pseudo", pseudo);
-		 	session.setAttribute("motdepasse", motdepasse); 
-			//response.sendRedirect("index.jsp"); 
-			response.setContentType("text/html"); 
-			//response.sendRedirect("\\..\\index.jsp"); 
+			// stocker les paramètres de l’utilisateur dans la session
+			// Je cherche l'utilisateur grâce à son pseudo et mot de passe et je
+			// retourne toutes ses infos dans l'objet utilisateurConnecté
+			utilisateurConnecté = utilisateur.getList().stream()
+					.filter(x -> x.getPseudo().equals(pseudo) && x.getMotdepasse().equals(motdepasse))
+					.findAny()
+					.orElse(null);
+
+			// J'ajoute l'objet en faisant un "setAttribute()"
+			session.setAttribute("utilisateur", utilisateurConnecté);
+			Utilisateur test = (Utilisateur) session.getAttribute("utilisateur");
+			out.println(test.getMail());
+			
+
+			request.getRequestDispatcher("AfficherNavBarConnectéServlet").forward(request, response);
+			// response.sendRedirect("index.jsp");
+			response.setContentType("text/html");
 		}
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

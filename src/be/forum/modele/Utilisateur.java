@@ -119,6 +119,26 @@ public class Utilisateur {
 	}
 	
 	/**
+	 * Récupère un utilisateur, ainsi que son id, grâce à toutes les infos d'un objet Utilisateur
+	 * @return
+	 */
+	public UtilisateurPOJO getUtilisateurPOJO(){
+		UtilisateurPOJO utilisateurPOJO = 
+									utilisateurDAO.getList()
+													.stream()
+													.filter(x -> x.getPseudo().equals(this.getPseudo())
+															&& x.getMotdepasse().equals(this.getPseudo())
+															//&& x.getNom().equals(this.getNom())
+															//&& x.getPrenom().equals(this.getPrenom())
+															//&& x.getMail().equals(this.getMail())
+															//&& x.getType().equals(this.getType())
+															)
+													.findAny()
+													.orElse(null);
+		return utilisateurPOJO;
+	}
+	
+	/**
 	 * Connecte l'utilisateur au site
 	 * - Filtre une liste, en cherchant si un pseudo et un mot de passe
 	 * correspondent à un élément de la liste.
@@ -135,32 +155,18 @@ public class Utilisateur {
 	}
 	
 	public boolean inscription(){
-		
-		// #TODO FAIRE UN CONVERTISSEUR METIER EN POJO
-		UtilisateurPOJO utilisateurPOJO = new UtilisateurPOJO();
-		utilisateurPOJO.setPseudo		(this.getPseudo());
-		utilisateurPOJO.setMotdepasse	(this.getMotdepasse());
-		utilisateurPOJO.setNom			(this.getNom());
-		utilisateurPOJO.setPrenom		(this.getPrenom());
-		utilisateurPOJO.setMail			(this.getMail());
-		utilisateurPOJO.setType			(this.getClass().getSimpleName());
+		UtilisateurPOJO utilisateurPOJO = new UtilisateurPOJO(this);
+		utilisateurPOJO.setType	(this.getClass().getSimpleName());
 
 		// La date du jour, pour les tests
 		java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		utilisateurPOJO.setDateNaissance(datePourTester);
 
-		//Vérification du pseudo, si il existe déjà -> erreur
-		/*if(this.getList().stream().anyMatch(x -> x.getPseudo().equals(this.getPseudo()))) {
-			//Pas besoin de vérification des champs, car déjà fait en JS
-			System.out.println("Le pseudo utilisé existe déjà!");
-		else {
-			utilisateurDAO.create(utilisateurPOJO);
-		}*/
-		
+		//Vérification du pseudo et du mail, si ils existent déjà -> erreur
 		//Renvoie true si la condition est positive sinon false
-		boolean flag = this.getList().stream().anyMatch(x -> x.getPseudo().equals(this.getPseudo())) ? true : false; 
+		boolean flag = this.getList().stream().anyMatch(x -> x.getPseudo().equals(this.getPseudo()) || x.getMail().equals(this.getMail())) ? true : false; 
 		
-		//Si false -> pas de pseudo déjà existant alors je peux inscrire
+		//Si false -> pas de pseudo ou mail déjà existant alors je peux inscrire
 		if(!flag)
 			utilisateurDAO.create(utilisateurPOJO);
 		return !flag;
