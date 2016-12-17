@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
+import be.forum.metier.Sujet;
 import be.forum.pojo.ActualitePOJO;
 import be.forum.pojo.CategoriePOJO;
 import be.forum.pojo.CommentairePOJO;
@@ -238,6 +240,14 @@ public class Test {
 		sujetPOJO.setSousCategoriePOJO(sousCatDAO.find(2));
 		sujetPOJO.setUtilisateurPOJO(utilisateurDAO.find(1));
 		//sujetDAO.create(sujetPOJO);
+		String nomSousCategorie = "Football";
+		Sujet suj = new Sujet();
+		//ArrayList<Sujet> listSujet = sujet.getListSelonSousCategorie(nomSousCategorie);
+		
+		ArrayList<Sujet> listSuj = suj.getListSelonSousCategorie(nomSousCategorie);
+		for (Sujet sujet2 : listSuj) {
+			System.out.println(sujet2.getTitre());
+		}
 		
 	}
 }

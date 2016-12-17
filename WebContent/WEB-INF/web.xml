@@ -26,11 +26,11 @@
     <url-pattern>/disconnect</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>displaySubjects</servlet-name>
-    <servlet-class>be.forum.servlet.AfficherSousCategorie</servlet-class>
+    <servlet-name>displaysubjects</servlet-name>
+    <servlet-class>be.forum.servlet.AfficherSujetServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>displaySubjects</servlet-name>
+    <servlet-name>displaysubjects</servlet-name>
     <url-pattern>/displaySubjects</url-pattern>
   </servlet-mapping>
 </web-app>

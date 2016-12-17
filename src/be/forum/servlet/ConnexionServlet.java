@@ -16,10 +16,8 @@ public class ConnexionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// récupération de l’identifiant/login dans la requête
-		String pseudo = request.getParameter("pseudo");
-		// récupération du mot de passe dans la requête
-		String motdepasse = request.getParameter("motdepasse");
+		String pseudo 		= request.getParameter("pseudo");
+		String motdepasse 	= request.getParameter("motdepasse");
 
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
@@ -32,8 +30,6 @@ public class ConnexionServlet extends HttpServlet {
 		out.println(pseudo + " " + motdepasse);
 		if (pseudo.equals("") || motdepasse.equals("")) {
 			out.println("Vous n'avez pas rempli les champs nécessaires.");
-			// Je redirige vers une page
-			// response.sendRedirect("\\..\\index.jsp");
 		}
 
 		if (utilisateurConnecté == null) {

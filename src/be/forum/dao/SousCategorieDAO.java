@@ -86,9 +86,9 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 
 	@Override
 	public SousCategoriePOJO find(int id) {
-		SousCategoriePOJO 	 sousCategoriePOJO 	= null;
-		CallableStatement cst = null;
-		DAO<CategoriePOJO> 	 categorieDAO	 	= new DAOFactory().getCategorieDAO();
+		SousCategoriePOJO 	sousCategoriePOJO 	= null;
+		CallableStatement 	cst = null;
+		DAO<CategoriePOJO> 	categorieDAO	 	= new DAOFactory().getCategorieDAO();
 		
 		try {
 			//Appel de la procédure stockée pour trouver une sous catégorie

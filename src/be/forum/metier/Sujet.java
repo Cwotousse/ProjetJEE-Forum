@@ -2,6 +2,7 @@ package be.forum.metier;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
@@ -71,23 +72,55 @@ public class Sujet {
 	 * Méthodes
 	 */
 	
-	/**
-	 * Récupère la liste des sujets d'une catégorie donnée
-	 * @return listSujets
-	 */
-	public ArrayList<Sujet> getListSelonSousCategorie(String sousCat){
-		ArrayList<Sujet> listSujet = new ArrayList<Sujet>();
-		try {
-			ArrayList<SujetPOJO> listSujetPOJO = sujetDAO.getList();
-			//#TODO Transformer le titre en son id et filter uniquement les sujets relatives à cette sous cat
-			for(int i = 0; i < listSujetPOJO.size(); i++){
-				Sujet sujet = new Sujet(listSujetPOJO.get(i));
-				listSujet.add(sujet);
-			}
-			
-		} catch (Exception e) {
-			e.getStackTrace();
+	public ArrayList<Sujet> getList(){
+		ArrayList<SujetPOJO>	 listSujetPOJO 	= sujetDAO.getList();
+		ArrayList<Sujet> 		 listSujet 		= new ArrayList<Sujet>();
+		
+		for(int i = 0; i < listSujetPOJO.size(); i++){
+			Sujet sujet = new Sujet(listSujetPOJO.get(i));
+			listSujet.add	(sujet);
 		}
 		return listSujet;
+	}
+	
+	/**
+	 * Récupère la liste des sujets d'une sous-catégorie
+	 * @param sousCat : nom de la sous-catégorie
+	 * @return listSujetBySousCat
+	 */
+	public ArrayList<Sujet> getListSelonSousCategorie(String sousCat){
+		ArrayList<Sujet> listSujetBySousCat = this.getList()
+					.stream()
+					.filter(x -> x.getSousCategorie().getTitre().equals(sousCat))
+					.collect(Collectors.toCollection(ArrayList::new));
+		return listSujetBySousCat;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Sujet sujet;
+		// vérification si obj est null ou référence une instance d’une autre
+		// classe
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			sujet = (Sujet) obj;
+			if (sujet.getTitre().equals(this.getTitre())
+					&& sujet.getSousCategorie().equals(this.getSousCategorie())
+					&& sujet.getDateSujet()	.equals(this.getDateSujet())
+					&& sujet.getUtilisateur().equals(this.getUtilisateur())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getTitre().hashCode() 
+				+ this.getSousCategorie().hashCode() 
+				+ this.getDateSujet().hashCode() 
+				+ this.getUtilisateur().hashCode();
 	}
 }

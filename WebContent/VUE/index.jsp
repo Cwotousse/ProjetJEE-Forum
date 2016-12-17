@@ -79,7 +79,7 @@
 						ArrayList<SousCategorie> listSousCategorie 
 									= sousCategorie.getList(listCategorie.get(0).getTitre());
 						for (int j = 0; j < listSousCategorie.size() ; j++) {
-							out.println("<li><a href=\"#\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
+							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie.get(j).getTitre() + "\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
 						}
 						%>
 					</ul></li>
@@ -93,7 +93,7 @@
 						ArrayList<SousCategorie> listSousCategorie1 
 									= sousCategorie.getList(listCategorie.get(1).getTitre());
 						for (int j = 0; j < listSousCategorie1.size() ; j++) {
-							out.println("<li><a href=\"#\">" + listSousCategorie1.get(j).getTitre() + "</a></li>");
+							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie1.get(j).getTitre() + "\">" + listSousCategorie1.get(j).getTitre() + "</a></li>");
 						}
 						%>
 					</ul></li>
@@ -107,7 +107,7 @@
 						ArrayList<SousCategorie> listSousCategorie2 
 									= sousCategorie.getList(listCategorie.get(2).getTitre());
 						for (int j = 0; j < listSousCategorie2.size() ; j++) {
-							out.println("<li><a href=\"#\">" + listSousCategorie2.get(j).getTitre() + "</a></li>");
+							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie2.get(j).getTitre() + "\">" + listSousCategorie2.get(j).getTitre() + "</a></li>");
 						}
 						%>
 					</ul></li>

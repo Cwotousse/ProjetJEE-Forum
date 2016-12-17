@@ -171,4 +171,36 @@ public class Utilisateur {
 			utilisateurDAO.create(utilisateurPOJO);
 		return !flag;
 	}	
+	
+	//equals nécessite l'hashcode override
+	// pas sur pour la date
+	@Override
+	public boolean equals(Object obj) {
+		Utilisateur utilisateur;
+		// vérification si obj est null ou référence une instance d’une autre
+		// classe
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			utilisateur = (Utilisateur) obj;
+			if (utilisateur.getPseudo().equals(this.getPseudo())
+					&& utilisateur.getMotdepasse().equals(this.getMotdepasse())
+					&& utilisateur.getNom().equals(this.getNom())
+					&& utilisateur.getPrenom().equals(this.getPrenom())
+					//&& utilisateur.getDateNaissance().equals(this.getDateNaissance())
+					&& utilisateur.getMail().equals(this.getMail())
+					&& utilisateur.getType().equals(this.getType())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getPseudo().hashCode() + this.getMotdepasse().hashCode() + this.getNom().hashCode()
+				+ this.getPrenom().hashCode() + this.getDateNaissance().hashCode() + this.getMail().hashCode()
+				+ this.getType().hashCode();
+	}
 }

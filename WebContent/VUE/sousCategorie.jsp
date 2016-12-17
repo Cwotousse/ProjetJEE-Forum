@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<!--  truc de ouf -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ page import="be.forum.metier.SousCategorie"%>
-<%@ page import="be.forum.pojo.SousCategoriePOJO"%>
-<%@ page import="be.forum.dao.CategorieDAO"%>
-<%@ page import="be.forum.pojo.CategoriePOJO"%>
-<%@ page import="be.forum.dao.DAO"%>
-<%@ page import="be.forum.dao.DAOFactory"%>
 <%@ page import="be.forum.metier.Utilisateur"%>
 <%@ page import="be.forum.metier.Sujet"%>
 <%@ page import="java.util.ArrayList"%>
@@ -17,33 +15,36 @@
 <title>Sujet</title>
 </head>
 <body>
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>Posts</th>
-				<th>Titre</th>
-				<th>Auteur</th>
-				<th>Creation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<%
-				// retrieve your list from the request, with casting 
-				// On récupère la liste des sujets
+	<%
+		//Comme toi khey
+		/*try {
+			if (request.getAttribute("listeSujets") != null) {
 				ArrayList<Sujet> listSujet = (ArrayList<Sujet>) request.getAttribute("listeSujets");
 
 				// print the information about every category of the list
 				for (Sujet LS : listSujet) {
 					out.println("<tr>");
-					out.println("<td>" + "x" + "</th>");
+					out.println("<td>" + "x" + "</td>");
 					out.println("<td>" + LS.getTitre() + "</td>");
 					out.println("<td>" + LS.getUtilisateur().getPseudo() + "</td>");
 					out.println("<td>" + LS.getDateSujet() + "</td>");
 					out.println("</tr>");
-				}
-			%>
-		</tbody>
 
-	</table>
+				}
+			} else {
+				out.println("no data in array");
+			}
+		} catch (Exception e) {
+			out.println("Exception : " + e);
+		}*/
+	%>
+	<!-- Et en utilisant du JSTL -->
+	<c:forEach items="${listeSujets}" var="sujet">
+    	${sujet.getTitre()}<br/>
+    	${sujet.getDateSujet()}<br/>
+    	${sujet.getUtilisateur().getPseudo()}<br/>
+    	${sujet.getSousCategorie().getTitre()}<br/>
+	</c:forEach>
+
 </body>
 </html>
