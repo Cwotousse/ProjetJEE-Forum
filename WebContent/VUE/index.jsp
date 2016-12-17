@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="be.forum.modele.SousCategorie"%>
+<%@ page import="be.forum.metier.SousCategorie"%>
 <%@ page import="be.forum.pojo.SousCategoriePOJO"%>
 <%@ page import="be.forum.dao.CategorieDAO"%>
 <%@ page import="be.forum.pojo.CategoriePOJO"%>
 <%@ page import="be.forum.dao.DAO"%>
 <%@ page import="be.forum.dao.DAOFactory"%>
-<%@ page import="be.forum.modele.Utilisateur"%>
+<%@ page import="be.forum.metier.Utilisateur"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -45,6 +45,7 @@
 </head>
 
 <body>
+<c:set var="context" value="${pageContext.request.contextPath}" />
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -120,7 +121,9 @@
 						ArrayList<SousCategorie> listSousCategorie3
 									= sousCategorie.getList(listCategorie.get(3).getTitre());
 						for (int j = 0; j < listSousCategorie3.size() ; j++) {
-							out.println("<li><a href=\"#\">" + listSousCategorie3.get(j).getTitre() + "</a></li>");
+							// Il n'y a pas besoin des <%= pour les request car on est déjà dans des <% 
+							// On ajoute en parametre le nom de la catégorie pour chercher ses sujets
+							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie3.get(j).getTitre() + "\">" + listSousCategorie3.get(j).getTitre() + "</a></li>");
 						}
 						%>
 					</ul></li>

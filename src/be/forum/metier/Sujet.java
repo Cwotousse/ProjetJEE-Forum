@@ -1,7 +1,10 @@
 package be.forum.metier;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
+import be.forum.dao.DAO;
+import be.forum.dao.DAOFactory;
 import be.forum.pojo.SujetPOJO;
 
 public class Sujet {
@@ -9,7 +12,8 @@ public class Sujet {
 	private String 			titre;
 	private Date 			dateSujet;
 	private Utilisateur 	utilisateur;
-
+	DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
+	
 	public SousCategorie getSousCategorie() {
 		return sousCategorie;
 	}
@@ -61,5 +65,29 @@ public class Sujet {
 		this.setTitre			(sujetPOJO.getTitre());
 		this.setDateSujet		(sujetPOJO.getDateSujet());
 		this.setUtilisateur		(new Utilisateur(sujetPOJO.getUtilisateurPOJO()));
+	}
+	
+	/**
+	 * Méthodes
+	 */
+	
+	/**
+	 * Récupère la liste des sujets d'une catégorie donnée
+	 * @return listSujets
+	 */
+	public ArrayList<Sujet> getListSelonSousCategorie(String sousCat){
+		ArrayList<Sujet> listSujet = new ArrayList<Sujet>();
+		try {
+			ArrayList<SujetPOJO> listSujetPOJO = sujetDAO.getList();
+			//#TODO Transformer le titre en son id et filter uniquement les sujets relatives à cette sous cat
+			for(int i = 0; i < listSujetPOJO.size(); i++){
+				Sujet sujet = new Sujet(listSujetPOJO.get(i));
+				listSujet.add(sujet);
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return listSujet;
 	}
 }

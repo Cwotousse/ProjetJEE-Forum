@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SingletonConnection {
-	//private static final String DB_DRIVER 		= "oracle.jdbc.driver.OracleDriver";
-	//private static final String DB_CONNECTION 	= "jdbc:oracle:thin:@localhost:1521:xe";
-	//private static final String DB_USER 		= "forum";
-	//private static final String DB_PASSWORD 	= "pwd";
 	private static final String DB_DRIVER 		= "oracle.jdbc.driver.OracleDriver";
+	private static final String DB_CONNECTION 	= "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String DB_USER 		= "forum";
+	private static final String DB_PASSWORD 	= "pwd";
+	/*private static final String DB_DRIVER 		= "oracle.jdbc.driver.OracleDriver";
 	private static final String DB_CONNECTION 	= "jdbc:oracle:thin:@char-oracle11.condorcet.be:1521:xe";
 	private static final String DB_USER 		= "exa2";
-	private static final String DB_PASSWORD 	= "tribuLugubre";
+	private static final String DB_PASSWORD 	= "tribuLugubre";*/
 	// Objet de connexion
 	private static Connection connect = getInstance();
 
