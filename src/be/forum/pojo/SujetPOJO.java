@@ -2,7 +2,7 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
-import be.forum.modele.Sujet;
+import be.forum.metier.Sujet;
 
 public class SujetPOJO {
 	private int idSujet;

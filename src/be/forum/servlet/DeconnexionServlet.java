@@ -1,6 +1,7 @@
 package be.forum.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,8 @@ public class DeconnexionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		response.sendRedirect("/ProjetJEE-Forum\\VUE\\index.jsp");
+		PrintWriter out = response.getWriter();
+		out.println("test");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -1,6 +1,6 @@
 package be.forum.pojo;
 
-import be.forum.modele.Categorie;
+import be.forum.metier.Categorie;
 
 public class CategoriePOJO {
 	/**

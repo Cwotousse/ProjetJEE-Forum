@@ -1,6 +1,6 @@
 package be.forum.pojo;
 
-import be.forum.modele.Actualite;
+import be.forum.metier.Actualite;
 
 public class ActualitePOJO {
 	private int 	idActualite;

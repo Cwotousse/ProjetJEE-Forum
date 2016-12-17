@@ -2,7 +2,7 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
-import be.forum.modele.Historique;
+import be.forum.metier.Historique;
 
 public class HistoriquePOJO {
 	/**

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.forum.modele.Utilisateur;
+import be.forum.metier.Utilisateur;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,9 +57,6 @@ public class ConnexionServlet extends HttpServlet {
 
 			// J'ajoute l'objet en faisant un "setAttribute()"
 			session.setAttribute("utilisateur", utilisateurConnecté);
-			Utilisateur test = (Utilisateur) session.getAttribute("utilisateur");
-			out.println(test.getMail());
-			
 			//getServletContext().getRequestDispatcher("/VUE\\index.jsp").forward(request, response);
 			//request.getRequestDispatcher("AfficherNavBarConnectéServlet").forward(request, response);
 			response.sendRedirect("/ProjetJEE-Forum\\VUE\\LoggedUser.jsp");

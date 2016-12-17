@@ -238,5 +238,6 @@ public class Test {
 		sujetPOJO.setSousCategoriePOJO(sousCatDAO.find(2));
 		sujetPOJO.setUtilisateurPOJO(utilisateurDAO.find(1));
 		//sujetDAO.create(sujetPOJO);
+		
 	}
 }

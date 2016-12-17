@@ -2,7 +2,7 @@ package be.forum.pojo;
 
 import java.sql.Date;
 
-import be.forum.modele.Commentaire;
+import be.forum.metier.Commentaire;
 
 public class CommentairePOJO {
 	/**

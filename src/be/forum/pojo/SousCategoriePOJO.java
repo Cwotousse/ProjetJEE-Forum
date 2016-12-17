@@ -1,6 +1,6 @@
 package be.forum.pojo;
 
-import be.forum.modele.SousCategorie;
+import be.forum.metier.SousCategorie;
 
 public class SousCategoriePOJO {
 	private int idSousCategorie;

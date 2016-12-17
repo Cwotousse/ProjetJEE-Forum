@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.modele.Utilisateur;
+import be.forum.metier.Utilisateur;
 
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// récupération de l’identifiant/login dans la requête
 				String pseudo 		= request.getParameter("form-username");

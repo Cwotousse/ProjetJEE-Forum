@@ -123,8 +123,8 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 					cst.getString	(4), 
 					cst.getString	(5),
 					cst.getDate		(6), 
-					cst.getString	(7), 
-					cst.getString	(8)
+					cst.getString	(8), 
+					cst.getString	(7)
 				);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -167,8 +167,8 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 							rs.getString("nom"), 
 							rs.getString("prenom"),
 							rs.getDate	("dateNaissance"), 
-							rs.getString("typeUtilisateur"), 
-							rs.getString("mail")
+							rs.getString("mail"),
+							rs.getString("typeUtilisateur")
 						);
 				listUtilisateur.add(utilisateurPOJO);
 			}

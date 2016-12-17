@@ -1,4 +1,4 @@
-package be.forum.modele;
+package be.forum.metier;
 
 import java.util.ArrayList;
 

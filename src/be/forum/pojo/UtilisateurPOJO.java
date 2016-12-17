@@ -2,7 +2,7 @@ package be.forum.pojo;
 
 import java.util.Date;
 
-import be.forum.modele.Utilisateur;
+import be.forum.metier.Utilisateur;
 
 public class UtilisateurPOJO {
 	/**

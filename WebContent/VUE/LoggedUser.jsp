@@ -9,6 +9,7 @@
 <%@ page import="be.forum.dao.DAOFactory"%>
 <%@ page import="be.forum.modele.Utilisateur"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
+<%@ page import="java.util.stream.Collectors"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -76,8 +77,8 @@
 					<ul class="dropdown-menu">
 						<%
 							SousCategorie sousCategorie = new SousCategorie();
-							ArrayList<SousCategorie> listSousCategorie = sousCategorie.getList();
-							for (int j = 0; j < 6; j++) {
+							ArrayList<SousCategorie> listSousCategorie = sousCategorie.getList(listCategorie.get(0).getTitre());
+							for (int j = 0; j < listSousCategorie.size(); j++) {
 								out.println("<li><a href=\"#\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
 							}
 						%>
@@ -88,8 +89,10 @@
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<%
-							for (int j = 6; j < 13; j++) {
-								out.println("<li><a href=\"#\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
+							SousCategorie sousCategorie1 = new SousCategorie();
+							ArrayList<SousCategorie> listSousCategorie1 = sousCategorie.getList(listCategorie.get(1).getTitre());
+							for (int j = 0; j < listSousCategorie1.size(); j++) {
+								out.println("<li><a href=\"#\">" + listSousCategorie1.get(j).getTitre() + "</a></li>");
 							}
 						%>
 					</ul></li>
@@ -99,8 +102,10 @@
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<%
-							for (int j = 13; j < 16; j++) {
-								out.println("<li><a href=\"#\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
+							SousCategorie sousCategorie2 = new SousCategorie();
+							ArrayList<SousCategorie> listSousCategorie2 = sousCategorie.getList(listCategorie.get(2).getTitre());
+							for (int j = 0; j < listSousCategorie2.size(); j++) {
+								out.println("<li><a href=\"#\">" + listSousCategorie2.get(j).getTitre() + "</a></li>");
 							}
 						%>
 					</ul></li>
@@ -110,8 +115,10 @@
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<%
-							for (int j = 16; j < 21; j++) {
-								out.println("<li><a href=\"#\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
+							SousCategorie sousCategorie3 = new SousCategorie();
+							ArrayList<SousCategorie> listSousCategorie3 = sousCategorie.getList(listCategorie.get(3).getTitre());
+							for (int j = 0; j < listSousCategorie3.size(); j++) {
+								out.println("<li><a href=\"#\">" + listSousCategorie3.get(j).getTitre() + "</a></li>");
 							}
 						%>
 					</ul></li>
@@ -119,12 +126,9 @@
 
 			<form class="navbar-form navbar-right" method="POST">
 				<a class="btn btn-link-1 launch-modal" href="#"
-					data-modal-id="modal-profile">Mon profil</a>
-				<a class="btn btn-link-1 launch-modal" href="#"
+					data-modal-id="modal-profile">Mon profil</a> 
+				<a class="btn btn-link-1 launch-modal" href="<%=request.getContextPath()%>/disconnect"
 					data-modal-id="modal-disconnect">Se déconnecter</a>
-				</form>
-			
-
 			</form>
 		</div>
 		<!--/.navbar-collapse -->

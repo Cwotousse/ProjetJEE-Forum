@@ -1,6 +1,7 @@
-package be.forum.modele;
+package be.forum.metier;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
@@ -67,6 +68,16 @@ public class SousCategorie {
 			SousCategorie sousCategorie = new SousCategorie(listSousCategoriePOJO.get(i));
 			listSousCategorie.add	(sousCategorie);
 		}
+		return listSousCategorie;
+	}
+	
+	public ArrayList<SousCategorie> getList(String titreCat){
+		SousCategorie sousCategorie = new SousCategorie();
+		ArrayList<SousCategorie> listSousCategorie 
+					= sousCategorie.getList()
+					.stream()
+					.filter(x -> x.getCategorie().getTitre().equals(titreCat))
+					.collect(Collectors.toCollection(ArrayList::new));
 		return listSousCategorie;
 	}
 }
