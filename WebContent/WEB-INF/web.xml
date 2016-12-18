@@ -33,4 +33,12 @@
     <servlet-name>displaysubjects</servlet-name>
     <url-pattern>/displaySubjects</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>displaycomments</servlet-name>
+    <servlet-class>be.forum.servlet.AfficherCommentaireServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>displaycomments</servlet-name>
+    <url-pattern>/displaycomments</url-pattern>
+  </servlet-mapping>
 </web-app>
