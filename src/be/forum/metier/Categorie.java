@@ -2,7 +2,6 @@ package be.forum.metier;
 
 import java.util.ArrayList;
 
-import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
 import be.forum.pojo.CategoriePOJO;
 
@@ -47,9 +46,13 @@ public class Categorie {
 	/**
 	 * Méthodes
 	 */
-	public ArrayList<CategoriePOJO> getList(){
-		DAO<CategoriePOJO> 			categorieDAO 	= new DAOFactory().getCategorieDAO();
-		ArrayList<CategoriePOJO> 	listCategorie	= categorieDAO.getList();
+	public ArrayList<Categorie> getList(){
+		ArrayList<CategoriePOJO> 	listCategoriePOJO	= new DAOFactory().getCategorieDAO().getList();
+		ArrayList<Categorie> 		listCategorie		= new ArrayList<Categorie>();
+		for(int i = 0; i < listCategoriePOJO.size(); i++){
+			Categorie categorie = new Categorie(listCategoriePOJO.get(i));
+			listCategorie.add	(categorie);
+		}
 		return listCategorie;
 	}
 }

@@ -9,6 +9,8 @@
 <%@ page import="be.forum.dao.DAOFactory"%>
 <%@ page import="be.forum.metier.Utilisateur"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,101 +47,8 @@
 </head>
 
 <body>
-<c:set var="context" value="${pageContext.request.contextPath}" />
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Forum</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<!-- Elements de la navigation bar -->
-
-			<!--  #TODO mettre du codejava pour récup la liste des catégories et créer le nbr de nav button en fonction de ça -->
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#accueil">Accueil</a></li>
-				<%
-					DAO<CategoriePOJO> categorieDAO = new DAOFactory().getCategorieDAO();
-					ArrayList<CategoriePOJO> listCategorie = categorieDAO.getList();
-				%>
-
-				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%=listCategorie.get(0).getTitre()%><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<%
-						SousCategorie sousCategorie = new SousCategorie();
-						ArrayList<SousCategorie> listSousCategorie 
-									= sousCategorie.getList(listCategorie.get(0).getTitre());
-						for (int j = 0; j < listSousCategorie.size() ; j++) {
-							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie.get(j).getTitre() + "\">" + listSousCategorie.get(j).getTitre() + "</a></li>");
-						}
-						%>
-					</ul></li>
-				<li class="dropdown"><a href="#jeuxvideos"
-					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"><%=listCategorie.get(1).getTitre()%><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<%
-						SousCategorie sousCategorie1 = new SousCategorie();
-						ArrayList<SousCategorie> listSousCategorie1 
-									= sousCategorie.getList(listCategorie.get(1).getTitre());
-						for (int j = 0; j < listSousCategorie1.size() ; j++) {
-							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie1.get(j).getTitre() + "\">" + listSousCategorie1.get(j).getTitre() + "</a></li>");
-						}
-						%>
-					</ul></li>
-				<li class="dropdown"><a href="#technologie"
-					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"><%=listCategorie.get(2).getTitre()%><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<%
-						SousCategorie sousCategorie2 = new SousCategorie();
-						ArrayList<SousCategorie> listSousCategorie2 
-									= sousCategorie.getList(listCategorie.get(2).getTitre());
-						for (int j = 0; j < listSousCategorie2.size() ; j++) {
-							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie2.get(j).getTitre() + "\">" + listSousCategorie2.get(j).getTitre() + "</a></li>");
-						}
-						%>
-					</ul></li>
-				<li class="dropdown"><a href="#blabla" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%=listCategorie.get(3).getTitre()%><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<%
-						SousCategorie sousCategorie3 = new SousCategorie();
-						ArrayList<SousCategorie> listSousCategorie3
-									= sousCategorie.getList(listCategorie.get(3).getTitre());
-						for (int j = 0; j < listSousCategorie3.size() ; j++) {
-							// Il n'y a pas besoin des <%= pour les request car on est déjà dans des <% 
-							// On ajoute en parametre le nom de la catégorie pour chercher ses sujets
-							out.println("<li><a href=\" " + request.getContextPath() + "/displaySubjects?nomSousCategorie=" + listSousCategorie3.get(j).getTitre() + "\">" + listSousCategorie3.get(j).getTitre() + "</a></li>");
-						}
-						%>
-					</ul></li>
-			</ul>
-			<!-- Partie connexion de la navigation bar -->
-			<!-- action="ConnexionServlet" -->
-			<form class="navbar-form navbar-right" method="POST">
-				<a class="btn btn-link-1 launch-modal" href="#"
-					data-modal-id="modal-login">Se connecter</a> <a
-					class="btn btn-link-1 launch-modal" href="#"
-					data-modal-id="modal-register">S'enregistrer</a>
-			</form>
-		</div>
-		<!--/.navbar-collapse -->
-	</div>
-	</nav>
+	<c:set var="context" value="${pageContext.request.contextPath}" />
+	<c:import url="include/navbar1.jsp"/> 
 	<!-- MODAL LOGIN -->
 	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog"
 		aria-labelledby="modal-login-label" aria-hidden="true">
@@ -156,8 +65,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form"
-						action="<%=request.getContextPath()%>/login"
+					<form role="form" action="<%=request.getContextPath()%>/login"
 						method="POST" class="login-form">
 						<div class="form-group">
 							<label class="sr-only" for="pseudo">Pseudo</label> <input
@@ -190,8 +98,7 @@
 					<p>Remplissez les champs suivants:</p>
 				</div>
 				<div class="modal-body">
-					<form role="form"
-						action="<%=request.getContextPath()%>/register"
+					<form role="form" action="<%=request.getContextPath()%>/register"
 						method="post" class="registration-form">
 						<div class="form-group">
 							<label class="sr-only" for="form-username">Pseudo</label> <input

@@ -33,12 +33,28 @@
     <servlet-name>displaysubjects</servlet-name>
     <url-pattern>/displaySubjects</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>displaycomments</servlet-name>
     <servlet-class>be.forum.servlet.AfficherCommentaireServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>displaycomments</servlet-name>
     <url-pattern>/displaycomments</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>addcomment</servlet-name>
+    <servlet-class>be.forum.servlet.AjouterCommentaireServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addcomment</servlet-name>
+    <url-pattern>/addComment</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>onloadindex</servlet-name>
+    <servlet-class>be.forum.servlet.OnLoadIndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>onloadindex</servlet-name>
+    <url-pattern>/onloadIndex</url-pattern>
   </servlet-mapping>
 </web-app>

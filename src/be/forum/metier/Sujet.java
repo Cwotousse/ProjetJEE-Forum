@@ -80,6 +80,7 @@ public class Sujet {
 			Sujet sujet = new Sujet(listSujetPOJO.get(i));
 			listSujet.add	(sujet);
 		}
+		
 		return listSujet;
 	}
 	

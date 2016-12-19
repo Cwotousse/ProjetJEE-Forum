@@ -82,6 +82,7 @@ public class Commentaire {
 		ArrayList<CommentairePOJO>	 listCommentairePOJO 	= commentaireDAO.getList();
 		ArrayList<Commentaire> 		 listCommentaire 		= new ArrayList<Commentaire>();
 		
+		
 		for(int i = 0; i < listCommentairePOJO.size(); i++){
 			Commentaire commentaire = new Commentaire(listCommentairePOJO.get(i));
 			listCommentaire.add	(commentaire);

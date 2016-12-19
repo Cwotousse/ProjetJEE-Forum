@@ -23,14 +23,21 @@ jQuery(document)
 							.on(
 									'submit',
 									function(e) {
-										$(this).find('input[type="text"], input[type="password"], textarea')
+										$(this)
+												.find(
+														'input[type="text"], input[type="password"], textarea')
 												.each(
 														function() {
 															if ($(this).val() == "") {
-																e.preventDefault();
-																$(this).addClass('input-error');
+																e
+																		.preventDefault();
+																$(this)
+																		.addClass(
+																				'input-error');
 															} else {
-																$(this).removeClass('input-error');
+																$(this)
+																		.removeClass(
+																				'input-error');
 															}
 														});
 
@@ -38,27 +45,35 @@ jQuery(document)
 					/*
 					 * Registration form validation
 					 */
-					$('.registration-form input[type="text"], input[type="password"]')
+					$(
+							'.registration-form input[type="text"], input[type="password"]')
 							.on('focus', function() {
 								$(this).removeClass('input-error');
 							});
 
-					$('.registration-form').on(
-							'submit',
-							function(e) {
-								$(this).find('input[type="text"], input[type="password"]')
-										.each(
-												function() {
-													if ($(this).val() == "") {
-														e.preventDefault();
-														$(this).addClass(
-																'input-error');
-													} else {
-														$(this).removeClass(
-																'input-error');
-													}
-												});
+					$('.registration-form')
+							.on(
+									'submit',
+									function(e) {
+										$(this)
+												.find(
+														'input[type="text"], input[type="password"]')
+												.each(
+														function() {
+															if ($(this).val() == "") {
+																e
+																		.preventDefault();
+																$(this)
+																		.addClass(
+																				'input-error');
+															} else {
+																$(this)
+																		.removeClass(
+																				'input-error');
+															}
+														});
 
-							});
+									});
 
 				});
+$("[data-toggle=tooltip]").tooltip();

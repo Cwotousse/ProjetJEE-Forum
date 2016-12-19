@@ -2,7 +2,6 @@ package be.forum.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ public class AfficherCommentaireServlet extends HttpServlet {
 				response.setContentType("text/html");
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			out.println(e.getMessage());
 		}

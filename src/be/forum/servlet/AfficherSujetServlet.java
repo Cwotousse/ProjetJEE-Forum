@@ -36,9 +36,7 @@ public class AfficherSujetServlet extends HttpServlet {
 			//response.sendRedirect("/ProjetJEE-Forum\\VUE\\sousCategorie.jsp");
 
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/sousCategorie.jsp");
-	        dispatcher.forward(request, response);
-
-	        
+	        dispatcher.forward(request, response); 
 			response.setContentType("text/html");
 		}
 	}
