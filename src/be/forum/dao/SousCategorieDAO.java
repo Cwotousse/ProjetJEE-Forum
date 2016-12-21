@@ -24,6 +24,7 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 
 			cst.setInt		(1, sousCategoriePOJO.getCategoriePOJO().getID());
 			cst.setString	(2, sousCategoriePOJO.getTitre());
+			cst.setString	(3, sousCategoriePOJO.getIcone());
 			cst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -70,6 +71,7 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 			cst.setInt		(1, sousCategoriePOJO.getID());
 			cst.setInt		(2, sousCategoriePOJO.getCategoriePOJO().getID());
 			cst.setString	(3, sousCategoriePOJO.getTitre());
+			cst.setString	(4, sousCategoriePOJO.getIcone());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,12 +100,14 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 			//Je récupère les paramètres sortants de la procédures stockées
 			cst.registerOutParameter(2, java.sql.Types.NUMERIC);
 			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(4, java.sql.Types.VARCHAR);
 			cst.executeQuery();
 			
 			sousCategoriePOJO = new SousCategoriePOJO(
 				id,
 				categorieDAO.find	(cst.getInt(2)),
-				cst.getString		(3)
+				cst.getString		(3),
+				cst.getString		(4)	
 			);
 			
 		} catch (SQLException e) {
@@ -139,7 +143,8 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 				sousCategoriePOJO = new SousCategoriePOJO(
 							rs.getInt			("idSousCategorie"), 
 							categorieDAO.find	(rs.getInt("idCategorie")),
-							rs.getString		("titre")
+							rs.getString		("titre"),
+							rs.getString		("icone")
 						);
 				listSousCategorie.add(sousCategoriePOJO);
 			}

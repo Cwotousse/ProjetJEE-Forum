@@ -246,7 +246,6 @@
 
 			<hr>
 
-			<!-- #TODO faire un seul footer pour chaque page et l'include pareil pour l'entete -->
 			<footer>
 			<p>&copy; 2016 Company, Inc.</p>
 			</footer>

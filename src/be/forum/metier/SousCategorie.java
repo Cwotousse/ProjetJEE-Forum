@@ -10,6 +10,7 @@ import be.forum.pojo.SousCategoriePOJO;
 public class SousCategorie {
 	private Categorie 		categorie;
 	private String 			titre;
+	private String			icone;
 	DAO<SousCategoriePOJO> 	sousCategorieDAO = new DAOFactory().getSousCategorieDAO();
 
 	public Categorie getCategorie() {
@@ -28,6 +29,14 @@ public class SousCategorie {
 		this.titre = titre;
 	}	
 	
+	public String getIcone() {
+		return icone;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}
+
 	/**
 	 * Constructeur vide
 	 */
@@ -37,11 +46,13 @@ public class SousCategorie {
 	 * Constructeur qui remplit un objet avec les attributs de la classe
 	 * @param categorie
 	 * @param titre
+	 * @param icone
 	 */
 
-	public SousCategorie(Categorie categorie, String titre) {
+	public SousCategorie(Categorie categorie, String titre, String icone) {
 		this.setCategorie(categorie);
 		this.setTitre(titre);
+		this.setIcone(icone);
 	}
 	
 	/**
@@ -51,6 +62,7 @@ public class SousCategorie {
 	public SousCategorie(SousCategoriePOJO sousCategoriePOJO){
 		this.setCategorie	(new Categorie(sousCategoriePOJO.getCategoriePOJO()));
 		this.setTitre		(sousCategoriePOJO.getTitre());
+		this.setIcone		(sousCategoriePOJO.getIcone());
 	}
 	
 	/*** Méthodes ***/

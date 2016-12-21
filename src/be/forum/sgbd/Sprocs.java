@@ -31,10 +31,10 @@ public class Sprocs {
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE SOUSCATEGORIEDAO
 	 */
-	public final static String INSERTSOUSCATEGORIE 	= "{CALL INSERTSOUSCATEGORIE(?,?)}";
+	public final static String INSERTSOUSCATEGORIE 	= "{CALL INSERTSOUSCATEGORIE(?,?,?)}";
 	public final static String DELETESOUSCATEGORIE 	= "{CALL DELETESOUSCATEGORIE(?)}";
-	public final static String UPDATESOUSCATEGORIE 	= "{CALL UPDATESOUSCATEGORIE(?,?,?)}";
-	public final static String SELECTSOUSCATEGORIE 	= "{CALL SELECTSOUSCATEGORIE(?,?,?)}";
+	public final static String UPDATESOUSCATEGORIE 	= "{CALL UPDATESOUSCATEGORIE(?,?,?,?)}";
+	public final static String SELECTSOUSCATEGORIE 	= "{CALL SELECTSOUSCATEGORIE(?,?,?,?)}";
 	public final static String GETLISTSOUSCATEGORIE	= "{CALL GETLISTSOUSCATEGORIE(?)}";
 	
 	/**

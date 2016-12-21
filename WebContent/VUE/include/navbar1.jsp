@@ -30,11 +30,8 @@
 <!-- Custom styles for this template -->
 <link href="/ProjetJEE-Forum/VUE/bootstrap/css/jumbotron.css"
 	rel="stylesheet">
-
-
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -43,7 +40,7 @@
 </head>
 <body>
 	<!-- grâce à cet import, je récupère les listes pour afficher la navbar -->
-	<c:import url="/onloadIndex" />
+	<c:import url="/displaycategories" />
 
 	<c:set var="context" value="${pageContext.request.contextPath}" />
 
@@ -51,74 +48,30 @@
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false" aria-controls="navbar">
 				<span class="sr-only">Toggle navigation</span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Forum</a>
+			<a class="navbar-brand" href="${context}/VUE/index.jsp">Forum</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<!-- Elements de la navigation bar -->
 
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#accueil">Accueil</a></li>
-				<%
-					DAO<CategoriePOJO> categorieDAO = new DAOFactory().getCategorieDAO();
-					ArrayList<CategoriePOJO> listCategorie = categorieDAO.getList();
-				%>
-				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%= listCategorie.get(0).getTitre() %><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<c:forEach items="${listSousCategorie0}" var="sousCat0">
-							<li><a
-								href="${context}/displaySubjects?nomSousCategorie=${sousCat0.getTitre()}">${sousCat0.getTitre()}
-							</a></li>
-						</c:forEach>
-					</ul></li>
-				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%= listCategorie.get(1).getTitre() %><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<c:forEach items="${listSousCategorie1}" var="sousCat1">
-							<li><a
-								href="${context}/displaySubjects?nomSousCategorie=${sousCat1.getTitre()}">${sousCat1.getTitre()}
-							</a></li>
-						</c:forEach>
-					</ul></li>
-				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%= listCategorie.get(2).getTitre() %><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<c:forEach items="${listSousCategorie2}" var="sousCat2">
-							<li><a
-								href="${context}/displaySubjects?nomSousCategorie=${sousCat2.getTitre()}">${sousCat2.getTitre()}
-							</a></li>
-						</c:forEach>
-					</ul></li>
-				<li class="dropdown"><a href="#sports" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"><%= listCategorie.get(3).getTitre() %><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<c:forEach items="${listSousCategorie3}" var="sousCat3">
-							<li><a
-								href="${context}/displaySubjects?nomSousCategorie=${sousCat3.getTitre()}">${sousCat3.getTitre()}
-							</a></li>
-						</c:forEach>
-					</ul></li>
+				<li ><a href="#accueil" class="fa fa-home fa-2x"></a></li>
+				<c:forEach items="${listCategorie}" var="categorie">
+					<li><a
+						href="${context}/displaysubcategories?nomCategorie=${categorie.getTitre()}">${categorie.getTitre()}</a></li>
+				</c:forEach>
 			</ul>
 			<!-- Partie connexion de la navigation bar -->
 			<!-- action="ConnexionServlet" -->
 			<form class="navbar-form navbar-right" method="POST">
-				<a class="btn btn-link-1 launch-modal" href="#"
+				<a class="btn btn-primary btn-sm launch-modal" href="#"
 					data-modal-id="modal-login">Se connecter</a> <a
-					class="btn btn-link-1 launch-modal" href="#"
+					class="btn btn-primary btn-sm launch-modal" href="#"
 					data-modal-id="modal-register">S'enregistrer</a>
 			</form>
 		</div>

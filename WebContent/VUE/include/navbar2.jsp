@@ -43,6 +43,45 @@
 </head>
 <body>
 	<!-- grâce à cet import, je récupère les listes pour afficher la navbar -->
+	<c:import url="/displaycategories" />
+
+	<c:set var="context" value="${pageContext.request.contextPath}" />
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="${context}/VUE/index.jsp">Forum</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<!-- Elements de la navigation bar -->
+
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#accueil">Accueil</a></li>
+				<c:forEach items="${listCategorie}" var="categorie">
+					<li><a
+						href="${context}/displaysubcategories?nomCategorie=${categorie.getTitre()}">${categorie.getTitre()}</a></li>
+				</c:forEach>
+			</ul>
+			<!-- Partie connexion de la navigation bar -->
+			<!-- action="ConnexionServlet" -->
+			<form class="navbar-form navbar-right" method="POST">
+				<a class="btn btn-primary btn-sm launch-modal" href="#"
+					data-modal-id="modal-profile">Mon profil</a> <a
+					class="btn btn-primary btn-sm launch-modal" href="#"
+					data-modal-id="modal-disconnect">Se déconnecter</a>
+			</form>
+		</div>
+		<!--/.navbar-collapse -->
+	</div>
+	</nav>
+	<!-- grâce à cet import, je récupère les listes pour afficher la navbar -->
 	<c:import url="/onloadIndex" />
 
 	<c:set var="context" value="${pageContext.request.contextPath}" />

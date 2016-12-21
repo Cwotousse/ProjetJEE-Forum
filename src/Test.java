@@ -3,6 +3,7 @@ import java.util.Calendar;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
+import be.forum.metier.SousCategorie;
 import be.forum.metier.Sujet;
 import be.forum.pojo.ActualitePOJO;
 import be.forum.pojo.CategoriePOJO;
@@ -30,11 +31,13 @@ public class Test {
 		String nomSousCategorie = "Football";
 		Sujet suj = new Sujet();
 		//ArrayList<Sujet> listSujet = sujet.getListSelonSousCategorie(nomSousCategorie);
-		
-		ArrayList<Sujet> listSuj = suj.getListSelonSousCategorie(nomSousCategorie);
-		for (Sujet sujet2 : listSuj) {
-			System.out.println(sujet2.getTitre());
-		}
-		
+		/*SousCategorie sousCat = new SousCategorie();
+		//ArrayList<SousCategorie> test2 = sousCat.getList("Sports");
+		for (SousCategorie soutessCategorie : test2) {
+			//System.out.println(soutessCategorie.getTitre());
+			//System.out.println(soutessCategorie.getIcone());
+		}		
+		*/
+		System.out.println(sousCatDAO.find(1).getIcone());
 	}
 }

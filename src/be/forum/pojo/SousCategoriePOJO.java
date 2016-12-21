@@ -6,13 +6,15 @@ public class SousCategoriePOJO {
 	private int idSousCategorie;
 	private CategoriePOJO categoriePOJO;
 	private String titre;
+	private String icone;
 	
 	public SousCategoriePOJO() { }
 
-	public SousCategoriePOJO(int idSousCategorie, CategoriePOJO categoriePOJO, String titre) {
+	public SousCategoriePOJO(int idSousCategorie, CategoriePOJO categoriePOJO, String titre, String icone) {
 		this.setID(idSousCategorie);
 		this.setCategoriePOJO(categoriePOJO);
 		this.setTitre(titre);
+		this.setIcone(icone);
 	}
 	
 	/**
@@ -22,6 +24,7 @@ public class SousCategoriePOJO {
 	public SousCategoriePOJO(SousCategorie sousCategorie){
 		this.setCategoriePOJO	(new CategoriePOJO(sousCategorie.getCategorie()));
 		this.setTitre			(sousCategorie.getTitre());
+		this.setIcone			(sousCategorie.getIcone());
 	}
 
 	public int getID() {
@@ -48,6 +51,20 @@ public class SousCategoriePOJO {
 		this.titre = titre;
 	}	
 	
+	/**
+	 * @return the icone
+	 */
+	public String getIcone() {
+		return icone;
+	}
+
+	/**
+	 * @param icone the icone to set
+	 */
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		SousCategoriePOJO sousCategoriePOJO;

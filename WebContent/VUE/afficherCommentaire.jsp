@@ -97,6 +97,7 @@ dd {
 
 </head>
 <body>
+	<c:import url="include/navbar1.jsp" />
 	<c:forEach items="${listeCommentaire}" var="commentaire">
 		<section class="container"> <section class="row clearfix">
 		<section class="col-md-12 column">
