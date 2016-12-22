@@ -2,11 +2,13 @@ package be.forum.metier;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
 import be.forum.pojo.CommentairePOJO;
+import be.forum.pojo.UtilisateurPOJO;
 
 public class Commentaire {
 	/**
@@ -103,6 +105,14 @@ public class Commentaire {
 					.collect(Collectors.toCollection(ArrayList::new));
 		
 		return listCommentaireFiltred;
+	}
+	
+	/**
+	 * Ajoute un commentaire au sujet.
+	 */
+	public void ajoutCommentaire(){
+		CommentairePOJO commentairePOJO = new CommentairePOJO(this);
+		commentaireDAO.create(commentairePOJO);
 	}
 	
 	@Override
