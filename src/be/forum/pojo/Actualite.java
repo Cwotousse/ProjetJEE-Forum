@@ -1,27 +1,16 @@
 package be.forum.pojo;
 
-import be.forum.metier.Actualite;
-
-public class ActualitePOJO {
+public class Actualite {
 	private int 	idActualite;
 	private String 	titre;
 	private String 	description;
 	
-	public ActualitePOJO() { }
+	public Actualite() { }
 
-	public ActualitePOJO(int idActualite, String titre, String description) {
+	public Actualite(int idActualite, String titre, String description) {
 		this.setID(idActualite);
 		this.setTitre(titre);
 		this.setDescription(description);
-	}
-	
-	/**
-	 * Constructeur qui convertit un objet Actualite en objet ActualitePOJO
-	 * @param actualite
-	 */
-	public ActualitePOJO(Actualite actualite){
-		this.setTitre		(actualite.getTitre());
-		this.setDescription	(actualite.getDescription());
 	}
 
 	public int getID() {

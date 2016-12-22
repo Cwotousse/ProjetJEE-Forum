@@ -2,43 +2,35 @@ package be.forum.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.metier.Utilisateur;
+import be.forum.modele.UtilisateurModele;
 
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// récupération de l’identifiant/login dans la requête
 				String pseudo 		= request.getParameter("form-username");
-				// récupération du mot de passe dans la requête
 				String motdepasse 	= request.getParameter("form-password-register");
 				String nom 			= request.getParameter("form-last-name");
 				String prenom 		= request.getParameter("form-first-name");
 				String mail 		= request.getParameter("form-email");
+				//Date de naissance
+				java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 				
-				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setPseudo(pseudo);
-				utilisateur.setMotdepasse(motdepasse);
-				utilisateur.setNom(nom);
-				utilisateur.setPrenom(prenom);
-				utilisateur.setMail(mail);
+				UtilisateurModele modele = new UtilisateurModele();
 				
 				PrintWriter out = response.getWriter();
-				if(utilisateur.inscription()) {
-					//out.println("Inscription réussie!");
-					//Je redirige la page
-					response.sendRedirect("/ProjetJEE-Forum\\VUE\\index.jsp"); 
-				}
+				if(modele.inscription(pseudo, motdepasse, nom, prenom, mail, datePourTester))
+					response.sendRedirect("/VUE\\index.jsp"); 
 				else
 					out.println("Le pseudo que vous avez saisi existe déjà.");
-				
 				response.setContentType("text/html"); 
 	}
 

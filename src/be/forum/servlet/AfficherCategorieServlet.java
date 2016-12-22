@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.metier.Categorie;
+import be.forum.modele.CategorieModele;
+import be.forum.pojo.Categorie;
 
 public class AfficherCategorieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,8 +19,8 @@ public class AfficherCategorieServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int nbrPosts = 0;
 		//Je récupère la liste des catégories
-		Categorie categorie = new Categorie();
-		ArrayList<Categorie> listCategorie = categorie.getList();
+		CategorieModele modele = new CategorieModele();
+		ArrayList<Categorie> listCategorie = modele.getList();
 		nbrPosts = listCategorie.size();
 		
 		PrintWriter out = response.getWriter();

@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.forum.metier.Utilisateur;
+import be.forum.modele.UtilisateurModele;
+import be.forum.pojo.Utilisateur;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,13 +21,9 @@ public class ConnexionServlet extends HttpServlet {
 		String pseudo 		= request.getParameter("pseudo");
 		String motdepasse 	= request.getParameter("motdepasse");
 
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setPseudo		(pseudo);
-		utilisateur.setMotdepasse	(motdepasse);
+		UtilisateurModele modele = new UtilisateurModele();
 
-		Utilisateur utilisateurConnecté = utilisateur.connexion();
-
-		// flux de sortie
+		Utilisateur utilisateurConnecté = modele.connexion(pseudo, motdepasse);
 		PrintWriter out = response.getWriter();
 		out.println(pseudo + " " + motdepasse);
 		if (pseudo.equals("") || motdepasse.equals("")) {
@@ -35,7 +32,6 @@ public class ConnexionServlet extends HttpServlet {
 
 		if (utilisateurConnecté == null) {
 			out.println("Authentification incorrecte, mauvaise saisie des informations.");
-			// response.sendRedirect("\\..\\index.jsp");
 		} else {
 			out.println("Authentification correcte, bienvenu(e) " + pseudo);
 			HttpSession session = request.getSession();
@@ -47,15 +43,14 @@ public class ConnexionServlet extends HttpServlet {
 			// stocker les paramètres de l’utilisateur dans la session
 			// Je cherche l'utilisateur grâce à son pseudo et mot de passe et je
 			// retourne toutes ses infos dans l'objet utilisateurConnecté
-			utilisateurConnecté = utilisateur.getList().stream()
+			utilisateurConnecté = modele.getList().stream()
 					.filter(x -> x.getPseudo().equals(pseudo) && x.getMotdepasse().equals(motdepasse))
 					.findAny()
 					.orElse(null);
 
 			// J'ajoute l'objet en faisant un "setAttribute()"
 			session.setAttribute("utilisateur", utilisateurConnecté);
-			//response.sendRedirect("/ProjetJEE-Forum\\VUE\\LoggedUser.jsp");
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE\\index.jsp");
 	        dispatcher.forward(request, response); 
 			response.setContentType("text/html");
 		}

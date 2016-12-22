@@ -2,36 +2,36 @@ package be.forum.dao;
 
 import java.sql.Connection;
 
-import be.forum.pojo.ActualitePOJO;
-import be.forum.pojo.CategoriePOJO;
-import be.forum.pojo.CommentairePOJO;
-import be.forum.pojo.HistoriquePOJO;
-import be.forum.pojo.SousCategoriePOJO;
-import be.forum.pojo.SujetPOJO;
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.pojo.Actualite;
+import be.forum.pojo.Categorie;
+import be.forum.pojo.Commentaire;
+import be.forum.pojo.Historique;
+import be.forum.pojo.SousCategorie;
+import be.forum.pojo.Sujet;
+import be.forum.pojo.Utilisateur;
 
 public class DAOFactory {
 	protected static final Connection  conn = SingletonConnection.getInstance();
 	
-	public DAO<UtilisateurPOJO> getUtilisateurDAO(){
+	public DAO<Utilisateur> getUtilisateurDAO(){
 		return new UtilisateurDAO(conn);
 	}
-	public DAO<ActualitePOJO> getActualiteDAO(){
+	public DAO<Actualite> getActualiteDAO(){
 		return new ActualiteDAO(conn);
 	}
-	public DAO<CategoriePOJO> getCategorieDAO(){
+	public DAO<Categorie> getCategorieDAO(){
 		return new CategorieDAO(conn);
 	}
-	public DAO<CommentairePOJO> getCommentaireDAO(){
+	public DAO<Commentaire> getCommentaireDAO(){
 		return new CommentaireDAO(conn);
 	}
-	public DAO<HistoriquePOJO> getHistoriqueDAO(){
+	public DAO<Historique> getHistoriqueDAO(){
 		return new HistoriqueDAO(conn);
 	}
-	public DAO<SujetPOJO> getSujetDAO(){
+	public DAO<Sujet> getSujetDAO(){
 		return new SujetDAO(conn);
 	}
-	public DAO<SousCategoriePOJO> getSousCategorieDAO(){
+	public DAO<SousCategorie> getSousCategorieDAO(){
 		return new SousCategorieDAO(conn);
 	}
 }

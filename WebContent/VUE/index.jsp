@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="be.forum.metier.SousCategorie"%>
-<%@ page import="be.forum.pojo.SousCategoriePOJO"%>
-<%@ page import="be.forum.dao.CategorieDAO"%>
-<%@ page import="be.forum.pojo.CategoriePOJO"%>
-<%@ page import="be.forum.dao.DAO"%>
-<%@ page import="be.forum.dao.DAOFactory"%>
-<%@ page import="be.forum.metier.Utilisateur"%>
+
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -398,7 +391,7 @@
 								<dd>150 like in 50 post</dd>
 							</dl>
 							</section> </section> </section>
-							<div class="panel-footer">
+							<div class="panel-footer" id="panelfooter">
 								<div class="row">
 									<section class="col-md-2 "> </section>
 									<section class="col-md-6"> <small><a href="#"

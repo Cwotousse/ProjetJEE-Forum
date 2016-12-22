@@ -2,9 +2,7 @@ package be.forum.pojo;
 
 import java.util.Date;
 
-import be.forum.metier.Utilisateur;
-
-public class UtilisateurPOJO {
+public class Utilisateur {
 	/**
 	 * Variables
 	 */
@@ -69,9 +67,9 @@ public class UtilisateurPOJO {
 		this.typeUtilisateur = type;
 	}
 	
-	public UtilisateurPOJO(){}
+	public Utilisateur(){}
 	/**
-	 * Constructeur de la classe UtilisateurPOJO
+	 * Constructeur de la classe Utilisateur
 	 * @param idUtilisateur
 	 * @param pseudo
 	 * @param motdepasse
@@ -81,7 +79,7 @@ public class UtilisateurPOJO {
 	 * @param mail
 	 * @param type
 	 */
-	public UtilisateurPOJO(int idUtilisateur, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String typeUtilisateur) {
+	public Utilisateur(int idUtilisateur, String pseudo, String motdepasse, String nom, String prenom, Date dateNaissance, String mail, String typeUtilisateur) {
 		this.idUtilisateur 		= idUtilisateur;
 		this.pseudo				= pseudo;
 		this.motdepasse 		= motdepasse;
@@ -92,34 +90,24 @@ public class UtilisateurPOJO {
 		this.mail 				= mail;
 	}
 	
-	public UtilisateurPOJO(Utilisateur utilisateur){
-		this.setPseudo			(utilisateur.getPseudo());
-		this.setMotdepasse		(utilisateur.getMotdepasse());
-		this.setNom				(utilisateur.getNom());
-		this.setPrenom			(utilisateur.getPrenom());
-		this.setDateNaissance	(utilisateur.getDateNaissance());
-		this.setMail			(utilisateur.getMail());
-		this.setType			(utilisateur.getType());
-	}
-	
 	//equals nécessite l'hashcode override
 	// pas sur pour la date
 	@Override
 	public boolean equals(Object obj) {
-		UtilisateurPOJO utilisateurPOJO;
+		Utilisateur utilisateur;
 		// vérification si obj est null ou référence une instance d’une autre
 		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {
-			utilisateurPOJO = (UtilisateurPOJO) obj;
-			if (utilisateurPOJO.getPseudo().equals(this.getPseudo())
-					&& utilisateurPOJO.getMotdepasse().equals(this.getMotdepasse())
-					&& utilisateurPOJO.getNom().equals(this.getNom())
-					&& utilisateurPOJO.getPrenom().equals(this.getPrenom())
-					//&& utilisateurPOJO.getDateNaissance().equals(this.getDateNaissance())
-					&& utilisateurPOJO.getMail().equals(this.getMail())
-					&& utilisateurPOJO.getType().equals(this.getType())) {
+			utilisateur = (Utilisateur) obj;
+			if (utilisateur.getPseudo().equals(this.getPseudo())
+					&& utilisateur.getMotdepasse().equals(this.getMotdepasse())
+					&& utilisateur.getNom().equals(this.getNom())
+					&& utilisateur.getPrenom().equals(this.getPrenom())
+					//&& utilisateur.getDateNaissance().equals(this.getDateNaissance())
+					&& utilisateur.getMail().equals(this.getMail())
+					&& utilisateur.getType().equals(this.getType())) {
 				return true;
 			} else {
 				return false;

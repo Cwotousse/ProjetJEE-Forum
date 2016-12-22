@@ -1,17 +1,14 @@
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import be.forum.dao.DAO;
 import be.forum.dao.DAOFactory;
-import be.forum.metier.SousCategorie;
-import be.forum.metier.Sujet;
-import be.forum.pojo.ActualitePOJO;
-import be.forum.pojo.CategoriePOJO;
-import be.forum.pojo.CommentairePOJO;
-import be.forum.pojo.HistoriquePOJO;
-import be.forum.pojo.SousCategoriePOJO;
-import be.forum.pojo.SujetPOJO;
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.pojo.Actualite;
+import be.forum.pojo.Categorie;
+import be.forum.pojo.Commentaire;
+import be.forum.pojo.Historique;
+import be.forum.pojo.SousCategorie;
+import be.forum.pojo.Sujet;
+import be.forum.pojo.Utilisateur;
 
 public class Test {
 
@@ -20,24 +17,12 @@ public class Test {
 		java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 		//Les DAO
-		DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
-		DAO<CategoriePOJO> catDAO = new DAOFactory().getCategorieDAO();
-		DAO<SousCategoriePOJO> sousCatDAO = new DAOFactory().getSousCategorieDAO();
-		DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
-		DAO<HistoriquePOJO> historiqueDAO = new DAOFactory().getHistoriqueDAO();
-		DAO<ActualitePOJO> actualiteDAO = new DAOFactory().getActualiteDAO();
-		DAO<CommentairePOJO> commentaireDAO = new DAOFactory().getCommentaireDAO();
-		
-		String nomSousCategorie = "Football";
-		Sujet suj = new Sujet();
-		//ArrayList<Sujet> listSujet = sujet.getListSelonSousCategorie(nomSousCategorie);
-		/*SousCategorie sousCat = new SousCategorie();
-		//ArrayList<SousCategorie> test2 = sousCat.getList("Sports");
-		for (SousCategorie soutessCategorie : test2) {
-			//System.out.println(soutessCategorie.getTitre());
-			//System.out.println(soutessCategorie.getIcone());
-		}		
-		*/
-		System.out.println(sousCatDAO.find(1).getIcone());
+		DAO<Utilisateur> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
+		DAO<Categorie> catDAO = new DAOFactory().getCategorieDAO();
+		DAO<SousCategorie> sousCatDAO = new DAOFactory().getSousCategorieDAO();
+		DAO<Sujet> sujetDAO = new DAOFactory().getSujetDAO();
+		DAO<Historique> historiqueDAO = new DAOFactory().getHistoriqueDAO();
+		DAO<Actualite> actualiteDAO = new DAOFactory().getActualiteDAO();
+		DAO<Commentaire> commentaireDAO = new DAOFactory().getCommentaireDAO();
 	}
 }

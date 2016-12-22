@@ -6,25 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.CategoriePOJO;
-import be.forum.pojo.SousCategoriePOJO;
+import be.forum.pojo.Categorie;
+import be.forum.pojo.SousCategorie;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
+public class SousCategorieDAO extends DAO<SousCategorie>{
 
 	public SousCategorieDAO(Connection conn) { super(conn); }
 
 	@Override
-	public void create(SousCategoriePOJO sousCategoriePOJO) {
+	public void create(SousCategorie sousCategorie) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour créer une actualité
 			cst = connect.prepareCall(Sprocs.INSERTSOUSCATEGORIE);
 
-			cst.setInt		(1, sousCategoriePOJO.getCategoriePOJO().getID());
-			cst.setString	(2, sousCategoriePOJO.getTitre());
-			cst.setString	(3, sousCategoriePOJO.getIcone());
+			cst.setInt		(1, sousCategorie.getCategorie().getID());
+			cst.setString	(2, sousCategorie.getTitre());
+			cst.setString	(3, sousCategorie.getIcone());
 			cst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -41,12 +41,12 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 	}
 
 	@Override
-	public void delete(SousCategoriePOJO sousCategoriePOJO) {
+	public void delete(SousCategorie sousCategorie) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour supprimer une sous catégorie
 			cst = connect.prepareCall(Sprocs.DELETESOUSCATEGORIE);
-			cst.setString(1, sousCategoriePOJO.getTitre());
+			cst.setString(1, sousCategorie.getTitre());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,16 +62,16 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 	}
 
 	@Override
-	public void update(SousCategoriePOJO sousCategoriePOJO) {
+	public void update(SousCategorie sousCategorie) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier une sous catégorie
 			cst = connect.prepareCall(Sprocs.UPDATESOUSCATEGORIE);
 			
-			cst.setInt		(1, sousCategoriePOJO.getID());
-			cst.setInt		(2, sousCategoriePOJO.getCategoriePOJO().getID());
-			cst.setString	(3, sousCategoriePOJO.getTitre());
-			cst.setString	(4, sousCategoriePOJO.getIcone());
+			cst.setInt		(1, sousCategorie.getID());
+			cst.setInt		(2, sousCategorie.getCategorie().getID());
+			cst.setString	(3, sousCategorie.getTitre());
+			cst.setString	(4, sousCategorie.getIcone());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,10 +87,10 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 	}
 
 	@Override
-	public SousCategoriePOJO find(int id) {
-		SousCategoriePOJO 	sousCategoriePOJO 	= null;
+	public SousCategorie find(int id) {
+		SousCategorie 	sousCategorie 	= null;
 		CallableStatement 	cst = null;
-		DAO<CategoriePOJO> 	categorieDAO	 	= new DAOFactory().getCategorieDAO();
+		DAO<Categorie> 	categorieDAO	 	= new DAOFactory().getCategorieDAO();
 		
 		try {
 			//Appel de la procédure stockée pour trouver une sous catégorie
@@ -103,7 +103,7 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 			cst.registerOutParameter(4, java.sql.Types.VARCHAR);
 			cst.executeQuery();
 			
-			sousCategoriePOJO = new SousCategoriePOJO(
+			sousCategorie = new SousCategorie(
 				id,
 				categorieDAO.find	(cst.getInt(2)),
 				cst.getString		(3),
@@ -121,16 +121,16 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 				}
 			}
 		}
-		return sousCategoriePOJO;
+		return sousCategorie;
 	}
 
 	@Override
-	public ArrayList<SousCategoriePOJO> getList() {
-		SousCategoriePOJO 				sousCategoriePOJO 	= null;
+	public ArrayList<SousCategorie> getList() {
+		SousCategorie 				sousCategorie 	= null;
 		CallableStatement 				cst 				= null;
 		ResultSet 						rs 					= null;
-		ArrayList<SousCategoriePOJO> 	listSousCategorie 	= new ArrayList<SousCategoriePOJO>();
-		DAO<CategoriePOJO> 	 			categorieDAO 		= new DAOFactory().getCategorieDAO();
+		ArrayList<SousCategorie> 	listSousCategorie 	= new ArrayList<SousCategorie>();
+		DAO<Categorie> 	 			categorieDAO 		= new DAOFactory().getCategorieDAO();
 		try {
 			cst = connect.prepareCall(Sprocs.GETLISTSOUSCATEGORIE);
 
@@ -140,13 +140,13 @@ public class SousCategorieDAO extends DAO<SousCategoriePOJO>{
 			// On récupère le curseur et on le cast à ResultSet
 			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
-				sousCategoriePOJO = new SousCategoriePOJO(
+				sousCategorie = new SousCategorie(
 							rs.getInt			("idSousCategorie"), 
 							categorieDAO.find	(rs.getInt("idCategorie")),
 							rs.getString		("titre"),
 							rs.getString		("icone")
 						);
-				listSousCategorie.add(sousCategoriePOJO);
+				listSousCategorie.add(sousCategorie);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -6,28 +6,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.CommentairePOJO;
-import be.forum.pojo.SujetPOJO;
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.pojo.Commentaire;
+import be.forum.pojo.Sujet;
+import be.forum.pojo.Utilisateur;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class CommentaireDAO extends DAO<CommentairePOJO> {
+public class CommentaireDAO extends DAO<Commentaire> {
 
 	public CommentaireDAO(Connection conn) { super(conn); }
 
 	@Override
-	public void create(CommentairePOJO commentairePOJO) {
+	public void create(Commentaire commentaire) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour ajouter un utilisateur
 			cst = connect.prepareCall(Sprocs.INSERTCOMMENTAIRE);
 
-			//cst.setInt		(1, commentairePOJO.getID());
-			cst.setInt		(1, commentairePOJO.getSujetPOJO().getID());
-			cst.setString	(2, commentairePOJO.getTexte());
-			cst.setDate		(3, commentairePOJO.getDateCommentaire());
-			cst.setInt		(4, commentairePOJO.getUtilisateurPOJO().getID());
+			cst.setInt		(1, commentaire.getSujet().getID());
+			cst.setString	(2, commentaire.getTexte());
+			cst.setDate		(3, commentaire.getDateCommentaire());
+			cst.setInt		(4, commentaire.getUtilisateur().getID());
 			cst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -45,13 +44,13 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 	}
 
 	@Override
-	public void delete(CommentairePOJO commentairePOJO) {
+	public void delete(Commentaire commentaire) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier un utilisateur
 			cst = connect.prepareCall(Sprocs.DELETECOMMENTAIRE);
-			cst.setString	(1, commentairePOJO.getTexte());
-			cst.setDate		(2, commentairePOJO.getDateCommentaire());
+			cst.setString	(1, commentaire.getTexte());
+			cst.setDate		(2, commentaire.getDateCommentaire());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,15 +67,15 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 	}
 
 	@Override
-	public void update(CommentairePOJO commentairePOJO) {
+	public void update(Commentaire commentaire) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier un utilisateur
 			cst = connect.prepareCall(Sprocs.UPDATECOMMENTAIRE);
 			
-			cst.setString	(1, commentairePOJO.getTexte());
-			cst.setDate		(2, commentairePOJO.getDateCommentaire());
-			cst.setInt		(3, commentairePOJO.getID());
+			cst.setString	(1, commentaire.getTexte());
+			cst.setDate		(2, commentaire.getDateCommentaire());
+			cst.setInt		(3, commentaire.getID());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,11 +91,11 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 	}
 
 	@Override
-	public CommentairePOJO find(int id) {
-		CommentairePOJO commentairePOJO = null;
+	public Commentaire find(int id) {
+		Commentaire commentaire = null;
 		CallableStatement cst = null;
-		DAO<UtilisateurPOJO> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
-		DAO<SujetPOJO> sujetDAO = new DAOFactory().getSujetDAO();
+		DAO<Utilisateur> utilisateurDAO = new DAOFactory().getUtilisateurDAO();
+		DAO<Sujet> sujetDAO = new DAOFactory().getSujetDAO();
 
 		try {
 			cst = connect.prepareCall(Sprocs.SELECTCOMMENTAIRE);
@@ -109,7 +108,7 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 			cst.registerOutParameter(5, java.sql.Types.NUMERIC);
 			cst.executeQuery();
 			
-			commentairePOJO = new CommentairePOJO(
+			commentaire = new Commentaire(
 					id,
 					sujetDAO.find		(cst.getInt(2)),
 					cst.getString		(3),
@@ -128,17 +127,17 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 				}
 			}
 		}
-		return commentairePOJO;
+		return commentaire;
 	}
 
 	@Override
-	public ArrayList<CommentairePOJO> getList() {
-		CommentairePOJO 			commentairePOJO 	= null;
+	public ArrayList<Commentaire> getList() {
+		Commentaire 			commentaire 	= null;
 		CallableStatement 			cst 				= null;
 		ResultSet 					rs 					= null;
-		DAO<UtilisateurPOJO> 		utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
-		DAO<SujetPOJO> 				sujetDAO 			= new DAOFactory().getSujetDAO();
-		ArrayList<CommentairePOJO> 	listcommentairePOJO = new ArrayList<CommentairePOJO>();
+		DAO<Utilisateur> 		utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
+		DAO<Sujet> 				sujetDAO 			= new DAOFactory().getSujetDAO();
+		ArrayList<Commentaire> 	listcommentaire = new ArrayList<Commentaire>();
 		try {
 			cst = connect.prepareCall(Sprocs.GETLISTCOMMENTAIRE);
 
@@ -148,13 +147,13 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 			// On récupère le curseur et on le cast à ResultSet
 			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
-				commentairePOJO = new CommentairePOJO(
+				commentaire = new Commentaire(
 						rs.getInt("idCommentaire"),
 						sujetDAO.find(rs.getInt("idSujet")),
 						rs.getString("texte"),
 						rs.getDate("dateCommentaire"),
 						utilisateurDAO.find(rs.getInt("idUtilisateur")));
-				listcommentairePOJO.add(commentairePOJO);
+				listcommentaire.add(commentaire);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -167,7 +166,7 @@ public class CommentaireDAO extends DAO<CommentairePOJO> {
 				}
 			}
 		}
-		return listcommentairePOJO;
+		return listcommentaire;
 	}
 
 }

@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.metier.Commentaire;
+import be.forum.modele.CommentaireModele;
+import be.forum.pojo.Commentaire;
 
 public class AfficherCommentaireServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +26,7 @@ public class AfficherCommentaireServlet extends HttpServlet {
 		//String pseudoAuteur 		= request.getParameter("pseudoAuteur");
 		String dateSujet			= request.getParameter("dateSujet");
 
-		Commentaire commentaire 	= new Commentaire();
+		CommentaireModele modele 	= new CommentaireModele();
 		PrintWriter out 			= response.getWriter();
 		try {
 			// Il faut changer le format de la date reçue en param car celui-ci est incorrect
@@ -41,7 +42,7 @@ public class AfficherCommentaireServlet extends HttpServlet {
 	        java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
 	        
 	        // On récupère la liste de commentaire filtré
-	        ArrayList<Commentaire> listCommentaire = commentaire.getListCommentaireFiltred(nomSujet, nomSousCategorie, sqlDate);
+	        ArrayList<Commentaire> listCommentaire = modele.getListCommentaireFiltered(nomSujet, nomSousCategorie, sqlDate);
 
 			int nbrCommentaire = listCommentaire.size();
 
