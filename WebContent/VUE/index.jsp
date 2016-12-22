@@ -349,18 +349,17 @@
 					<div class="col-md-12 column">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<section class="panel-title"> <time class="pull-right">
-								<i class="fa fa-calendar"></i>
-								${commentaire.getDateCommentaire()}<i class="fa fa-clock-o"></i>
-								h min </time> <section class="pull-left" id="id"> <abbr
+								<section class="panel-title"> 
+								<time class="pull-right"><i class="fa fa-calendar"></i>
+								<div id="date-creation-sujet">
+								${commentaire.getSujet().getDateSujet()}</div>
+								</time>
+								<section class="pull-left" id="id"> <abbr
 									title="count of posts in this topic">#1</abbr> </section> </section>
 							</div>
 							<section class="row panel-body"> <section
 								class="col-md-9">
-							<h2>
-								<i class="fa fa-smile-o"></i>
-								${commentaire.getSujet().getTitre()}
-							</h2>
+							<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
 							<hr>
 							${commentaire.getTexte()} </section> <section id="user-description"
 								class="col-md-3 "> <section class="well">
@@ -434,7 +433,12 @@
 							class="comment-form">
 							<div class="form-group">
 								<label class="sr-only" for="form-comment">Commentaire</label>
-								<textarea name="form-comment" placeholder=""
+								<label class="form-comment form-control"  id="nom-sujet-label">nom</label>
+								<label class="form-comment form-control"  id="date-sujet-label">date</label>
+								
+								<input type="hidden" name="nom-sujet-hidden" id="nom-sujet-hidden" value="xxx" ></input>
+								<input type="hidden" name="date-sujet-hidden" id="date-sujet-hidden" value="xxx"></input>
+								<textarea name="form-comment" placeholder="Votre commentaire..."
 									class="form-comment form-control" id="form-comment"></textarea>
 							</div>
 							<button type="submit" class="btn">Confirmer</button>

@@ -125,5 +125,15 @@ jQuery(document)
 
 					}
 					
+					// Le modal affichange un nouveau commentaire va indiquer au bon endroit le num du sujet + la date
+					$( "#reply" ).click(function() {
+						var dateSansEspaces = $.trim($("#date-creation-sujet").text());
+						  $("#nom-sujet-hidden").val($("#nom-sujet").text());
+						  // On retire les espaces useless
+						  $("#date-sujet-hidden").val(dateSansEspaces);
+						  $("#nom-sujet-label").text($("#nom-sujet").text());
+						  $("#date-sujet-label").text(dateSansEspaces);
+						});
+					
 				});
 $("[data-toggle=tooltip]").tooltip();

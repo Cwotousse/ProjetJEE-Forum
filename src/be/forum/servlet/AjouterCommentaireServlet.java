@@ -2,6 +2,7 @@ package be.forum.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -10,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.forum.dao.DAO;
-import be.forum.dao.DAOFactory;
-import be.forum.metier.Commentaire;
-import be.forum.metier.Sujet;
-import be.forum.metier.Utilisateur;
-import be.forum.pojo.SujetPOJO;
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.modele.CommentaireModele;
+import be.forum.modele.SujetModele;
+import be.forum.pojo.Sujet;
+import be.forum.pojo.Utilisateur;
 
 public class AjouterCommentaireServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,31 +29,39 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		try {
 			// Récuperation des données de session
 			HttpSession session = request.getSession();
-			
+
 			// récupération du commentaire dans la requête
 			String textComm = request.getParameter("form-comment");
 
-			Sujet suj = new Sujet();
-			suj.setTitre("Marseille nul");
-			suj = suj.getSujet();
-			
-			
+			// Il faut récupérer la date et le titre du topic afin de rechercher son ID
+			SujetModele sujM = new SujetModele();
+
+			// Il faut changer le format de la date reçue en param car celui-ci
+			// est incorrect
+			// 1992-12-17
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date d = sdf.parse(request.getParameter("date-sujet-hidden"));
+			// 17/12/92
+			sdf.applyPattern("dd/MM/yy");
+			String nouveauFormatStringUtil = sdf.format(d);
+
+			// Ensuite on parse cette date en date.sql
+			SimpleDateFormat formatter 	= new SimpleDateFormat("dd/MM/yy");
+			java.util.Date parsedDate = formatter.parse(nouveauFormatStringUtil);
+			java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+
+			// On récupère le sujet correspondant
+			Sujet suj = sujM.getSujetSelonTitreEtDateSujet(request.getParameter("nom-sujet-hidden"), sqlDate);
+
 			// Utilisateur
 			Utilisateur util = (Utilisateur) session.getAttribute("utilisateur");
-			
-			
 
 			if (!session.isNew()) {
 				if (!textComm.equals("")) {
-					Commentaire commentaire = new Commentaire();
-					commentaire.setTexte(textComm);
-					commentaire.setDateCommentaire(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-					commentaire.setSujet(suj);
-					commentaire.setUtilisateur();
-
-					//out.println("id util : " + commentaire.getUtilisateur().getPseudo());
-					 commentaire.ajoutCommentaire();
-
+					CommentaireModele commentaire = new CommentaireModele();
+					commentaire.ajouterCommentaire(suj, textComm,
+							new java.sql.Date(Calendar.getInstance().getTime().getTime()), util);
+					response.sendRedirect("/VUE\\index.jsp");
 				} else {
 					out.println("Le commentaire est vide.");
 				}

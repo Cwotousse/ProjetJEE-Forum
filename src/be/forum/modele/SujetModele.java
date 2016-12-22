@@ -22,4 +22,13 @@ public class SujetModele {
 				.filter(x -> x.getSousCategorie().getTitre().equals(sousCat))
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+	
+	public Sujet getSujetSelonTitreEtDateSujet(String titre, java.sql.Date dateSujet){
+		return this.getList()
+				.stream()
+				.filter(x -> x.getTitre().equals(titre)
+						&& x.getDateSujet().equals(dateSujet))
+				.findAny()
+				.orElse(null);	
+	}
 }
