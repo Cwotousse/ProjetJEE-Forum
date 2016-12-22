@@ -7,29 +7,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.pojo.Utilisateur;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
+public class UtilisateurDAO extends DAO<Utilisateur> {
 	public UtilisateurDAO(Connection conn) {
 		super(conn);
 	}
 
 	@Override
-	public void create(UtilisateurPOJO utilisateurPOJO) {
+	public void create(Utilisateur utilisateur) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour ajouter un utilisateur
 			cst = connect.prepareCall(Sprocs.INSERTUTILISATEUR);
 			
-			cst.setString	(1, utilisateurPOJO.getPseudo());
-			cst.setString	(2, utilisateurPOJO.getMotdepasse());
-			cst.setString	(3, utilisateurPOJO.getNom());
-			cst.setString	(4, utilisateurPOJO.getPrenom());
-			cst.setDate		(5, (Date) utilisateurPOJO.getDateNaissance());
-			cst.setString	(6, utilisateurPOJO.getType());
-			cst.setString	(7, utilisateurPOJO.getMail());
+			cst.setString	(1, utilisateur.getPseudo());
+			cst.setString	(2, utilisateur.getMotdepasse());
+			cst.setString	(3, utilisateur.getNom());
+			cst.setString	(4, utilisateur.getPrenom());
+			cst.setDate		(5, (Date) utilisateur.getDateNaissance());
+			cst.setString	(6, utilisateur.getType());
+			cst.setString	(7, utilisateur.getMail());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -46,12 +46,12 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	}
 
 	@Override
-	public void delete(UtilisateurPOJO utilisateurPOJO) {
+	public void delete(Utilisateur utilisateur) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour supprimer un utilisateur
 			cst = connect.prepareCall(Sprocs.DELETEUTILISATEUR);
-			cst.setString(1, utilisateurPOJO.getPseudo());	
+			cst.setString(1, utilisateur.getPseudo());	
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,19 +67,19 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	}
 
 	@Override
-	public void update(UtilisateurPOJO utilisateurPOJO) {
+	public void update(Utilisateur utilisateur) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier un utilisateur
 			cst = connect.prepareCall(Sprocs.UPDATEUTILISATEUR);
 			
-			cst.setString	(1, utilisateurPOJO.getMotdepasse());
-			cst.setString	(2, utilisateurPOJO.getNom());
-			cst.setString	(3, utilisateurPOJO.getPrenom());
-			cst.setDate		(4, (Date) utilisateurPOJO.getDateNaissance());
-			cst.setString	(5, utilisateurPOJO.getType());
-			cst.setString	(6, utilisateurPOJO.getMail());
-			cst.setString	(7, utilisateurPOJO.getPseudo());
+			cst.setString	(1, utilisateur.getMotdepasse());
+			cst.setString	(2, utilisateur.getNom());
+			cst.setString	(3, utilisateur.getPrenom());
+			cst.setDate		(4, (Date) utilisateur.getDateNaissance());
+			cst.setString	(5, utilisateur.getType());
+			cst.setString	(6, utilisateur.getMail());
+			cst.setString	(7, utilisateur.getPseudo());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -96,8 +96,8 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	}
 
 	@Override
-	public UtilisateurPOJO find(int id) {
-		UtilisateurPOJO 	utilisateurPOJO = null;
+	public Utilisateur find(int id) {
+		Utilisateur 	utilisateur = null;
 		CallableStatement 	cst 			= null;
 		try {
 			//Appel de la procédure stockée pour sélectionner un utilisateur
@@ -116,7 +116,7 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 
 			cst.executeUpdate();
 			
-			utilisateurPOJO = new UtilisateurPOJO(
+			utilisateur = new Utilisateur(
 					id, 
 					cst.getString	(2),
 					cst.getString	(3), 
@@ -137,7 +137,7 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 				}
 			}
 		}
-		return utilisateurPOJO;
+		return utilisateur;
 	}
 
 	/**
@@ -146,9 +146,9 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 	 * @return listUtilisateur : liste des utilisateurs
 	 */
 	@Override
-	public ArrayList<UtilisateurPOJO> getList() {
-		UtilisateurPOJO 			utilisateurPOJO = null;
-		ArrayList<UtilisateurPOJO> 	listUtilisateur = new ArrayList<UtilisateurPOJO>();
+	public ArrayList<Utilisateur> getList() {
+		Utilisateur 			utilisateur = null;
+		ArrayList<Utilisateur> 	listUtilisateur = new ArrayList<Utilisateur>();
 		CallableStatement			cst				= null;
 		ResultSet 					rs 				= null;
 		try {
@@ -160,7 +160,7 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 			// On récupère le curseur et on le cast à ResultSet
 			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
-				utilisateurPOJO = new UtilisateurPOJO(
+				utilisateur = new Utilisateur(
 							rs.getInt	("idUtilisateur"), 
 							rs.getString("pseudo"),
 							rs.getString("motdepasse"), 
@@ -170,7 +170,7 @@ public class UtilisateurDAO extends DAO<UtilisateurPOJO> {
 							rs.getString("mail"),
 							rs.getString("typeUtilisateur")
 						);
-				listUtilisateur.add(utilisateurPOJO);
+				listUtilisateur.add(utilisateur);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

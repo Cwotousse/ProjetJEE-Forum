@@ -6,23 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.ActualitePOJO;
+import be.forum.pojo.Actualite;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class ActualiteDAO extends DAO<ActualitePOJO> {
+public class ActualiteDAO extends DAO<Actualite> {
 
 	public ActualiteDAO(Connection conn) { super(conn); }
 
 	@Override
-	public void create(ActualitePOJO actualitePOJO) {
+	public void create(Actualite actualite) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour créer une actualité
 			cst = connect.prepareCall(Sprocs.INSERTACTUALITE);
 
-			cst.setString	(1, actualitePOJO.getTitre());
-			cst.setString	(2, actualitePOJO.getDescription());
+			cst.setString	(1, actualite.getTitre());
+			cst.setString	(2, actualite.getDescription());
 			cst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -40,14 +40,14 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 	}
 
 	@Override
-	public void delete(ActualitePOJO actualitePOJO) {
+	public void delete(Actualite actualite) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour supprimer une actualité
 			cst = connect.prepareCall(Sprocs.DELETEACTUALITE);
 
-			cst.setString(1, actualitePOJO.getTitre());
-			cst.setString(2, actualitePOJO.getDescription());
+			cst.setString(1, actualite.getTitre());
+			cst.setString(2, actualite.getDescription());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,15 +64,15 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 	}
 
 	@Override
-	public void update(ActualitePOJO actualitePOJO) {
+	public void update(Actualite actualite) {
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier une actualite
 			cst = connect.prepareCall(Sprocs.UPDATEACTUALITE);
 			
-			cst.setInt		(1, actualitePOJO.getID());
-			cst.setString	(2, actualitePOJO.getTitre());
-			cst.setString	(3, actualitePOJO.getDescription());
+			cst.setInt		(1, actualite.getID());
+			cst.setString	(2, actualite.getTitre());
+			cst.setString	(3, actualite.getDescription());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,8 +88,8 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 	}
 
 	@Override
-	public ActualitePOJO find(int id) {
-		ActualitePOJO 	 	 actualitePOJO 	= null;
+	public Actualite find(int id) {
+		Actualite 	 	 actualite 	= null;
 		CallableStatement cst = null;
 		
 		try {
@@ -103,7 +103,7 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
 			cst.executeQuery();
 			
-			actualitePOJO = new ActualitePOJO(
+			actualite = new Actualite(
 					id,
 					cst.getString 	(2),
 					cst.getString	(3)
@@ -119,15 +119,15 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 				}
 			}
 		}
-		return actualitePOJO;
+		return actualite;
 	}
 
 	@Override
-	public ArrayList<ActualitePOJO> getList() {
-		ActualitePOJO 				actualitePOJO 		= null;
-		CallableStatement 			cst 				= null;
-		ResultSet 					rs 					= null;
-		ArrayList<ActualitePOJO>	listActualitePOJO 	= new ArrayList<ActualitePOJO>();
+	public ArrayList<Actualite> getList() {
+		Actualite 				actualite 		= null;
+		CallableStatement 			cst 		= null;
+		ResultSet 					rs 			= null;
+		ArrayList<Actualite>	listActualite 	= new ArrayList<Actualite>();
 		try {
 			cst = connect.prepareCall(Sprocs.GETLISTACTUALITE);
 
@@ -137,12 +137,12 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 			// On récupère le curseur et on le cast à ResultSet
 			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
-				actualitePOJO = new ActualitePOJO(
+				actualite = new Actualite(
 							rs.getInt			("idActualite"), 
 							rs.getString		("titre"),
 							rs.getString		("description")
 						);
-				listActualitePOJO.add(actualitePOJO);
+				listActualite.add(actualite);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,7 +155,7 @@ public class ActualiteDAO extends DAO<ActualitePOJO> {
 				}
 			}
 		}
-		return listActualitePOJO;
+		return listActualite;
 	}
 
 }

@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.metier.SousCategorie;
+import be.forum.modele.SousCategorieModele;
+import be.forum.pojo.SousCategorie;
 
 public class AfficherSousCategorieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,8 +19,8 @@ public class AfficherSousCategorieServlet extends HttpServlet {
 		String nomCategorie = request.getParameter("nomCategorie");
 		int nbrPosts = 0;
 		
-		SousCategorie sousCategorie = new SousCategorie();
-		ArrayList<SousCategorie> listSousCategorie = sousCategorie.getList(nomCategorie);
+		SousCategorieModele modele = new SousCategorieModele();
+		ArrayList<SousCategorie> listSousCategorie = modele.getList(nomCategorie);
 		nbrPosts = listSousCategorie.size();
 		
 		PrintWriter out = response.getWriter();

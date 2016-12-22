@@ -1,8 +1,6 @@
 package be.forum.pojo;
 
-import be.forum.metier.Categorie;
-
-public class CategoriePOJO {
+public class Categorie {
 	/**
 	 * Variables
 	 */
@@ -12,25 +10,16 @@ public class CategoriePOJO {
 	/**
 	 * Constructeurs
 	 */
-	public CategoriePOJO(){}
+	public Categorie(){}
 	/**
 	 * 
 	 * @param idCategorie
 	 * @param titre
 	 */
-	public CategoriePOJO(int idCategorie, String titre){
+	public Categorie(int idCategorie, String titre){
 		this.setID(idCategorie);
 		this.setTitre(titre);
 	}
-	
-	/**
-	 * Constructeur qui convertit un objet Categorie en objet CategoriePOJO
-	 * @param categorie
-	 */
-	public CategoriePOJO(Categorie categorie){
-		this.setTitre(categorie.getTitre());
-	}
-
 	
 	/**
 	 * Getters & Setters
@@ -50,14 +39,14 @@ public class CategoriePOJO {
 	
 	@Override
 	public boolean equals(Object obj) {
-		CategoriePOJO categoriePOJO;
+		Categorie categorie;
 		// vérification si obj est null ou référence une instance d’une autre
 		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {
-			categoriePOJO = (CategoriePOJO) obj;
-			if (categoriePOJO.getTitre().equals(this.getTitre())) {
+			categorie = (Categorie) obj;
+			if (categorie.getTitre().equals(this.getTitre())) {
 				return true;
 			} else {
 				return false;

@@ -6,21 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.CategoriePOJO;
+import be.forum.pojo.Categorie;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class CategorieDAO extends DAO<CategoriePOJO> {
+public class CategorieDAO extends DAO<Categorie> {
 
 	public CategorieDAO(Connection conn) { super(conn); }
 
 	@Override
-	public void create(CategoriePOJO categoriePOJO) {
+	public void create(Categorie categorie) {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.INSERTCATEGORIE);
 			
-			cst.setString(1, categoriePOJO.getTitre());
+			cst.setString(1, categorie.getTitre());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,12 +37,12 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 	}
 
 	@Override
-	public void delete(CategoriePOJO categoriePOJO) {
+	public void delete(Categorie categorie) {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.DELETECATEGORIE);
 			
-			cst.setString(1, categoriePOJO.getTitre());
+			cst.setString(1, categorie.getTitre());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,12 +59,12 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 	}
 
 	@Override
-	public void update(CategoriePOJO categoriePOJO) {
+	public void update(Categorie categorie) {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.UPDATECATEGORIE);
-			cst.setInt		(1, categoriePOJO.getID());
-			cst.setString	(2, categoriePOJO.getTitre());
+			cst.setInt		(1, categorie.getID());
+			cst.setString	(2, categorie.getTitre());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -81,8 +81,8 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 	}
 
 	@Override
-	public CategoriePOJO find(int id) {
-		CategoriePOJO 		categoriePOJO 	= null;
+	public Categorie find(int id) {
+		Categorie 		categorie 	= null;
 		CallableStatement 	cst 			= null;
 
 		try {
@@ -95,7 +95,7 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 
 			cst.executeUpdate();
 			
-			categoriePOJO = new CategoriePOJO(
+			categorie = new Categorie(
 					id, 
 					cst.getString(2)
 				);
@@ -110,15 +110,15 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 				}
 			}
 		}
-		return categoriePOJO;
+		return categorie;
 	}
 
 	@Override
-	public ArrayList<CategoriePOJO> getList() {
-		CategoriePOJO 				categoriePOJO 		= null;
-		CallableStatement 			cst 				= null;
-		ResultSet 					rs 					= null;
-		ArrayList<CategoriePOJO> 	listcategoriePOJO 	= new ArrayList<CategoriePOJO>();
+	public ArrayList<Categorie> getList() {
+		Categorie 				categorie 		= null;
+		CallableStatement 			cst 		= null;
+		ResultSet 					rs 			= null;
+		ArrayList<Categorie> 	listcategorie 	= new ArrayList<Categorie>();
 		try {
 			cst = connect.prepareCall(Sprocs.GETLISTCATEGORIE);
 
@@ -128,8 +128,8 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 			// On récupère le curseur et on le cast à ResultSet
 			rs = (ResultSet) cst.getObject(1);
 			while (rs.next()) {
-				categoriePOJO = new CategoriePOJO(rs.getInt("idCategorie"), rs.getString("titre"));
-				listcategoriePOJO.add(categoriePOJO);
+				categorie = new Categorie(rs.getInt("idCategorie"), rs.getString("titre"));
+				listcategorie.add(categorie);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,6 +142,6 @@ public class CategorieDAO extends DAO<CategoriePOJO> {
 				}
 			}
 		}
-		return listcategoriePOJO;
+		return listcategorie;
 	}
 }

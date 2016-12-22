@@ -1,13 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="be.forum.metier.SousCategorie"%>
-<%@ page import="be.forum.pojo.SousCategoriePOJO"%>
-<%@ page import="be.forum.dao.CategorieDAO"%>
-<%@ page import="be.forum.pojo.CategoriePOJO"%>
-<%@ page import="be.forum.dao.DAO"%>
-<%@ page import="be.forum.dao.DAOFactory"%>
-<%@ page import="be.forum.metier.Utilisateur"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 

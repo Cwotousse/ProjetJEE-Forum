@@ -49,18 +49,10 @@
     <servlet-name>addcomment</servlet-name>
     <url-pattern>/addComment</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>onloadindex</servlet-name>
-    <servlet-class>be.forum.servlet.OnLoadIndexServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>onloadindex</servlet-name>
-    <url-pattern>/onloadIndex</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>displaycategories</servlet-name>
-    <servlet-class>be.forum.servlet.AfficherCategorieServlet</servlet-class>
-  </servlet>
+	<servlet>
+		<servlet-name>displaycategories</servlet-name>
+		<servlet-class>be.forum.servlet.AfficherCategorieServlet</servlet-class>
+	</servlet>
   <servlet-mapping>
     <servlet-name>displaycategories</servlet-name>
     <url-pattern>/displaycategories</url-pattern>
@@ -73,6 +65,4 @@
     <servlet-name>displaysubcategories</servlet-name>
     <url-pattern>/displaysubcategories</url-pattern>
   </servlet-mapping>
-  
-  
 </web-app>

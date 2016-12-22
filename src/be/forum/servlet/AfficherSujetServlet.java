@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.forum.metier.Sujet;
+import be.forum.modele.SujetModele;
+import be.forum.pojo.Sujet;
 
 public class AfficherSujetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,8 +20,8 @@ public class AfficherSujetServlet extends HttpServlet {
 		String nomSousCategorie = request.getParameter("nomSousCategorie");
 		int nbrPosts = 0;
 
-		Sujet sujet = new Sujet();
-		ArrayList<Sujet> listSujet = sujet.getListSelonSousCategorie(nomSousCategorie);
+		SujetModele modele = new SujetModele();
+		ArrayList<Sujet> listSujet = modele.getListSelonSousCategorie(nomSousCategorie);
 		nbrPosts = listSujet.size();
 		
 		PrintWriter out = response.getWriter();

@@ -7,26 +7,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.forum.pojo.SousCategoriePOJO;
-import be.forum.pojo.SujetPOJO;
-import be.forum.pojo.UtilisateurPOJO;
+import be.forum.pojo.SousCategorie;
+import be.forum.pojo.Sujet;
+import be.forum.pojo.Utilisateur;
 import be.forum.sgbd.Sprocs;
 import oracle.jdbc.OracleTypes;
 
-public class SujetDAO extends DAO<SujetPOJO> {
+public class SujetDAO extends DAO<Sujet> {
 
 	public SujetDAO(Connection conn) { super(conn); }
 
 	@Override
-	public void create(SujetPOJO sujetPOJO) {
+	public void create(Sujet sujet) {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.INSERTSUJET);
 			
-			cst.setInt		(1, sujetPOJO.getSousCategoriePOJO().getID());
-			cst.setString	(2, sujetPOJO.getTitre());
-			cst.setDate		(3, (Date) sujetPOJO.getDateSujet());
-			cst.setInt		(4, sujetPOJO.getUtilisateurPOJO().getID());
+			cst.setInt		(1, sujet.getSousCategorie().getID());
+			cst.setString	(2, sujet.getTitre());
+			cst.setDate		(3, (Date) sujet.getDateSujet());
+			cst.setInt		(4, sujet.getUtilisateur().getID());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -43,12 +43,12 @@ public class SujetDAO extends DAO<SujetPOJO> {
 	}
 
 	@Override
-	public void delete(SujetPOJO sujetPOJO) {
+	public void delete(Sujet sujet) {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.DELETESUJET);
-			cst.setString	(1, sujetPOJO.getTitre());	
-			cst.setDate		(2, sujetPOJO.getDateSujet());
+			cst.setString	(1, sujet.getTitre());	
+			cst.setDate		(2, sujet.getDateSujet());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,18 +64,18 @@ public class SujetDAO extends DAO<SujetPOJO> {
 	}
 
 	@Override
-	public void update(SujetPOJO sujetPOJO) {
+	public void update(Sujet sujet) {
 		
 		CallableStatement cst = null;
 		try {
 			//Appel de la procédure stockée pour modifier un sujet
 			cst = connect.prepareCall(Sprocs.UPDATESUJET);
 
-			cst.setInt		(1, sujetPOJO.getID());
-			cst.setInt		(2, sujetPOJO.getSousCategoriePOJO().getID());
-			cst.setString	(3, sujetPOJO.getTitre());
-			cst.setDate		(4, (Date)sujetPOJO.getDateSujet());
-			cst.setInt		(5, sujetPOJO.getUtilisateurPOJO().getID());
+			cst.setInt		(1, sujet.getID());
+			cst.setInt		(2, sujet.getSousCategorie().getID());
+			cst.setString	(3, sujet.getTitre());
+			cst.setDate		(4, (Date)sujet.getDateSujet());
+			cst.setInt		(5, sujet.getUtilisateur().getID());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {
@@ -92,11 +92,11 @@ public class SujetDAO extends DAO<SujetPOJO> {
 	}
 
 	@Override
-	public SujetPOJO find(int id) {
+	public Sujet find(int id) {
 		CallableStatement 		cst 				= null;
-		SujetPOJO	 	 	 	sujetPOJO		 	= null;
-		DAO<UtilisateurPOJO> 	utilisateurDAO		= new DAOFactory().getUtilisateurDAO();
-		DAO<SousCategoriePOJO> 	sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
+		Sujet	 	 	 	sujet		 	= null;
+		DAO<Utilisateur> 	utilisateurDAO		= new DAOFactory().getUtilisateurDAO();
+		DAO<SousCategorie> 	sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
 		
 		try {
 			cst = connect.prepareCall(Sprocs.SELECTSUJET);
@@ -110,7 +110,7 @@ public class SujetDAO extends DAO<SujetPOJO> {
 			cst.registerOutParameter(6, java.sql.Types.NUMERIC);
 	
 			cst.executeUpdate();
-			sujetPOJO = new SujetPOJO(
+			sujet = new Sujet(
 					id, 
 					sousCategorieDAO.find	(cst.getInt(3)),
 					cst.getString			(4), 
@@ -129,17 +129,17 @@ public class SujetDAO extends DAO<SujetPOJO> {
 				}
 			}
 		}
-		return sujetPOJO;
+		return sujet;
 	}
 
 	@Override
-	public ArrayList<SujetPOJO> getList() {
-		SujetPOJO 					sujetPOJO 			= null;
+	public ArrayList<Sujet> getList() {
+		Sujet 					sujet 			= null;
 		CallableStatement 			cst 				= null;
 		ResultSet 					rs 					= null;
-		ArrayList<SujetPOJO> 		listSujet 			= new ArrayList<SujetPOJO>();
-		DAO<UtilisateurPOJO> 	 	utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
-		DAO<SousCategoriePOJO> 		sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
+		ArrayList<Sujet> 		listSujet 			= new ArrayList<Sujet>();
+		DAO<Utilisateur> 	 	utilisateurDAO 		= new DAOFactory().getUtilisateurDAO();
+		DAO<SousCategorie> 		sousCategorieDAO 	= new DAOFactory().getSousCategorieDAO();
 		try {
 			cst = connect.prepareCall(Sprocs.GETLISTSUJET);
 
@@ -150,14 +150,14 @@ public class SujetDAO extends DAO<SujetPOJO> {
 			rs = (ResultSet) cst.getObject(1);
 
 			while (rs.next()) {
-				sujetPOJO = new SujetPOJO(
+				sujet = new Sujet(
 								rs.getInt				("idSujet"),
 								sousCategorieDAO.find	(rs.getInt("idSousCategorie")),
 								rs.getString			("titre"),
 								rs.getDate				("dateSujet"),
 								utilisateurDAO.find		(rs.getInt("idUtilisateur"))
 							);
-				listSujet.add(sujetPOJO);
+				listSujet.add(sujet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
