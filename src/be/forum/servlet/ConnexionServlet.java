@@ -3,6 +3,7 @@ package be.forum.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,8 @@ public class ConnexionServlet extends HttpServlet {
 		String motdepasse 	= request.getParameter("motdepasse");
 
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setPseudo(pseudo);
-		utilisateur.setMotdepasse(motdepasse);
+		utilisateur.setPseudo		(pseudo);
+		utilisateur.setMotdepasse	(motdepasse);
 
 		Utilisateur utilisateurConnecté = utilisateur.connexion();
 
@@ -53,9 +54,9 @@ public class ConnexionServlet extends HttpServlet {
 
 			// J'ajoute l'objet en faisant un "setAttribute()"
 			session.setAttribute("utilisateur", utilisateurConnecté);
-			//getServletContext().getRequestDispatcher("/VUE\\index.jsp").forward(request, response);
-			//request.getRequestDispatcher("AfficherNavBarConnectéServlet").forward(request, response);
-			response.sendRedirect("/ProjetJEE-Forum\\VUE\\LoggedUser.jsp");
+			//response.sendRedirect("/ProjetJEE-Forum\\VUE\\LoggedUser.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
+	        dispatcher.forward(request, response); 
 			response.setContentType("text/html");
 		}
 	}

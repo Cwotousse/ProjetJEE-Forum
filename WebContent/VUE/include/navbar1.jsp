@@ -54,29 +54,44 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="${context}/VUE/index.jsp">Forum</a>
+			<!-- <a class="navbar-brand fa fa-home fa-2x" href="${context}/VUE/index.jsp"></a>-->
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<!-- Elements de la navigation bar -->
 
 			<ul class="nav navbar-nav">
-				<li ><a href="#accueil" class="fa fa-home fa-2x"></a></li>
+				<li ><a href="${context}/VUE/index.jsp" class="fa fa-home fa-2x"></a></li>
 				<c:forEach items="${listCategorie}" var="categorie">
 					<li><a
 						href="${context}/displaysubcategories?nomCategorie=${categorie.getTitre()}">${categorie.getTitre()}</a></li>
 				</c:forEach>
 			</ul>
 			<!-- Partie connexion de la navigation bar -->
-			<!-- action="ConnexionServlet" -->
-			<form class="navbar-form navbar-right" method="POST">
-				<a class="btn btn-primary btn-sm launch-modal" href="#"
+			
+			<form class="navbar-form navbar-right" method="POST" id="profil-form">
+			<a id="username-form" class="btn btn-primary btn-sm launch-modal" href="#"
+					data-modal-id="modal-profile">${sessionScope.utilisateur.getPseudo()}</a> 
+			</form>
+			
+			<form class="navbar-form navbar-right" method="POST" id="deconnect-form">
+					<a class="btn btn-primary btn-sm launch-modal" href="#"
+					data-modal-id="modal-disconnect">Se déconnecter</a>
+			</form>
+			
+			<form class="navbar-form navbar-right" method="POST" id="connect-form">
+				<a class="btn btn-primary btn-sm launch-modal" id="connect" href="#"
 					data-modal-id="modal-login">Se connecter</a> <a
-					class="btn btn-primary btn-sm launch-modal" href="#"
+					class="btn btn-primary btn-sm launch-modal" id="enregistrer" href="#"
 					data-modal-id="modal-register">S'enregistrer</a>
 			</form>
 		</div>
 		<!--/.navbar-collapse -->
 	</div>
 	</nav>
+	
+	<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script>
+	
 </body>
 </html>

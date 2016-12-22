@@ -92,4 +92,28 @@ public class SousCategorie {
 					.collect(Collectors.toCollection(ArrayList::new));
 		return listSousCategorie;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		SousCategorie sousCategorie;
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			sousCategorie = (SousCategorie) obj;
+			if (sousCategorie.getTitre().equals(this.getTitre())
+					&& sousCategorie.getCategorie().equals(this.getCategorie())
+					&& sousCategorie.getIcone()	.equals(this.getIcone())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getTitre().hashCode() 
+				+ this.getCategorie().hashCode() 
+				+ this.getIcone().hashCode();
+	}
 }

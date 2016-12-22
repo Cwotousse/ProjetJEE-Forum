@@ -20,10 +20,9 @@ public class AfficherCommentaireServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		SimpleDateFormat formatter 	= new SimpleDateFormat("dd/MM/yy");
-		//?nomSujet=Issou&nomSousCategorie=18-25&pseudoAuteur=Cwotousse&dateSujet=1992-12-17
 		String nomSujet 			= request.getParameter("nomSujet");
 		String nomSousCategorie 	= request.getParameter("nomSousCategorie");
-		String pseudoAuteur 		= request.getParameter("pseudoAuteur");
+		//String pseudoAuteur 		= request.getParameter("pseudoAuteur");
 		String dateSujet			= request.getParameter("dateSujet");
 
 		Commentaire commentaire 	= new Commentaire();
@@ -42,7 +41,7 @@ public class AfficherCommentaireServlet extends HttpServlet {
 	        java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
 	        
 	        // On récupère la liste de commentaire filtré
-	        ArrayList<Commentaire> listCommentaire = commentaire.getListCommentaireFiltred(nomSujet, nomSousCategorie, pseudoAuteur,sqlDate);
+	        ArrayList<Commentaire> listCommentaire = commentaire.getListCommentaireFiltred(nomSujet, nomSousCategorie, sqlDate);
 
 			int nbrCommentaire = listCommentaire.size();
 
@@ -50,7 +49,7 @@ public class AfficherCommentaireServlet extends HttpServlet {
 				out.println("Il n'y a pas de commentaires pour ce sujet.");
 			} else {
 				request.setAttribute("listeCommentaire", listCommentaire);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/afficherCommentaire.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
 				dispatcher.forward(request, response);
 				response.setContentType("text/html");
 			}

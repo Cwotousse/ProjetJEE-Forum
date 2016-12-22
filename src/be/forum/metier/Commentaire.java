@@ -25,10 +25,10 @@ public class Commentaire {
 
 	public Commentaire(Sujet sujet, Utilisateur utilisateur, String texte,
 			Date dateCommentaire) {
-		this.setSujet(sujet);
-		this.setUtilisateur(utilisateur);
-		this.setTexte(texte);
-		this.setDateCommentaire(dateCommentaire);
+		this.setSujet			(sujet);
+		this.setUtilisateur		(utilisateur);
+		this.setTexte			(texte);
+		this.setDateCommentaire	(dateCommentaire);
 	}
 	
 	/**
@@ -82,7 +82,6 @@ public class Commentaire {
 		ArrayList<CommentairePOJO>	 listCommentairePOJO 	= commentaireDAO.getList();
 		ArrayList<Commentaire> 		 listCommentaire 		= new ArrayList<Commentaire>();
 		
-		
 		for(int i = 0; i < listCommentairePOJO.size(); i++){
 			Commentaire commentaire = new Commentaire(listCommentairePOJO.get(i));
 			listCommentaire.add	(commentaire);
@@ -95,12 +94,11 @@ public class Commentaire {
 	 * @param sousCat : nom de la sous-catégorie
 	 * @return listCommentaireFiltred
 	 */
-	public ArrayList<Commentaire> getListCommentaireFiltred(String nomSujet, String nomSousCategorie, String pseudoAuteur, Date dateSujet){
+	public ArrayList<Commentaire> getListCommentaireFiltred(String nomSujet, String nomSousCategorie, Date dateSujet){
 		ArrayList<Commentaire> listCommentaireFiltred = this.getList()
 					.stream()
 					.filter(x -> x.getSujet().getTitre().equals(nomSujet) 
 							&& x.getSujet().getSousCategorie().getTitre().equals(nomSousCategorie)
-							&& x.getUtilisateur().getPseudo().equals(pseudoAuteur)
 							&& x.getSujet().getDateSujet().equals(dateSujet))
 					.collect(Collectors.toCollection(ArrayList::new));
 		

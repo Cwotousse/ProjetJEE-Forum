@@ -55,4 +55,24 @@ public class Categorie {
 		}
 		return listCategorie;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Categorie categorie;
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			categorie = (Categorie) obj;
+			if (categorie.getTitre().equals(this.getTitre())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getTitre().hashCode();
+	}
 }

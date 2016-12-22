@@ -16,7 +16,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="">
@@ -24,31 +24,27 @@
 <title>Forum Projet JEE</title>
 
 <!-- Bootstrap core CSS -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
-
-<!-- Custom styles for this template -->
-<link href="bootstrap/css/jumbotron.css" rel="stylesheet">
-
+<link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 
 <link rel="stylesheet"
 	href="assets/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="assets/css/form-elements.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<style>
-.carousel-inner>.item>img, .carousel-inner>.item>a>img {
-	width: 70%;
-	margin: auto;
-}
-</style>
+<link rel="stylesheet"
+	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
+<link rel="stylesheet"
+	href="/ProjetJEE-Forum/VUE/bootstrap/css/lumen.css">
+<link href="/ProjetJEE-Forum/VUE/css/comment.css" rel="stylesheet">
+
 </head>
 
 <body>
 	<c:set var="context" value="${pageContext.request.contextPath}" />
-	<c:import url="include/navbar1.jsp"/> 
+	<c:import url="include/navbar1.jsp" />
+
 	<!-- MODAL LOGIN -->
 	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog"
 		aria-labelledby="modal-login-label" aria-hidden="true">
@@ -194,62 +190,342 @@
 					</a>
 				</div>
 			</div>-->
-				<h1>Hello, world!</h1>
-				<p>This is a template for a simple marketing or informational
-					website. It includes a large callout called a jumbotron and three
-					supporting pieces of content. Use it as a starting point to create
-					something more unique.</p>
-				<p>
-					<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-						more &raquo;</a>
-				</p>
+				<!-- row -->
+				<div class="row" id="sub-categorie">
+					<!-- col-lg-12 -->
+					<div class="col-lg-12">
+						<!-- wrapper wrapper-content animated fadeInRight -->
+						<div class="wrapper wrapper-content animated fadeInRight">
+							<!-- ibox-content m-b-sm border-bottom -->
+							<div class="ibox-content m-b-sm border-bottom">
+								<div class="p-xs">
+									<div class="pull-left m-r-md">
+										<i class="fa fa-globe text-navy mid-icon"></i>
+									</div>
+									<h2>Bienvenu(e) sur notre forum</h2>
+									<span>Choisissez la sous-catégorie que vous souhaitez.</span>
+								</div>
+							</div>
+
+							<div class="ibox-content forum-container">
+								<div class="forum-title" id="total-sub-categorie">
+									<div class="pull-right forum-desc">
+										<small>Total de sous-catégorie:
+											${listSousCategorie.size()}</small>
+									</div>
+									<h3>General subjects</h3>
+								</div>
+								<c:forEach items="${listSousCategorie}" var="sousCategorie">
+									<div class="forum-item active" id="elem-sub-categorie">
+										<div class="row">
+											<div class="col-md-9">
+												<div class="forum-icon">
+													<i class="${sousCategorie.getIcone()}"></i>
+												</div>
+												<a
+													href="${context}/displaysubjects?nomSousCategorie=${sousCategorie.getTitre()}"
+													class="forum-item-title" id="btn-sub-categories"
+													onclick="$('#total-sub-categorie').hide()">${sousCategorie.getTitre()}</a>
+												<div class="forum-sub-title">Talk about sports,
+													entertainment, music, movies, your favorite color, talk
+													about enything.</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="views-number"> 1216 </span>
+												<div>
+													<small>Vues</small>
+												</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="views-number"> 368 </span>
+												<div>
+													<small>Topics</small>
+												</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="views-number"> 140 </span>
+												<div>
+													<small>Posts</small>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+						<!-- wrapper wrapper-content animated fadeInRight -->
+					</div>
+					<!-- col-lg-12 -->
+				</div>
+				<!-- row -->
+				<div id="body-text">
+					<h1>Hello, world!</h1>
+					<p>This is a template for a simple marketing or informational
+						website. It includes a large callout called a jumbotron and three
+						supporting pieces of content. Use it as a starting point to create
+						something more unique.</p>
+					<p>
+						<a class="btn btn-primary btn-lg" href="#" role="button">Learn
+							more &raquo;</a>
+					</p>
+				</div>
 			</div>
 		</div>
 
+		<!-- AFFICHAGE DES SUJETS -->
+		<!-- container -->
 		<div class="container">
-			<!-- Example row of columns -->
-			<div class="row">
-				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
-					<p>
-						<a class="btn btn-default" href="#" role="button">View details
-							&raquo;</a>
-					</p>
+			<!-- row -->
+			<div class="row" id="subject">
+				<!-- col-lg-12 -->
+				<div class="col-lg-12">
+					<!-- wrapper wrapper-content animated fadeInRight -->
+					<div class="wrapper wrapper-content animated fadeInRight">
+						<!-- ibox-content m-b-sm border-bottom -->
+						<div class="ibox-content m-b-sm border-bottom">
+							<div class="p-xs">
+								<div class="pull-left m-r-md">
+									<i class="fa fa-globe text-navy mid-icon"></i>
+								</div>
+								<h2>Bienvenu(e) sur notre forum</h2>
+								<span>Choisissez le sujet que vous souhaitez consulter.</span>
+							</div>
+						</div>
+
+						<div class="ibox-content forum-container">
+							<div class="forum-title">
+								<div class="pull-right forum-desc">
+									<!--  count du nombre de sujet dans cette sous cat -->
+									<small>Total posts: ${listeSujets.size()}</small>
+								</div>
+								<h3>General subjects</h3>
+							</div>
+							<c:forEach items="${listeSujets}" var="sujet">
+								<div class="forum-item active" id="elem-sujet">
+									<div class="row">
+										<div class="col-md-9">
+											<div class="forum-icon">
+												<i class="${sousCategorie.getIcone()}"></i>
+											</div>
+											<!-- titre du sujet avec un href -->
+											<a
+												href="<%=request.getContextPath()%>/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
+												class="forum-item-title" title="${sujet.getTitre()}">${sujet.getTitre()}</a>
+
+											<div class="forum-sub-title">Talk about sports,
+												entertainment, music, movies, your favorite color, talk
+												about enything.</div>
+										</div>
+										<div class="col-md-1 forum-info">
+											<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
+											<div>
+												<small>Auteur</small>
+											</div>
+										</div>
+										<div class="col-md-1 forum-info">
+											<span class="views-number">${sujet.getDateSujet()}</span>
+											<div>
+												<small>Date</small>
+											</div>
+										</div>
+										<div class="col-md-1 forum-info">
+											<span class="views-number"> 140 </span>
+											<div>
+												<small>Posts</small>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					<!-- wrapper wrapper-content animated fadeInRight -->
 				</div>
-				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
-					<p>
-						<a class="btn btn-default" href="#" role="button">View details
-							&raquo;</a>
-					</p>
+				<!-- col-lg-12 -->
+			</div>
+			<!-- row -->
+		</div>
+		<!-- container -->
+
+		<!-- Affichage des commentaires -->
+		<div id="comments">
+			<c:forEach items="${listeCommentaire}" var="commentaire">
+				<section class="container" id="elem-comment"> <section
+					class="row clearfix"> <section class="col-md-12 column">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<section class="panel-title"> <time class="pull-right">
+								<i class="fa fa-calendar"></i>
+								${commentaire.getDateCommentaire()}<i class="fa fa-clock-o"></i>
+								h min </time> <section class="pull-left" id="id"> <abbr
+									title="count of posts in this topic">#1</abbr> </section> </section>
+							</div>
+							<section class="row panel-body"> <section
+								class="col-md-9">
+							<h2>
+								<i class="fa fa-smile-o"></i>
+								${commentaire.getSujet().getTitre()}
+							</h2>
+							<hr>
+							${commentaire.getTexte()} </section> <section id="user-description"
+								class="col-md-3 "> <section class="well">
+							<div class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+									class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
+									class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-user"></i> See profile</a></li>
+									<li><a href="#"><i class="fa fa-envelope"></i> Send PM</a></li>
+								</ul>
+							</div>
+							<figure> <img class="img-rounded img-responsive"
+								src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
+								alt="Adista's avatar"> <figcaption class="text-center">
+							<br>
+							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+								class="fa fa-star-half"></i> </figcaption> </figure>
+							<dl class="dl-horizontal">
+								<dt>joined date:</dt>
+								<dd>15 September 2016</dd>
+								<dt>Posts:</dt>
+								<dd>785</dd>
+								<dt>plus:</dt>
+								<dd>+89</dd>
+								<dt>like:</dt>
+								<dd>150 like in 50 post</dd>
+							</dl>
+							</section> </section> </section>
+							<div class="panel-footer">
+								<div class="row">
+									<section class="col-md-2 "> </section>
+									<section class="col-md-6"> <small><a href="#"
+										data-toggle="tooltip" title=""> </a> </small> <br>
+									</section>
+
+									<section class="col-md-4"> <a
+										class="btn btn-primary launch-modal" href="#"
+										data-modal-id="modal-comment" id="reply">Répondre <i
+										class="fa fa-mail-reply "></i></a> <a href="#"
+										class="btn btn-primary launch-modal" id="edit" href="#"
+										data-modal-id="modal-modify">Modifier <i
+										class="fa fa-edit "></i>
+									</a> </section>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis
-						in, egestas eget quam. Vestibulum id ligula porta felis euismod
-						semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-						condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-					<p>
-						<a class="btn btn-default" href="#" role="button">View details
-							&raquo;</a>
-					</p>
+				</section> </section> </section>
+			</c:forEach>
+		</div>
+		<!-- MODAL ADD COMMENT -->
+		<div class="modal fade" id="modal-comment" tabindex="-1" role="dialog"
+			aria-labelledby="modal-comment-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+						</button>
+						<h3 class="modal-title" id="modal-comment-label">Ajouter un
+							commentaire</h3>
+						<p>Veuillez entrer le commentaire que vous voulez ajouter:</p>
+					</div>
+
+					<div class="modal-body">
+						<form role="form"
+							action="<%=request.getContextPath()%>/addComment" method="POST"
+							class="comment-form">
+							<div class="form-group">
+								<label class="sr-only" for="form-comment">Commentaire</label>
+								<textarea name="form-comment" placeholder=""
+									class="form-comment form-control" id="form-comment"></textarea>
+							</div>
+							<button type="submit" class="btn">Confirmer</button>
+						</form>
+					</div>
 				</div>
 			</div>
-
-			<hr>
-
-			<footer>
-			<p>&copy; 2016 Company, Inc.</p>
-			</footer>
 		</div>
+
+		<!-- MODAL MODIFY COMMENT -->
+		<div class="modal fade" id="modal-modify" tabindex="-1" role="dialog"
+			aria-labelledby="modal-modify-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+						</button>
+						<h3 class="modal-title" id="modal-modify-label">Modifier un
+							commentaire</h3>
+						<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
+					</div>
+
+					<div class="modal-body">
+						<form role="form" action="" method="POST" class="modify-form">
+							<div class="form-group">
+								<label class="sr-only" for="form-modify">Commentaire</label>
+								<textarea name="form-modify" placeholder="Votre commentaire..."
+									class="form-modify form-control" id="form-modify"></textarea>
+							</div>
+							<button type="submit" class="btn">Confirmer</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- MODAL PROFILE-->
+		<div class="modal fade" id="modal-profile" tabindex="-1" role="dialog"
+			aria-labelledby="modal-profile-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+						</button>
+						<h3 class="modal-title" id="modal-profile-label">Votre profil</h3>
+					</div>
+					<div class="modal-body">
+						<div class="div-pseudo">
+							<strong>Pseudo</strong>
+							<p>${sessionScope.utilisateur.getPseudo()}</p>
+						</div>
+						<div class="div-nom">
+							<strong>Nom</strong>
+							<p>${sessionScope.utilisateur.getNom()}</p>
+						</div>
+						<div class="div-prenom">
+							<strong>Prénom</strong>
+							<p>${sessionScope.utilisateur.getPrenom()}</p>
+						</div>
+						<div class="div-datenaissance">
+							<strong>Date de naissance</strong>
+							<p>${sessionScope.utilisateur.getDateNaissance()}</p>
+						</div>
+						<div class="div-email">
+							<strong>Email</strong>
+							<p>${sessionScope.utilisateur.getMail()}</p>
+						</div>
+						<div class="div-type">
+							<strong>Type</strong>
+							<p>${sessionScope.utilisateur.getType()}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin affichage des commentaires -->
+
+		<hr>
+
+		<footer>
+		<p>&copy; 2016 Company, Inc.</p>
+		</footer>
 		<!-- /container -->
 
 
@@ -263,8 +539,8 @@
 					|| document
 							.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
 		</script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<script src="assets/js/jquery.backstretch.min.js"></script>
-		<script src="assets/js/scripts.js"></script>
+		<script src="/ProjetJEE-Forum/VUE/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/ProjetJEE-Forum/VUE/assets/js/jquery.backstretch.min.js"></script>
+		<script src="/ProjetJEE-Forum/VUE/assets/js/scripts.js"></script>
 </body>
 </html>

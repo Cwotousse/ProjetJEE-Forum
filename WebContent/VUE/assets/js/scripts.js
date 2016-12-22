@@ -74,6 +74,56 @@ jQuery(document)
 														});
 
 									});
+					
+					//Cache la partie affichage commentaire (useless)
+					if ($('#elem-sub-categorie').length >= 1){
+						// Affich les sous catégories
+						$("#body-text").hide();
+						$('#subject').hide();
+						$('#comments').hide();
+						$('#sub-categorie').show();
+					}
+					else if ($('#elem-sujet').length >= 1){
+						// Affiche les sujets
+						$("#body-text").hide();
+						$('#sub-categorie').hide();
+						$('#comments').hide();
+						$('#subject').show();
+					}
+					else if ($('#elem-comment').length >= 1){
+						// Affiche les commentaires
+						$("#body-text").hide();
+						$('#sub-categorie').hide();
+						$('#subject').hide();
+						$('#comments').show();
+					}
+					else{
+						// L'accueil est affiché
+						$('#sub-categorie').hide();
+						$('#subject').hide();
+						$('#comments').hide();
+						$("#body-text").show();
+					}
+					
+					// Si l'utilisateur n'est pas connecté, le nom n'apparait pas dans le bouton pour voir son profil
+					// Dans ce cas on affiche la navbar pour se connecter
+					if($('#username-form').text().length == 0){
+						// Il est déconnecté
+						$('#deconnect-form').hide();
+						$("#profil-form").hide();
+						$("#connect-form").show();
+						
+						//Je cache les boutons modifier et ajouter pour qu'un invité ne puisse pas faire cela
+						$("#reply").hide();
+						$("#edit").hide();
+					}
+					else{
+						// Il est connecté
+						$('#deconnect-form').show();
+						$("#profil-form").show();
+						$("#connect-form").hide();
 
+					}
+					
 				});
 $("[data-toggle=tooltip]").tooltip();

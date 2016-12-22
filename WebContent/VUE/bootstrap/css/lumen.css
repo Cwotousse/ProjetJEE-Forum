@@ -238,3 +238,8 @@ a.forum-item-title:hover {
 .m-b-sm {
 	margin-bottom: 10px;
 }
+
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+	width: 70%;
+	margin: auto;
+}

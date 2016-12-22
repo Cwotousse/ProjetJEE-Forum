@@ -29,7 +29,7 @@ public class AfficherSousCategorieServlet extends HttpServlet {
 			out.println("0");
 		} else {
 			request.setAttribute("listSousCategorie", listSousCategorie);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/test.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
 	        dispatcher.forward(request, response); 
 			response.setContentType("text/html");
 		}

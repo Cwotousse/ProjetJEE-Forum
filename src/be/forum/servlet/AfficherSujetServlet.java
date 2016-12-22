@@ -28,14 +28,10 @@ public class AfficherSujetServlet extends HttpServlet {
 		//out.println(nomSousCategorie);
 		if (listSujet.isEmpty() || nbrPosts == 0){
 			out.println("Il n'y a pas de posts pour cette sous-catégorie.");
-		}
-		else {
-			//out.println(listSujet.get(0).getTitre());
+		} else {
 			request.setAttribute("listeSujets", listSujet);
-			//you redirect the page instead of forward it. 
-			//response.sendRedirect("/ProjetJEE-Forum\\VUE\\sousCategorie.jsp");
 
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/sousCategorie.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
 	        dispatcher.forward(request, response); 
 			response.setContentType("text/html");
 		}
