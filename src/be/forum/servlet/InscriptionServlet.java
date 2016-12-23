@@ -24,10 +24,10 @@ public class InscriptionServlet extends HttpServlet {
 				//Date de naissance
 				java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 				
-				UtilisateurModele modele = new UtilisateurModele();
+				UtilisateurModele utilisateurModele = new UtilisateurModele();
 				
 				PrintWriter out = response.getWriter();
-				if(modele.inscription(pseudo, motdepasse, nom, prenom, mail, datePourTester))
+				if(utilisateurModele.inscription(pseudo, motdepasse, nom, prenom, mail, datePourTester))
 					response.sendRedirect("/VUE\\index.jsp"); 
 				else
 					out.println("Le pseudo que vous avez saisi existe déjà.");

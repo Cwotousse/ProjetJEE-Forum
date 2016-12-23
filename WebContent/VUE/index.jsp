@@ -355,7 +355,7 @@
 								${commentaire.getSujet().getDateSujet()}</div>
 								</time>
 								<section class="pull-left" id="id"> <abbr
-									title="count of posts in this topic">#1</abbr> </section> </section>
+									title="count of posts in this topic">${commentaire.getID()}</abbr> </section> </section>
 							</div>
 							<section class="row panel-body"> <section
 								class="col-md-9">

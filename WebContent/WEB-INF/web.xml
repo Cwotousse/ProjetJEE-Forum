@@ -49,20 +49,28 @@
     <servlet-name>addcomment</servlet-name>
     <url-pattern>/addComment</url-pattern>
   </servlet-mapping>
-	<servlet>
-		<servlet-name>displaycategories</servlet-name>
-		<servlet-class>be.forum.servlet.AfficherCategorieServlet</servlet-class>
-	</servlet>
+  <servlet>
+    <servlet-name>displaycategories</servlet-name>
+    <servlet-class>be.forum.servlet.AfficherCategorieServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>displaycategories</servlet-name>
     <url-pattern>/displaycategories</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>displaysubcategories</servlet-name>
     <servlet-class>be.forum.servlet.AfficherSousCategorieServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>displaysubcategories</servlet-name>
     <url-pattern>/displaysubcategories</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>addsubject</servlet-name>
+    <servlet-class>be.forum.servlet.AjouterSujetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addsubject</servlet-name>
+    <url-pattern>/addsubject</url-pattern>
   </servlet-mapping>
 </web-app>

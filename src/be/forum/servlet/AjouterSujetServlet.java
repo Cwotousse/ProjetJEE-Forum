@@ -16,15 +16,11 @@ import be.forum.modele.SujetModele;
 import be.forum.pojo.Sujet;
 import be.forum.pojo.Utilisateur;
 
-public class AjouterCommentaireServlet extends HttpServlet {
+public class AjouterSujetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public AjouterCommentaireServlet() {
-		super();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// #TODO a faire
 		PrintWriter out = response.getWriter();
 		try {
 			// Récuperation des données de session
@@ -80,11 +76,9 @@ public class AjouterCommentaireServlet extends HttpServlet {
 			e.getStackTrace();
 			out.println(e.getMessage());
 		}
-
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
