@@ -1,0 +1,4 @@
+- Faire une servlet ONLOAD sur index, qui enverra par attribut (setAttribute) 
+la liste des catégories, ainsi que la liste des sous catégories
+- Utiliser du JSTL pour récupérer ces listes pour ne plus avoir de scriptlets (java dans jsp)
+- Faire un beau tableau pour les sujets et l'intégrer dans "index.jsp"
