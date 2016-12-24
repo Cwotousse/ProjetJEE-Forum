@@ -6,7 +6,7 @@ public class Sprocs {
 	 */
 	public final static String INSERTUTILISATEUR 	= "{CALL INSERTUTILISATEUR(?,?,?,?,?,?,?)}";
 	public final static String DELETEUTILISATEUR 	= "{CALL DELETEUTILISATEUR(?)}";
-	public final static String UPDATEUTILISATEUR 	= "{CALL UPDATEUTILISATEUR(?,?,?,?,?,?,?)}";
+	public final static String UPDATEUTILISATEUR 	= "{CALL UPDATEUTILISATEUR(?,?,?,?,?,?,?,?)}";
 	public final static String SELECTUTILISATEUR 	= "{CALL SELECTUTILISATEUR(?,?,?,?,?,?,?,?)}";
 	public final static String GETLISTUTILISATEUR	= "{CALL GETLISTUTILISATEUR(?)}";
 	

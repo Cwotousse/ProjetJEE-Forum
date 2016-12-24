@@ -16,7 +16,9 @@ import be.forum.pojo.Utilisateur;
 
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	public static final String ACCES_PUBLIC = "/VUE\\index.jsp";
+	public static final String ACCES_RESTREINT = "/restrained/restrained_access.jsp";
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pseudo 		= request.getParameter("pseudo");
@@ -26,7 +28,6 @@ public class ConnexionServlet extends HttpServlet {
 		Utilisateur utilisateurConnecté = utilisateurModele.connexion(pseudo, motdepasse);
 		
 		PrintWriter out = response.getWriter();
-		out.println(pseudo + " " + motdepasse);
 		if (pseudo.equals("") || motdepasse.equals("")) {
 			out.println("Vous n'avez pas rempli les champs nécessaires.");
 		}
@@ -54,8 +55,14 @@ public class ConnexionServlet extends HttpServlet {
 			historiqueModele.creer(utilisateurConnecté);
 			
 			session.setAttribute("utilisateur", utilisateurConnecté);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE\\index.jsp");
-	        dispatcher.forward(request, response); 
+			if(utilisateurConnecté.getType().equals("Utilisateur")){
+		        RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
+		        dispatcher.forward(request, response); 
+			} else {
+		        RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
+		        dispatcher.forward(request, response); 
+			}
+
 			response.setContentType("text/html");
 		}
 	}

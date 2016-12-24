@@ -65,12 +65,44 @@
     <servlet-name>displaysubcategories</servlet-name>
     <url-pattern>/displaysubcategories</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>addsubject</servlet-name>
     <servlet-class>be.forum.servlet.AjouterSujetServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>addsubject</servlet-name>
     <url-pattern>/addsubject</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>displayusers</servlet-name>
+    <servlet-class>be.forum.servlet.AfficherListUtilisateurServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>displayusers</servlet-name>
+    <url-pattern>/displayusers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>deleteuser</servlet-name>
+    <servlet-class>be.forum.servlet.SupprimerUtilisateurServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deleteuser</servlet-name>
+    <url-pattern>/deleteuser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>edituser</servlet-name>
+    <servlet-class>be.forum.servlet.ModifierUtilisateurServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>edituser</servlet-name>
+    <url-pattern>/edituser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>displayuser</servlet-name>
+    <servlet-class>be.forum.servlet.AfficherUtilisateurServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>displayuser</servlet-name>
+    <url-pattern>/displayuser</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -56,7 +56,10 @@
 				</c:forEach>
 			</ul>
 			<!-- Partie connexion de la navigation bar -->
-
+			<form class="navbar-form navbar-right" method="POST" id="admin-form">
+				<a class="btn btn-primary btn-sm" href="/ProjetJEE-Forum/VUE/restrained/restrained_access.jsp">Administration</a>
+			</form>
+			
 			<form class="navbar-form navbar-right" method="POST" id="profil-form">
 				<a id="username-form" class="btn btn-primary btn-sm launch-modal"
 					href="#" data-modal-id="modal-profile">${sessionScope.utilisateur.getPseudo()}</a>
@@ -100,7 +103,6 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-		
 	</script>
 </body>
 </html>
