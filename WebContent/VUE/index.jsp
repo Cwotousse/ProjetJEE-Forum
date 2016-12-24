@@ -54,7 +54,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/login"
+					<form role="form" action="${context}/login"
 						method="POST" class="login-form">
 						<div class="form-group">
 							<label class="sr-only" for="pseudo">Pseudo</label> <input
@@ -87,7 +87,7 @@
 					<p>Remplissez les champs suivants:</p>
 				</div>
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/register"
+					<form role="form" action="${context}/register"
 						method="post" class="registration-form">
 						<div class="form-group">
 							<label class="sr-only" for="form-username">Pseudo</label> <input
@@ -139,15 +139,15 @@
 					<div class="carousel-inner" role="listbox">
 
 						<div class="item active">
-							<img src="http://esq.h-cdn.co/assets/15/32/1438985167-screen-shot-2015-08-07-at-60550-pm.png" alt="Chania" width="460" height="345">
+							<img src="source" alt="Chania" width="460" height="345">
 							<div class="carousel-caption">
 								<h3>Mia</h3>
-								<p>PORNSTAR</p>
+								<p>description</p>
 							</div>
 						</div>
 
 						<div class="item">
-							<img src="http://vignette4.wikia.nocookie.net/prowrestling/images/a/a5/Annie_Cruz.jpg/revision/latest?cb=20140822020817" alt="Chania" width="460" height="345">
+							<img src="source" alt="Chania" width="460" height="345">
 							<div class="carousel-caption">
 								<h3>Annie</h3>
 								<p>The idol of Adrien</p>
@@ -413,6 +413,7 @@
 				</section> </section> </section>
 			</c:forEach>
 		</div>
+		
 		<!-- MODAL ADD COMMENT -->
 		<div class="modal fade" id="modal-comment" tabindex="-1" role="dialog"
 			aria-labelledby="modal-comment-label" aria-hidden="true">

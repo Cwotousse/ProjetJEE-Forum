@@ -17,7 +17,7 @@ import be.forum.pojo.Utilisateur;
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String ACCES_PUBLIC = "/VUE\\index.jsp";
-	public static final String ACCES_RESTREINT = "/restrained/restrained_access.jsp";
+	public static final String ACCES_RESTREINT = "/restrained_access.jsp";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
