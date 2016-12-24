@@ -73,13 +73,14 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 			//Appel de la procédure stockée pour modifier un utilisateur
 			cst = connect.prepareCall(Sprocs.UPDATEUTILISATEUR);
 			
-			cst.setString	(1, utilisateur.getMotdepasse());
-			cst.setString	(2, utilisateur.getNom());
-			cst.setString	(3, utilisateur.getPrenom());
-			cst.setDate		(4, (Date) utilisateur.getDateNaissance());
-			cst.setString	(5, utilisateur.getType());
-			cst.setString	(6, utilisateur.getMail());
-			cst.setString	(7, utilisateur.getPseudo());
+			cst.setString	(1, utilisateur.getPseudo());
+			cst.setString	(2, utilisateur.getMotdepasse());
+			cst.setString	(3, utilisateur.getNom());
+			cst.setString	(4, utilisateur.getPrenom());
+			cst.setDate		(5, (Date) utilisateur.getDateNaissance());
+			cst.setString	(6, utilisateur.getType());
+			cst.setString	(7, utilisateur.getMail());
+			cst.setInt		(8, utilisateur.getID());
 			
 			cst.executeUpdate();
 		} catch (SQLException e) {

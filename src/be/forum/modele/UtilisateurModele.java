@@ -15,6 +15,17 @@ public class UtilisateurModele {
 	}
 	
 	/**
+	 * Recherche un utilisateur dans la liste grâce à son pseudo
+	 * @param pseudo
+	 * @return objet utilisateur trouvé sinon null
+	 */
+	public Utilisateur getUtilisateur(String pseudo){
+		return this.getList().stream()
+				.filter(x -> x.getPseudo().equals(pseudo))
+				.findAny()
+				.orElse(null);
+	}
+	/**
 	 * Connecte l'utilisateur au site
 	 * - Filtre une liste, en cherchant si un pseudo et un mot de passe
 	 * correspondent à un élément de la liste.
@@ -29,6 +40,16 @@ public class UtilisateurModele {
 				.orElse(null);
 	}
 	
+	/**
+	 * Ajoute un utilisateur dans la base de données, si son pseudo ou son mail n'existe pas déjà
+	 * @param pseudo
+	 * @param motdepasse
+	 * @param nom
+	 * @param prenom
+	 * @param mail
+	 * @param dateNaissance
+	 * @return true si ok sinon false
+	 */
 	public boolean inscription(String pseudo, String motdepasse, String nom, String prenom, String mail, java.sql.Date dateNaissance){
 		//Vérification champs vides fait en javascript
 		Utilisateur utilisateur = new Utilisateur();
@@ -54,4 +75,20 @@ public class UtilisateurModele {
 			return true;
 		}
 	}	
+	
+	/**
+	 * Supprime un utilisateur
+	 * @param utilisateur
+	 */
+	public void supprimer(Utilisateur utilisateur){
+		new DAOFactory().getUtilisateurDAO().delete(utilisateur);
+	}
+	
+	/**
+	 * Modifie les informations d'un utilisateur
+	 * @param utilisateur
+	 */
+	public void modifier(Utilisateur utilisateur){
+		new DAOFactory().getUtilisateurDAO().update(utilisateur);
+	}
 }

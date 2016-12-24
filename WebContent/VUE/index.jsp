@@ -54,7 +54,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/login"
+					<form role="form" action="${context}/login"
 						method="POST" class="login-form">
 						<div class="form-group">
 							<label class="sr-only" for="pseudo">Pseudo</label> <input
@@ -66,7 +66,7 @@
 								type="password" name="motdepasse" placeholder="Mot de passe..."
 								class="form-password form-control" id="motdepasse">
 						</div>
-						<button type="submit" class="btn">Se connecter</button>
+						<button type="submit" class="btn1">Se connecter</button>
 					</form>
 				</div>
 			</div>
@@ -87,7 +87,7 @@
 					<p>Remplissez les champs suivants:</p>
 				</div>
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/register"
+					<form role="form" action="${context}/register"
 						method="post" class="registration-form">
 						<div class="form-group">
 							<label class="sr-only" for="form-username">Pseudo</label> <input
@@ -116,7 +116,7 @@
 								type="text" name="form-email" placeholder="Email..."
 								class="form-email form-control" id="form-email">
 						</div>
-						<button type="submit" class="btn">S'enregistrer</button>
+						<button type="submit" class="btn1">S'enregistrer</button>
 					</form>
 				</div>
 			</div>
@@ -139,15 +139,15 @@
 					<div class="carousel-inner" role="listbox">
 
 						<div class="item active">
-							<img src="http://esq.h-cdn.co/assets/15/32/1438985167-screen-shot-2015-08-07-at-60550-pm.png" alt="Chania" width="460" height="345">
+							<img src="source" alt="Chania" width="460" height="345">
 							<div class="carousel-caption">
 								<h3>Mia</h3>
-								<p>PORNSTAR</p>
+								<p>description</p>
 							</div>
 						</div>
 
 						<div class="item">
-							<img src="http://vignette4.wikia.nocookie.net/prowrestling/images/a/a5/Annie_Cruz.jpg/revision/latest?cb=20140822020817" alt="Chania" width="460" height="345">
+							<img src="source" alt="Chania" width="460" height="345">
 							<div class="carousel-caption">
 								<h3>Annie</h3>
 								<p>The idol of Adrien</p>
@@ -413,6 +413,7 @@
 				</section> </section> </section>
 			</c:forEach>
 		</div>
+		
 		<!-- MODAL ADD COMMENT -->
 		<div class="modal fade" id="modal-comment" tabindex="-1" role="dialog"
 			aria-labelledby="modal-comment-label" aria-hidden="true">
@@ -441,7 +442,7 @@
 								<textarea name="form-comment" placeholder="Votre commentaire..."
 									class="form-comment form-control" id="form-comment"></textarea>
 							</div>
-							<button type="submit" class="btn">Confirmer</button>
+							<button type="submit" class="btn1">Confirmer</button>
 						</form>
 					</div>
 				</div>
@@ -469,7 +470,7 @@
 								<textarea name="form-modify" placeholder="Votre commentaire..."
 									class="form-modify form-control" id="form-modify"></textarea>
 							</div>
-							<button type="submit" class="btn">Confirmer</button>
+							<button type="submit" class="btn1">Confirmer</button>
 						</form>
 					</div>
 				</div>
@@ -490,27 +491,27 @@
 					<div class="modal-body">
 						<div class="div-pseudo">
 							<strong>Pseudo</strong>
-							<p>${sessionScope.utilisateur.getPseudo()}</p>
+							<p id="pseudo">${sessionScope.utilisateur.getPseudo()}</p>
 						</div>
 						<div class="div-nom">
 							<strong>Nom</strong>
-							<p>${sessionScope.utilisateur.getNom()}</p>
+							<p id="nom">${sessionScope.utilisateur.getNom()}</p>
 						</div>
 						<div class="div-prenom">
 							<strong>Prénom</strong>
-							<p>${sessionScope.utilisateur.getPrenom()}</p>
+							<p id="prenom">${sessionScope.utilisateur.getPrenom()}</p>
 						</div>
 						<div class="div-datenaissance">
 							<strong>Date de naissance</strong>
-							<p>${sessionScope.utilisateur.getDateNaissance()}</p>
+							<p id="date-naissance">${sessionScope.utilisateur.getDateNaissance()}</p>
 						</div>
 						<div class="div-email">
 							<strong>Email</strong>
-							<p>${sessionScope.utilisateur.getMail()}</p>
+							<p id="email">${sessionScope.utilisateur.getMail()}</p>
 						</div>
 						<div class="div-type">
 							<strong>Type</strong>
-							<p>${sessionScope.utilisateur.getType()}</p>
+							<p id="type">${sessionScope.utilisateur.getType()}</p>
 						</div>
 					</div>
 				</div>
