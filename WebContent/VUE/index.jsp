@@ -349,19 +349,20 @@
 					<div class="col-md-12 column">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<section class="panel-title"> 
-								<time class="pull-right"><i class="fa fa-calendar"></i>
+								<section class="panel-title"> <time class="pull-right">
+								<i class="fa fa-calendar"></i>
 								<div id="date-creation-sujet">
-								${commentaire.getSujet().getDateSujet()}</div>
-								</time>
-								<section class="pull-left" id="id"> <abbr
-									title="count of posts in this topic">${commentaire.getID()}</abbr> </section> </section>
+									${commentaire.getSujet().getDateSujet()}</div>
+								</time> <section class="pull-left" id="id"> 
+								<abbr
+									title="count of posts in this topic">${commentaire.getID()}</abbr>
+								</section> </section>
 							</div>
 							<section class="row panel-body"> <section
 								class="col-md-9">
 							<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
 							<hr>
-							${commentaire.getTexte()} </section> <section id="user-description"
+							<div id="corps-comment">${commentaire.getTexte()}</div></section> <section id="user-description"
 								class="col-md-3 "> <section class="well">
 							<div class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
@@ -396,15 +397,20 @@
 									<section class="col-md-6"> <small><a href="#"
 										data-toggle="tooltip" title=""> </a> </small> <br>
 									</section>
-
-									<section class="col-md-4"> <a
-										class="btn btn-primary launch-modal" href="#"
-										data-modal-id="modal-comment" id="reply">Répondre <i
-										class="fa fa-mail-reply "></i></a> <a href="#"
-										class="btn btn-primary launch-modal" id="edit" href="#"
-										data-modal-id="modal-modify">Modifier <i
-										class="fa fa-edit "></i>
-									</a> </section>
+									
+									<!-- La personne connectée ne pourra modifier que ses posts -->
+									<c:choose>
+										<c:when test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo()}">
+											<section>
+											 	<a href="#"
+													class="btn btn-primary launch-modal" id="edit" href="#"
+													data-modal-id="modal-modify">
+													Modifier
+													<i class="fa fa-edit "></i>
+												</a>
+											</section>
+										</c:when>
+									</c:choose>
 								</div>
 							</div>
 						</div>
@@ -412,6 +418,10 @@
 				</div>
 				</section> </section> </section>
 			</c:forEach>
+			<a
+				class="btn btn-primary launch-modal" href="#"
+				data-modal-id="modal-comment" id="reply">Répondre <i
+				class="fa fa-mail-reply "></i></a>
 		</div>
 		<!-- MODAL ADD COMMENT -->
 		<div class="modal fade" id="modal-comment" tabindex="-1" role="dialog"
@@ -432,12 +442,13 @@
 							action="<%=request.getContextPath()%>/addComment" method="POST"
 							class="comment-form">
 							<div class="form-group">
-								<label class="sr-only" for="form-comment">Commentaire</label>
-								<label class="form-comment form-control"  id="nom-sujet-label">nom</label>
-								<label class="form-comment form-control"  id="date-sujet-label">date</label>
-								
-								<input type="hidden" name="nom-sujet-hidden" id="nom-sujet-hidden" value="xxx" ></input>
-								<input type="hidden" name="date-sujet-hidden" id="date-sujet-hidden" value="xxx"></input>
+								<label class="sr-only" for="form-comment">Commentaire</label> <label
+									class="form-comment form-control" id="nom-sujet-label">nom</label>
+								<label class="form-comment form-control" id="date-sujet-label">date</label>
+
+								<input type="hidden" name="nom-sujet-hidden"
+									id="nom-sujet-hidden" value="xxx"></input> <input type="hidden"
+									name="date-sujet-hidden" id="date-sujet-hidden" value="xxx"></input>
 								<textarea name="form-comment" placeholder="Votre commentaire..."
 									class="form-comment form-control" id="form-comment"></textarea>
 							</div>
@@ -459,14 +470,13 @@
 						</button>
 						<h3 class="modal-title" id="modal-modify-label">Modifier un
 							commentaire</h3>
-						<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
 					</div>
 
 					<div class="modal-body">
 						<form role="form" action="" method="POST" class="modify-form">
 							<div class="form-group">
 								<label class="sr-only" for="form-modify">Commentaire</label>
-								<textarea name="form-modify" placeholder="Votre commentaire..."
+								<textarea name="form-modify"
 									class="form-modify form-control" id="form-modify"></textarea>
 							</div>
 							<button type="submit" class="btn">Confirmer</button>
