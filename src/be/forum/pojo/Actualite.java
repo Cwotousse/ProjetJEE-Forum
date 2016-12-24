@@ -4,13 +4,15 @@ public class Actualite {
 	private int 	idActualite;
 	private String 	titre;
 	private String 	description;
+	private String 	image;
 	
 	public Actualite() { }
 
-	public Actualite(int idActualite, String titre, String description) {
+	public Actualite(int idActualite, String titre, String description, String image) {
 		this.setID(idActualite);
 		this.setTitre(titre);
 		this.setDescription(description);
+		this.setImage(image);
 	}
 
 	public int getID() {
@@ -35,5 +37,13 @@ public class Actualite {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}	
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}	
 }

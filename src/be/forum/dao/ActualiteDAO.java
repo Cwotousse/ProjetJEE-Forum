@@ -23,6 +23,7 @@ public class ActualiteDAO extends DAO<Actualite> {
 
 			cst.setString	(1, actualite.getTitre());
 			cst.setString	(2, actualite.getDescription());
+			cst.setString	(3, actualite.getImage());
 			cst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -73,6 +74,7 @@ public class ActualiteDAO extends DAO<Actualite> {
 			cst.setInt		(1, actualite.getID());
 			cst.setString	(2, actualite.getTitre());
 			cst.setString	(3, actualite.getDescription());
+			cst.setString	(4, actualite.getImage());
 			cst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,18 +97,19 @@ public class ActualiteDAO extends DAO<Actualite> {
 		try {
 			//Appel de la procédure stockée pour trouver une actualite
 			cst = connect.prepareCall(Sprocs.SELECTACTUALITE);
-			//pst = this.connect.prepareStatement("SELECT * FROM Actualite WHERE idActualite = ?");
 			//J'insère le paramètre entrant
 			cst.setInt(1, id);
 			//Je récupère les paramètres sortants de la procédures stockées
 			cst.registerOutParameter(2, java.sql.Types.VARCHAR);
 			cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cst.registerOutParameter(4, java.sql.Types.VARCHAR);
 			cst.executeQuery();
 			
 			actualite = new Actualite(
 					id,
 					cst.getString 	(2),
-					cst.getString	(3)
+					cst.getString	(3),
+					cst.getString	(4)
 			);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +143,8 @@ public class ActualiteDAO extends DAO<Actualite> {
 				actualite = new Actualite(
 							rs.getInt			("idActualite"), 
 							rs.getString		("titre"),
-							rs.getString		("description")
+							rs.getString		("description"),
+							rs.getString		("image")
 						);
 				listActualite.add(actualite);
 			}

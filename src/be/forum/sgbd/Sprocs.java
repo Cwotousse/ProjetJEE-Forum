@@ -13,10 +13,10 @@ public class Sprocs {
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE ACTUALITEDAO
 	 */
-	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?)}";
+	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?,?)}";
 	public final static String DELETEACTUALITE 		= "{CALL DELETEACTUALITE(?,?)}";
-	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?)}";
-	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?)}";
+	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?,?)}";
+	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?,?)}";
 	public final static String GETLISTACTUALITE		= "{CALL GETLISTACTUALITE(?)}";
 	
 	/**
