@@ -128,14 +128,17 @@
 		<div class="container">
 			<div>
 				<h1>Hello, world!</h1>
-				<p>This is a template for a simple marketing or informational
+				<!-- <p>This is a template for a simple marketing or informational
 					website. It includes a large callout called a jumbotron and three
 					supporting pieces of content. Use it as a starting point to create
 					something more unique.</p>
 				<p>
 					<a class="btn btn-primary btn-lg" href="#" role="button">Learn
 						more &raquo;</a>
-				</p>
+				</p>-->
+				
+				 <!-- <img class="img-responsive img-rounded" src="assets/img/tree.jpg" alt="img opening">  -->
+				 <img class="img-responsive img-rounded" src="https://wallpaperscraft.com/image/deer_minimalism_vector_background_nature_93845_1920x1080.jpg" alt="img opening"> 
 			</div>
 		</div>
 	</div>
@@ -247,18 +250,15 @@
 										</a>
 									</c:if>
 								</div>
-
-
 							</div>
 
 							<c:forEach items="${listeSujets}" var="sujet" varStatus="loop">
-								<input type="hidden" id="sous-categorie-hidden"
-									value="${sujet.getSousCategorie().getTitre()}">
-
 								<div class="forum-item active" id="elem-sujet">
 									<div class="row">
 										<div class="col-md-9">
 											<div class="forum-icon">
+												<input type="hidden" id="sous-categorie-hidden"
+												value="${sujet.getSousCategorie().getTitre()}">
 												<i class="${sujet.getSousCategorie().getIcone()}"></i>
 											</div>
 											<!-- titre du sujet avec un href -->
