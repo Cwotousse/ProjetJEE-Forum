@@ -15,6 +15,7 @@ import be.forum.pojo.Actualite;
 
 public class AfficherActualiteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String ACCES_PUBLIC = "/VUE\\index.jsp";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ActualiteModele actualiteModele = new ActualiteModele();
@@ -26,9 +27,10 @@ public class AfficherActualiteServlet extends HttpServlet {
 			out.println("Il n'y a pas de posts pour ce sujet.");
 		} else {
 			request.setAttribute("listActualite", listActualite);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/index.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
 	        dispatcher.forward(request, response);
 			response.setContentType("text/html");
+			//response.setContentType("text/css");
 		}
 	}
 

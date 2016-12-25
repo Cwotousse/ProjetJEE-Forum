@@ -123,12 +123,28 @@
 		</div>
 	</div>
 
-	<!-- Main jumbotron for a primary marketing message or call to action >-->
-	<div class="jumbotron">
+	<!-- row -->
+	<div class="jumbotron" id="body-text">
 		<div class="container">
+			<div>
+				<h1>Hello, world!</h1>
+				<p>This is a template for a simple marketing or informational
+					website. It includes a large callout called a jumbotron and three
+					supporting pieces of content. Use it as a starting point to create
+					something more unique.</p>
+				<p>
+					<a class="btn btn-primary btn-lg" href="#" role="button">Learn
+						more &raquo;</a>
+				</p>
+			</div>
+		</div>
+	</div>
 
+	<!-- Main jumbotron for a primary marketing message or call to action >-->
+	<div class="jumbotron" id="sub-categorie">
+		<div class="container">
 			<!-- row -->
-			<div class="row" id="sub-categorie">
+			<div class="row">
 				<!-- col-lg-12 -->
 				<div class="col-lg-12">
 					<!-- wrapper wrapper-content animated fadeInRight -->
@@ -194,253 +210,248 @@
 				</div>
 				<!-- col-lg-12 -->
 			</div>
-			<!-- row -->
-			<div id="body-text">
-				<h1>Hello, world!</h1>
-				<p>This is a template for a simple marketing or informational
-					website. It includes a large callout called a jumbotron and three
-					supporting pieces of content. Use it as a starting point to create
-					something more unique.</p>
-				<p>
-					<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-						more &raquo;</a>
-				</p>
-			</div>
 		</div>
 	</div>
 
 	<!-- AFFICHAGE DES SUJETS -->
-	<!-- container -->
-	<div class="container">
-		<!-- row -->
-		<div class="row" id="subject">
-			<!-- col-lg-12 -->
-			<div class="col-lg-12">
-				<!-- wrapper wrapper-content animated fadeInRight -->
-				<div class="wrapper wrapper-content animated fadeInRight">
-					<!-- ibox-content m-b-sm border-bottom -->
-					<div class="ibox-content m-b-sm border-bottom">
-						<div class="p-xs">
-							<div class="pull-left m-r-md">
-								<i class="fa fa-globe text-navy mid-icon"></i>
+	<div class="jumbotron" id="subject">
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- col-lg-12 -->
+				<div class="col-lg-12">
+					<!-- wrapper wrapper-content animated fadeInRight -->
+					<div class="wrapper wrapper-content animated fadeInRight">
+						<!-- ibox-content m-b-sm border-bottom -->
+						<div class="ibox-content m-b-sm border-bottom">
+							<div class="p-xs">
+								<div class="pull-left m-r-md">
+									<i class="fa fa-globe text-navy mid-icon"></i>
+								</div>
+								<h2 id="nom-sous-categorie"></h2>
+								<span>Choisissez le sujet que vous souhaitez consulter.</span>
 							</div>
-							<h2 id="nom-sous-categorie"></h2>
-							<span>Choisissez le sujet que vous souhaitez consulter.</span>
 						</div>
-					</div>
 
-					<div class="ibox-content forum-container">
-						<div class="forum-title">
-							<div class="pull-right forum-desc">
-								<!--  count du nombre de sujet dans cette sous cat -->
-								<small>Total posts: ${listeSujets.size()}</small>
-								<!-- Seul une personne connectée peut ajouter un sujet -->
-								<c:if test="${not empty utilisateur}">
-									<a id="add-subject" class=" launch-modal" href="#"
-										data-modal-id="modal-subject"> <i
-										class="fa fa-plus-square-o fa-2x"></i>
-									</a>
-								</c:if>
+						<div class="ibox-content forum-container">
+							<div class="forum-title" id="total-sub-categorie">
+								<div class="pull-right forum-desc">
+									<!--  count du nombre de sujet dans cette sous cat -->
+									<small>Total posts: ${listeSujets.size()}</small>
+
+									<!-- Seul une personne connectée peut ajouter un sujet -->
+									<c:if test="${not empty utilisateur}">
+										<a id="add-subject" class=" launch-modal" href="#"
+											data-modal-id="modal-subject">Nouveau <i
+											class="fa fa-plus-square-o fa-2x"></i>
+										</a>
+									</c:if>
+								</div>
+
+
 							</div>
 
-						</div>
-						<c:forEach items="${listeSujets}" var="sujet" varStatus="loop">
-							<input type="hidden" id="sous-categorie-hidden"
-								value="${sujet.getSousCategorie().getTitre()}">
+							<c:forEach items="${listeSujets}" var="sujet" varStatus="loop">
+								<input type="hidden" id="sous-categorie-hidden"
+									value="${sujet.getSousCategorie().getTitre()}">
 
-							<div class="forum-item active" id="elem-sujet">
-								<div class="row">
-									<div class="col-md-9">
-										<div class="forum-icon">
-											<i class="${sousCategorie.getIcone()}"></i>
-										</div>
-										<!-- titre du sujet avec un href -->
-										<a
-											href="<%=request.getContextPath()%>/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
-											id="titre-sujet" class="forum-item-title"
-											title="${sujet.getTitre()}">${sujet.getTitre()}</a>
+								<div class="forum-item active" id="elem-sujet">
+									<div class="row">
+										<div class="col-md-9">
+											<div class="forum-icon">
+												<i class="${sujet.getSousCategorie().getIcone()}"></i>
+											</div>
+											<!-- titre du sujet avec un href -->
+											<a
+												href="<%=request.getContextPath()%>/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
+												id="titre-sujet" class="forum-item-title"
+												title="${sujet.getTitre()}">${sujet.getTitre()}</a>
 
-										<div id="description-sujet" class="forum-sub-title">Si ce sujet vous intéresse, cliquez dessus!.</div>
-									</div>
-									<div id="description-auteur-sujet">
-										<div class="col-md-1 forum-info">
-											<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
-											<div>
-												<small>Auteur</small>
-											</div>
+											<div id="description-sujet" class="forum-sub-title">Si
+												ce sujet vous intéresse, cliquez dessus!.</div>
 										</div>
-										<div class="col-md-1 forum-info">
-											<span class="views-number">${sujet.getDateSujet()}</span>
-											<div>
-												<small>Date</small>
+										<div id="description-auteur-sujet">
+											<div class="col-md-1 forum-info">
+												<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
+												<div>
+													<small>Auteur</small>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-1 forum-info">
-											<span class="views-number"> 140 </span>
-											<div>
-												<small>Posts</small>
+											<div class="col-md-1 forum-info">
+												<span class="views-number">${sujet.getDateSujet()}</span>
+												<div>
+													<small>Date</small>
+												</div>
+											</div>
+											<div class="col-md-1 forum-info">
+												<span class="views-number"> 140 </span>
+												<div>
+													<small>Posts</small>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</c:forEach>
+							</c:forEach>
+						</div>
 					</div>
+					<!-- wrapper wrapper-content animated fadeInRight -->
 				</div>
-				<!-- wrapper wrapper-content animated fadeInRight -->
+				<!-- col-lg-12 -->
 			</div>
-			<!-- col-lg-12 -->
+			<!-- row -->
 		</div>
-		<!-- row -->
 	</div>
-	<!-- container -->
 
 	<!-- Affichage des commentaires -->
-	<div id="comments">
-		<c:forEach items="${listeCommentaire}" var="commentaire">
-			<section class="container" id="elem-comment"> <section
-				class="row clearfix"> <section class="col-md-12 column">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<section class="panel-title"> <time class="pull-right">
-							<i class="fa fa-calendar"></i>
-							<div id="date-creation-sujet">
-								${commentaire.getSujet().getDateSujet()}</div>
-							</time> <section class="pull-left" id="id"> <abbr
-								title="count of posts in this topic">${commentaire.getID()}</abbr>
-							</section> </section>
-						</div>
-						<section class="row panel-body"> <section
-							class="col-md-9">
-						<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
-						<hr>
-						${commentaire.getTexte()} </section> <section id="user-description"
-							class="col-md-3 "> <section class="well">
-						<div class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-								class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
-								class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#"><i class="fa fa-user"></i> See profile</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> Send PM</a></li>
-							</ul>
-						</div>
-						<figure> <img class="img-rounded img-responsive"
-							src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
-							alt="Adista's avatar"> <figcaption class="text-center">
-						<br>
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half"></i> </figcaption> </figure>
-						<dl class="dl-horizontal">
-							<dt>joined date:</dt>
-							<dd>15 September 2016</dd>
-							<dt>Posts:</dt>
-							<dd>785</dd>
-							<dt>plus:</dt>
-							<dd>+89</dd>
-							<dt>like:</dt>
-							<dd>150 like in 50 post</dd>
-						</dl>
-						</section> </section> </section>
-						<div class="panel-footer" id="panelfooter">
-							<div class="row">
-								<section class="col-md-2 "> </section>
-								<section class="col-md-6"> <small><a href="#"
-									data-toggle="tooltip" title=""> </a> </small> <br>
-								</section>
+	<div class="jumbotron" id="comments">
+		<div class="container">
+			<c:forEach items="${listeCommentaire}" var="commentaire">
+				<section class="container" id="elem-comment"> <section
+					class="row clearfix"> <section class="col-md-12 column">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<section class="panel-title"> <time class="pull-right">
+								<i class="fa fa-calendar"></i>
+								<div id="date-creation-sujet">
+									${commentaire.getSujet().getDateSujet()}</div>
+								</time> <section class="pull-left" id="id"> <abbr
+									title="count of posts in this topic">${commentaire.getID()}</abbr>
+								</section> </section>
+							</div>
+							<section class="row panel-body"> <section
+								class="col-md-9">
+							<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
+							<hr>
+							${commentaire.getTexte()} </section> <section id="user-description"
+								class="col-md-3 "> <section class="well">
+							<div class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+									class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
+									class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-user"></i> See profile</a></li>
+									<li><a href="#"><i class="fa fa-envelope"></i> Send PM</a></li>
+								</ul>
+							</div>
+							<figure> <img class="img-rounded img-responsive"
+								src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
+								alt="Adista's avatar"> <figcaption class="text-center">
+							<br>
+							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+								class="fa fa-star-half"></i> </figcaption> </figure>
+							<dl class="dl-horizontal">
+								<dt>joined date:</dt>
+								<dd>15 September 2016</dd>
+								<dt>Posts:</dt>
+								<dd>785</dd>
+								<dt>plus:</dt>
+								<dd>+89</dd>
+								<dt>like:</dt>
+								<dd>150 like in 50 post</dd>
+							</dl>
+							</section> </section> </section>
+							<div class="panel-footer" id="panelfooter">
+								<div class="row">
+									<section class="col-md-2 "> </section>
+									<section class="col-md-6"> <small><a href="#"
+										data-toggle="tooltip" title=""> </a> </small> <br>
+									</section>
 
-								<!-- La personne connectée ne pourra modifier que ses posts -->
-								<!-- Si c'est un admin il peut tout modifier et supprimer -->
-								<c:choose>
-									<c:when
-										test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo() || utilisateur.getType() == 'Admin'}">
-										<section> <a href="#"
-											class="btn btn-primary launch-modal" id="edit" href="#"
-											data-modal-id="modal-modify-${commentaire.getID()}">
-											Modifier <i class="fa fa-edit"></i>
-										</a> <a href="#" class="btn btn-primary launch-modal" id="delete"
-											href="#" data-modal-id="modal-delete-${commentaire.getID()}">
-											Supprimer <i class="fa fa-trash-o"></i>
-										</a> </section>
-									</c:when>
-								</c:choose>
+									<!-- La personne connectée ne pourra modifier que ses posts -->
+									<!-- Si c'est un admin il peut tout modifier et supprimer -->
+									<c:choose>
+										<c:when
+											test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo() || utilisateur.getType() == 'Admin'}">
+											<section> <a href="#"
+												class="btn btn-primary launch-modal" id="edit" href="#"
+												data-modal-id="modal-modify-${commentaire.getID()}">
+												Modifier <i class="fa fa-edit"></i>
+											</a> <a href="#" class="btn btn-primary launch-modal" id="delete"
+												href="#" data-modal-id="modal-delete-${commentaire.getID()}">
+												Supprimer <i class="fa fa-trash-o"></i>
+											</a> </section>
+										</c:when>
+									</c:choose>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			</section> </section> </section>
+				</section> </section> </section>
 
-			<!-- MODAL MODIFY COMMENT -->
-			<div class="modal fade" id="modal-modify-${commentaire.getID()}"
-				tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
-				aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
-							</button>
-							<h3 class="modal-title" id="modal-modify-label">Modifier un
-								commentaire</h3>
-							<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
-						</div>
+				<!-- MODAL MODIFY COMMENT -->
+				<div class="modal fade" id="modal-modify-${commentaire.getID()}"
+					tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+								</button>
+								<h3 class="modal-title" id="modal-modify-label">Modifier un
+									commentaire</h3>
+								<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
+							</div>
 
-						<div class="modal-body">
-							<form role="form" action="${context}/modifycomment" method="POST"
-								class="modify-form">
-								<input type="hidden" name="id-commentaire-hidden"
-									id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
-								<div class="form-group">
-									<label class="sr-only" for="form-modify">Commentaire</label>
-									<textarea name="form-modify" placeholder="Votre commentaire..."
-										class="form-modify form-control" id="form-modify">${commentaire.getTexte()}</textarea>
-								</div>
-								<button type="submit" class="btn1">Confirmer</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- MODAL DELETE COMMENT -->
-			<div class="modal fade" id="modal-delete-${commentaire.getID()}"
-				tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
-				aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
-							</button>
-							<h3 class="modal-title" id="modal-modify-label">Voulez-vous
-								supprimer ce commentaire?</h3>
-						</div>
-
-						<div class="modal-body">
-							<form role="form" action="${context}/deletecomment" method="POST"
-								class="modify-form">
-								<input type="hidden" name="id-commentaire-hidden"
-									id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
-								<div class="form-group">
-									<label class="sr-only" for="form-modify">Commentaire</label>
-									<textarea name="form-modify" class="form-modify form-control"
-										id="form-modify" readonly>${commentaire.getTexte()}</textarea>
-								</div>
-								<button type="submit" class="btn1">Supprimer</button>
-							</form>
+							<div class="modal-body">
+								<form role="form" action="${context}/modifycomment"
+									method="POST" class="modify-form">
+									<input type="hidden" name="id-commentaire-hidden"
+										id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
+									<div class="form-group">
+										<label class="sr-only" for="form-modify">Commentaire</label>
+										<textarea name="form-modify"
+											placeholder="Votre commentaire..."
+											class="form-modify form-control" id="form-modify">${commentaire.getTexte()}</textarea>
+									</div>
+									<button type="submit" class="btn1">Confirmer</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-		</c:forEach>
-		<a class="btn btn-primary launch-modal" href="#"
-			data-modal-id="modal-comment" id="reply">Répondre <i
-			class="fa fa-mail-reply "></i></a>
+				<!-- MODAL DELETE COMMENT -->
+				<div class="modal fade" id="modal-delete-${commentaire.getID()}"
+					tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+								</button>
+								<h3 class="modal-title" id="modal-modify-label">Voulez-vous
+									supprimer ce commentaire?</h3>
+							</div>
+
+							<div class="modal-body">
+								<form role="form" action="${context}/deletecomment"
+									method="POST" class="modify-form">
+									<input type="hidden" name="id-commentaire-hidden"
+										id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
+									<div class="form-group">
+										<label class="sr-only" for="form-modify">Commentaire</label>
+										<textarea name="form-modify" class="form-modify form-control"
+											id="form-modify" readonly>${commentaire.getTexte()}</textarea>
+									</div>
+									<button type="submit" class="btn1">Supprimer</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</c:forEach>
+			<a class="btn btn-primary launch-modal" href="#"
+				data-modal-id="modal-comment" id="reply">Répondre <i
+				class="fa fa-mail-reply "></i></a>
+		</div>
 	</div>
 
 	<!-- MODAL ADD COMMENT -->

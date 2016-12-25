@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -19,16 +18,11 @@ public class AfficherSujetServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nomSousCategorie = request.getParameter("nomSousCategorie");
-		int nbrPosts = 0;
 
 		SujetModele modele = new SujetModele();
 		ArrayList<Sujet> listSujet = modele.getListSelonSousCategorie(nomSousCategorie);
-		nbrPosts = listSujet.size();
-		
-		PrintWriter out = response.getWriter();
-		out.println("size of ids list :"+listSujet.size());
-		//out.println(nomSousCategorie);
-		if (listSujet.isEmpty() || nbrPosts == 0){
+
+		if (listSujet.isEmpty()){
 			// Si c'est vide on ajoute un faux sujet pour juste afficher le bouton "ajouter sujet"
 			Sujet sujetVide = new Sujet();
 			SousCategorie sousCategorie = new SousCategorie();

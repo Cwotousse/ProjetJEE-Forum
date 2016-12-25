@@ -25,7 +25,7 @@
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
 <link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE//css/restrained.css">
+	href="/ProjetJEE-Forum/VUE/css/restrained.css">
 <style>
 </style>
 </head>
@@ -34,7 +34,6 @@
 	<c:import url="include/navbar1.jsp" />
 	<c:import url="/displayusers" />
 	<c:set var="context" value="${pageContext.request.contextPath}" />
-	<br />
 	<br />
 	<br />
 	<br />
@@ -156,15 +155,6 @@
 							</tbody>
 						</table>
 					</div>
-					<ul class="pagination pull-right">
-						<li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-					</ul>
 				</div>
 			</div>
 		</div>

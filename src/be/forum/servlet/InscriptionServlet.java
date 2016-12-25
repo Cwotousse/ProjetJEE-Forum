@@ -21,6 +21,7 @@ public class InscriptionServlet extends HttpServlet {
 				String nom 			= request.getParameter("form-last-name");
 				String prenom 		= request.getParameter("form-first-name");
 				String mail 		= request.getParameter("form-email");
+				//String dateNaissance= request.getParameter("form-birthdate");
 				//Date de naissance
 				java.sql.Date datePourTester = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 				
@@ -28,7 +29,7 @@ public class InscriptionServlet extends HttpServlet {
 				
 				PrintWriter out = response.getWriter();
 				if(utilisateurModele.inscription(pseudo, motdepasse, nom, prenom, mail, datePourTester))
-					response.sendRedirect("/VUE\\index.jsp"); 
+					this.getServletContext().getRequestDispatcher("/VUE\\index.jsp").forward(request, response);
 				else
 					out.println("Le pseudo que vous avez saisi existe déjà.");
 				response.setContentType("text/html"); 

@@ -20,10 +20,11 @@
 	rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500" type="text/css"/>
 <link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
+	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css" type="text/css"/>
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css" type="text/css"/>
+
 </head>
 <body>
 	<!-- grâce à cet import, je récupère les listes pour afficher la navbar -->
