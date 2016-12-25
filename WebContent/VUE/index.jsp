@@ -18,7 +18,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
+	rel="stylesheet">
 
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
