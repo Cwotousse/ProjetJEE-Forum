@@ -106,7 +106,7 @@ jQuery(document)
 														});
 
 									});
-					
+
 					// Cache la partie affichage commentaire (useless)
 					if ($('#elem-sub-categorie').length >= 1) {
 						// Affich les sous catégories
@@ -116,10 +116,19 @@ jQuery(document)
 						$('#sub-categorie').show();
 					} else if ($('#elem-sujet').length >= 1) {
 						// Affiche les sujets
+						// Il faut vérifier qu'il y ait au moins un sujet
 						$("#body-text").hide();
 						$('#sub-categorie').hide();
 						$('#comments').hide();
 						$('#subject').show();
+						$('#nom-sous-categorie').text($('#sous-categorie-hidden').val());
+						// .length ici 'est utilisé pour savoir si un élément existe
+						if($('#titre-sujet').text() == '') {
+							$('#description-sujet').text("Il n'y a pas de sujets disponibles, creez-en un !");
+							$('#description-auteur-sujet').hide();
+							$('.forum-title small').hide();
+						}
+						
 					} else if ($('#elem-comment').length >= 1) {
 						// Affiche les commentaires
 						$("#body-text").hide();
@@ -169,6 +178,14 @@ jQuery(document)
 										$("#nom-sujet").text());
 								$("#date-sujet-label").text(dateSansEspaces);
 							});
+
+					// Transmettre la sous-catégorie en paramètre pour l'ajout
+					// d'un sujet
+					$("#add-subject").click(function() {
+						$("#form-hidden-souscat").val($("#nom-sous-categorie").text());
+						$("#form-souscat").val($("#form-hidden-souscat").val());
+						$("#form-souscat").text($("#form-hidden-souscat").val());
+					});
 
 					// Je cache l'élement de la navbar "Administration" qui est
 					// propre à l'admin

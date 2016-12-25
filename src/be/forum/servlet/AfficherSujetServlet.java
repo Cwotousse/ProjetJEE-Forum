@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.forum.modele.SujetModele;
+import be.forum.pojo.SousCategorie;
 import be.forum.pojo.Sujet;
 
 public class AfficherSujetServlet extends HttpServlet {
@@ -28,14 +29,19 @@ public class AfficherSujetServlet extends HttpServlet {
 		out.println("size of ids list :"+listSujet.size());
 		//out.println(nomSousCategorie);
 		if (listSujet.isEmpty() || nbrPosts == 0){
-			out.println("Il n'y a pas de posts pour cette sous-catégorie.");
-		} else {
-			request.setAttribute("listeSujets", listSujet);
-
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
-	        dispatcher.forward(request, response); 
-			response.setContentType("text/html");
-		}
+			// Si c'est vide on ajoute un faux sujet pour juste afficher le bouton "ajouter sujet"
+			Sujet sujetVide = new Sujet();
+			SousCategorie sousCategorie = new SousCategorie();
+			sousCategorie.setTitre(nomSousCategorie);
+			sujetVide.setSousCategorie(sousCategorie);
+			
+			listSujet.add(sujetVide);
+		} 
+		
+		request.setAttribute("listeSujets", listSujet);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
+        dispatcher.forward(request, response); 
+		response.setContentType("text/html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -2,7 +2,6 @@ package be.forum.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -19,7 +18,8 @@ import be.forum.pojo.Utilisateur;
 public class AjouterSujetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// #TODO a faire
 		PrintWriter out = response.getWriter();
 		try {
@@ -27,46 +27,41 @@ public class AjouterSujetServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			// récupération du commentaire dans la requête
-			String textComm = request.getParameter("form-comment");
-
-			// Il faut récupérer la date et le titre du topic afin de rechercher son ID
-			SujetModele sujM = new SujetModele();
-
-			// Il faut changer le format de la date reçue en param car celui-ci
-			// est incorrect
-			// 1992-12-17
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date d = sdf.parse(request.getParameter("date-sujet-hidden"));
-			// 17/12/92
-			sdf.applyPattern("dd/MM/yy");
-			String nouveauFormatStringUtil = sdf.format(d);
-
-			// Ensuite on parse cette date en date.sql
-			SimpleDateFormat formatter 	= new SimpleDateFormat("dd/MM/yy");
-			java.util.Date parsedDate = formatter.parse(nouveauFormatStringUtil);
-			java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-
-			// On récupère le sujet correspondant
-			Sujet suj = sujM.getSujetSelonTitreEtDateSujet(request.getParameter("nom-sujet-hidden"), sqlDate);
-
-			// Utilisateur
-			Utilisateur util = (Utilisateur) session.getAttribute("utilisateur");
+			String souscategorie 	= request.getParameter("form-hidden-souscat");
+			String titreSujet 		= request.getParameter("form-subject-title");
+			String textComm 		= request.getParameter("form-subject-comment");
 
 			if (!session.isNew()) {
-				if (!textComm.equals("")) {
-					CommentaireModele commentaire = new CommentaireModele();
-					commentaire.creer(suj, textComm,
-							new java.sql.Date(Calendar.getInstance().getTime().getTime()), util);
-					//http://localhost:9090/ProjetJEE-Forum/displaycomments?nomSujet=Marseille%20nul&nomSousCategorie=Football&pseudoAuteur=Adista&dateSujet=2016-12-15
-					String completeURL = request.getContextPath() + "/displaycomments" + 
-							"?&nomSujet=" + suj.getTitre() +
-							"&nomSousCategorie=" + suj.getSousCategorie().getTitre() +
-							"&pseudoAuteur=" + util.getPseudo() + 
-							"&dateSujet=" + sqlDate;
-					out.println(completeURL);
-					response.sendRedirect(completeURL);
+				if (!textComm.equals("") && !titreSujet.equals("")) {
+					// Il faut créer le sujet ET le premier commentaire
+					SujetModele sujetModele 	= new SujetModele();
+					Sujet sujet 				= new Sujet();
+					CommentaireModele comModele = new CommentaireModele();
+					java.sql.Date sqlDate 		= new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+					// Utilisateur
+					Utilisateur utilisateur 	= (Utilisateur) session.getAttribute("utilisateur");
+
+					if(sujetModele.creer(souscategorie, titreSujet, sqlDate, utilisateur)){
+						// On récupère le sujet créé car on en a besoin pour le commentaire
+						sujet = sujetModele.getDernierSujetCree();
+						out.print(sujet.getTitre());
+						// On crée le premier commentaire
+						comModele.creer(sujet, textComm, sqlDate, utilisateur);
+						// http://localhost:9090/ProjetJEE-Forum/displaycomments?nomSujet=Marseille%20nul&nomSousCategorie=Football&pseudoAuteur=Adista&dateSujet=2016-12-15
+						String completeURL = request.getContextPath() + "/displaycomments" 
+								+ "?&nomSujet=" + titreSujet
+								+ "&nomSousCategorie=" + souscategorie
+								+ "&pseudoAuteur="+ utilisateur.getPseudo() 
+								+ "&dateSujet=" + sqlDate;
+						out.println(completeURL);
+						response.sendRedirect(completeURL);
+					}
+					else {
+						out.println("Erreur lors de la création du sujet.");
+					}
 				} else {
-					out.println("Le commentaire est vide.");
+					out.println("Un élément n'a pas été correctement remplis.");
 				}
 			} else {
 				out.println("Connectez-vous.");
@@ -78,7 +73,8 @@ public class AjouterSujetServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

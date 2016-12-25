@@ -22,7 +22,6 @@ public class SujetDAO extends DAO<Sujet> {
 		CallableStatement cst = null;
 		try {
 			cst = connect.prepareCall(Sprocs.INSERTSUJET);
-			
 			cst.setInt		(1, sujet.getSousCategorie().getID());
 			cst.setString	(2, sujet.getTitre());
 			cst.setDate		(3, (Date) sujet.getDateSujet());

@@ -123,80 +123,10 @@
 		</div>
 	</div>
 
-	<!-- Main jumbotron for a primary marketing message or call to action -->
+	<!-- Main jumbotron for a primary marketing message or call to action >-->
 	<div class="jumbotron">
 		<div class="container">
-			<!-- <div class="container">
-				<br>
-				<div id="myCarousel" class="carousel slide" data-ride="carousel">
-					<c:import url="/displaynews" />
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-						<li data-target="#myCarousel" data-slide-to="3"></li>
-					</ol>
-					<div class="carousel-inner" role="listbox">
-						<c:forEach items="${listActualite}" var="actualite">
-							<div class="item active">
-								<img src="${actualite.getImage()}" alt="${actualite.getTitre()}"
-									width="460" height="345">
-								<div class="carousel-caption">
-									<h3>${actualite.getTitre()}</h3>
-									<p>${actualite.getDescription()}</p>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-					<div class="carousel-inner" role="listbox">
 
-						<div class="item active">
-							<img src="source" alt="Chania" width="460" height="345">
-							<div class="carousel-caption">
-								<h3>Mia</h3>
-								<p>description</p>
-							</div>
-						</div>
-
-						<div class="item">
-							<img src="source" alt="Chania" width="460" height="345">
-							<div class="carousel-caption">
-								<h3>Annie</h3>
-								<p>The idol of Adrien</p>
-							</div>
-						</div>
-
-						<div class="item">
-							<img src="http://www.w3schools.com/bootstrap/img_chania2.jpg"
-								alt="Flower" width="460" height="345">
-							<div class="carousel-caption">
-								<h3>Flowers</h3>
-								<p>Beatiful flowers in Kolymbari, Crete.</p>
-							</div>
-						</div>
-
-						<div class="item">
-							<img src="http://www.w3schools.com/bootstrap/img_chania2.jpg"
-								alt="Flower" width="460" height="345">
-							<div class="carousel-caption">
-								<h3>Flowers</h3>
-								<p>Beatiful flowers in Kolymbari, Crete.</p>
-							</div>
-						</div>
-
-					</div>
-
-					<a class="left carousel-control" href="#myCarousel" role="button"
-						data-slide="prev"> <span
-						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a> <a class="right carousel-control" href="#myCarousel" role="button"
-						data-slide="next"> <span
-						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
-				</div>
-			</div>-->
 			<!-- row -->
 			<div class="row" id="sub-categorie">
 				<!-- col-lg-12 -->
@@ -294,7 +224,7 @@
 							<div class="pull-left m-r-md">
 								<i class="fa fa-globe text-navy mid-icon"></i>
 							</div>
-							<h2>Bienvenu(e) sur notre forum</h2>
+							<h2 id="nom-sous-categorie"></h2>
 							<span>Choisissez le sujet que vous souhaitez consulter.</span>
 						</div>
 					</div>
@@ -304,10 +234,20 @@
 							<div class="pull-right forum-desc">
 								<!--  count du nombre de sujet dans cette sous cat -->
 								<small>Total posts: ${listeSujets.size()}</small>
+								<!-- Seul une personne connectée peut ajouter un sujet -->
+								<c:if test="${not empty utilisateur}">
+									<a id="add-subject" class=" launch-modal" href="#"
+										data-modal-id="modal-subject"> <i
+										class="fa fa-plus-square-o fa-2x"></i>
+									</a>
+								</c:if>
 							</div>
-							<h3>General subjects</h3>
+
 						</div>
-						<c:forEach items="${listeSujets}" var="sujet">
+						<c:forEach items="${listeSujets}" var="sujet" varStatus="loop">
+							<input type="hidden" id="sous-categorie-hidden"
+								value="${sujet.getSousCategorie().getTitre()}">
+
 							<div class="forum-item active" id="elem-sujet">
 								<div class="row">
 									<div class="col-md-9">
@@ -317,28 +257,29 @@
 										<!-- titre du sujet avec un href -->
 										<a
 											href="<%=request.getContextPath()%>/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
-											class="forum-item-title" title="${sujet.getTitre()}">${sujet.getTitre()}</a>
+											id="titre-sujet" class="forum-item-title"
+											title="${sujet.getTitre()}">${sujet.getTitre()}</a>
 
-										<div class="forum-sub-title">Talk about sports,
-											entertainment, music, movies, your favorite color, talk about
-											enything.</div>
+										<div id="description-sujet" class="forum-sub-title">Si ce sujet vous intéresse, cliquez dessus!.</div>
 									</div>
-									<div class="col-md-1 forum-info">
-										<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
-										<div>
-											<small>Auteur</small>
+									<div id="description-auteur-sujet">
+										<div class="col-md-1 forum-info">
+											<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
+											<div>
+												<small>Auteur</small>
+											</div>
 										</div>
-									</div>
-									<div class="col-md-1 forum-info">
-										<span class="views-number">${sujet.getDateSujet()}</span>
-										<div>
-											<small>Date</small>
+										<div class="col-md-1 forum-info">
+											<span class="views-number">${sujet.getDateSujet()}</span>
+											<div>
+												<small>Date</small>
+											</div>
 										</div>
-									</div>
-									<div class="col-md-1 forum-info">
-										<span class="views-number"> 140 </span>
-										<div>
-											<small>Posts</small>
+										<div class="col-md-1 forum-info">
+											<span class="views-number"> 140 </span>
+											<div>
+												<small>Posts</small>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -411,21 +352,95 @@
 									data-toggle="tooltip" title=""> </a> </small> <br>
 								</section>
 
-								<section class="col-md-4"> <a
-									class="btn btn-primary launch-modal" href="#"
-									data-modal-id="modal-comment" id="reply">Répondre <i
-									class="fa fa-mail-reply "></i></a> <a href="#"
-									class="btn btn-primary launch-modal" id="edit" href="#"
-									data-modal-id="modal-modify">Modifier <i
-									class="fa fa-edit "></i>
-								</a> </section>
+								<!-- La personne connectée ne pourra modifier que ses posts -->
+								<!-- Si c'est un admin il peut tout modifier et supprimer -->
+								<c:choose>
+									<c:when
+										test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo() || utilisateur.getType() == 'Admin'}">
+										<section> <a href="#"
+											class="btn btn-primary launch-modal" id="edit" href="#"
+											data-modal-id="modal-modify-${commentaire.getID()}">
+											Modifier <i class="fa fa-edit"></i>
+										</a> <a href="#" class="btn btn-primary launch-modal" id="delete"
+											href="#" data-modal-id="modal-delete-${commentaire.getID()}">
+											Supprimer <i class="fa fa-trash-o"></i>
+										</a> </section>
+									</c:when>
+								</c:choose>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			</section> </section> </section>
+
+			<!-- MODAL MODIFY COMMENT -->
+			<div class="modal fade" id="modal-modify-${commentaire.getID()}"
+				tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+							</button>
+							<h3 class="modal-title" id="modal-modify-label">Modifier un
+								commentaire</h3>
+							<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
+						</div>
+
+						<div class="modal-body">
+							<form role="form" action="${context}/modifycomment" method="POST"
+								class="modify-form">
+								<input type="hidden" name="id-commentaire-hidden"
+									id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
+								<div class="form-group">
+									<label class="sr-only" for="form-modify">Commentaire</label>
+									<textarea name="form-modify" placeholder="Votre commentaire..."
+										class="form-modify form-control" id="form-modify">${commentaire.getTexte()}</textarea>
+								</div>
+								<button type="submit" class="btn1">Confirmer</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- MODAL DELETE COMMENT -->
+			<div class="modal fade" id="modal-delete-${commentaire.getID()}"
+				tabindex="-1" role="dialog" aria-labelledby="modal-modify-label"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+							</button>
+							<h3 class="modal-title" id="modal-modify-label">Voulez-vous
+								supprimer ce commentaire?</h3>
+						</div>
+
+						<div class="modal-body">
+							<form role="form" action="${context}/deletecomment" method="POST"
+								class="modify-form">
+								<input type="hidden" name="id-commentaire-hidden"
+									id="id-commentaire-hidden" value="${commentaire.getID()}"></input>
+								<div class="form-group">
+									<label class="sr-only" for="form-modify">Commentaire</label>
+									<textarea name="form-modify" class="form-modify form-control"
+										id="form-modify" readonly>${commentaire.getTexte()}</textarea>
+								</div>
+								<button type="submit" class="btn1">Supprimer</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</c:forEach>
+		<a class="btn btn-primary launch-modal" href="#"
+			data-modal-id="modal-comment" id="reply">Répondre <i
+			class="fa fa-mail-reply "></i></a>
 	</div>
 
 	<!-- MODAL ADD COMMENT -->
@@ -455,34 +470,6 @@
 								name="date-sujet-hidden" id="date-sujet-hidden" value="xxx"></input>
 							<textarea name="form-comment" placeholder="Votre commentaire..."
 								class="form-comment form-control" id="form-comment"></textarea>
-						</div>
-						<button type="submit" class="btn1">Confirmer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- MODAL MODIFY COMMENT -->
-	<div class="modal fade" id="modal-modify" tabindex="-1" role="dialog"
-		aria-labelledby="modal-modify-label" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
-					</button>
-					<h3 class="modal-title" id="modal-modify-label">Modifier un
-						commentaire</h3>
-					<p>Veuillez entrer le commentaire que vous voulez modifier:</p>
-				</div>
-
-				<div class="modal-body">
-					<form role="form" action="" method="POST" class="modify-form">
-						<div class="form-group">
-							<label class="sr-only" for="form-modify">Commentaire</label>
-							<textarea name="form-modify" placeholder="Votre commentaire..."
-								class="form-modify form-control" id="form-modify"></textarea>
 						</div>
 						<button type="submit" class="btn1">Confirmer</button>
 					</form>
@@ -527,6 +514,41 @@
 						<strong>Type</strong>
 						<p id="type">${sessionScope.utilisateur.getType()}</p>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL ADD SUBJECT -->
+	<div class="modal fade" id="modal-subject" tabindex="-1" role="dialog"
+		aria-labelledby="modal-subject-label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+					</button>
+					<h3 class="modal-title" id="modal-subject-label">Ajouter un
+						sujet</h3>
+					<p>Veuillez entrer le titre du sujet à ajouter:</p>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" action="<%=request.getContextPath()%>/addsubject"
+						method="POST" class="subject-form">
+						<div class="form-group">
+							<input type="hidden" name="form-hidden-souscat"
+								id="form-hidden-souscat"></input> <label class="sr-only"
+								for="form-comment" id="form-souscat"></label>
+							<textarea name="form-subject-title" placeholder="Votre titre..."
+								class="form-subject form-control" id="form-subject-title"
+								rows="1"></textarea>
+							<textarea name="form-subject-comment"
+								placeholder="Votre commentaire..."
+								class="form-subject form-control" id="form-subject-comment"></textarea>
+						</div>
+						<button type="submit" class="btn1">Confirmer</button>
+					</form>
 				</div>
 			</div>
 		</div>

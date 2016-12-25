@@ -116,4 +116,20 @@
 		<servlet-name>displaynews</servlet-name>
 		<url-pattern>/displaynews</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>modifycomment</servlet-name>
+		<servlet-class>be.forum.servlet.ModifierCommentaire</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>modifycomment</servlet-name>
+		<url-pattern>/modifycomment</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>deletecomment</servlet-name>
+		<servlet-class>be.forum.servlet.SupprimerCommentaire</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deletecomment</servlet-name>
+		<url-pattern>/deletecomment</url-pattern>
+	</servlet-mapping>
 </web-app>

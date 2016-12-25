@@ -22,4 +22,12 @@ public class SousCategorieModele {
 				.filter(x -> x.getCategorie().getTitre().equals(titreCat))
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+	
+	public SousCategorie getSousCat(String titreSousCat){
+		// Récupère le dernier élément correspondant au filter
+		return this.getList()
+				.stream()
+				.filter(x -> x.getTitre().equals(titreSousCat))
+				.reduce((first, second) -> second).get();
+	}
 }
