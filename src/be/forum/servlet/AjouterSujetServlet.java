@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,18 +59,30 @@ public class AjouterSujetServlet extends HttpServlet {
 						response.sendRedirect(completeURL);
 					}
 					else {
-						out.println("Erreur lors de la création du sujet.");
+						request.setAttribute("error_message", "Erreur lors de la création du sujet.");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+						dispatcher.forward(request, response);
+						response.setContentType("text/html");
 					}
 				} else {
-					out.println("Un élément n'a pas été correctement remplis.");
+					request.setAttribute("error_message", "Un élément n'a pas été correctement remplis.");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+					dispatcher.forward(request, response);
+					response.setContentType("text/html");
 				}
 			} else {
-				out.println("Connectez-vous.");
+				request.setAttribute("error_message", "Connectez-vous.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
-			out.println(e.getMessage());
+			request.setAttribute("error_message", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		}
 	}
 

@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -17,31 +16,44 @@ import be.forum.pojo.Utilisateur;
 public class AfficherListUtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		UtilisateurModele utilisateurModele = new UtilisateurModele();
 		ArrayList<Utilisateur> listUtilisateur = utilisateurModele.getList();
-		
-		PrintWriter out = response.getWriter();
-		if (listUtilisateur.isEmpty()){
-			out.println("empty.");
+
+		if (listUtilisateur.isEmpty()) {
+			request.setAttribute("error_message", "Pas d'utilisateurs enregistré.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		} else {
 			HttpSession session = request.getSession();
-			if(!session.isNew()){
+			if (!session.isNew()) {
 				Utilisateur utilisateurConnecté = (Utilisateur) session.getAttribute("utilisateur");
-				if(utilisateurConnecté.getType().equals("Admin")){
+				if (utilisateurConnecté.getType().equals("Admin")) {
 					request.setAttribute("listUtilisateur", listUtilisateur);
 
-			        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/restrained_access.jsp");
-			        dispatcher.forward(request, response); 
-				} else 
-					out.println("vous n'êtes pas autorisé à voir cette page.");
-			} else
-				out.println("pas de session en cours.");	
+					RequestDispatcher dispatcher = request
+							.getRequestDispatcher(request.getContextPath() + "/restrained_access.jsp");
+					dispatcher.forward(request, response);
+				} else {
+					request.setAttribute("error_message", "Vous n'êtes pas autorisé à visionner cette page.");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+					dispatcher.forward(request, response);
+					response.setContentType("text/html");
+				}
+			} else {
+				request.setAttribute("error_message", "Pas de session en cours.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
+			}
 		}
 		response.setContentType("text/html");
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

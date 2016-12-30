@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +80,10 @@ public class SupprimerCommentaire extends HttpServlet {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
-			out.println("Suppression non-effectuée.");
+			request.setAttribute("error_message", "Suppression non effectuée.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		}
 		
 	}

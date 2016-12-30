@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -21,9 +20,11 @@ public class AfficherCategorieServlet extends HttpServlet {
 		CategorieModele modele = new CategorieModele();
 		ArrayList<Categorie> listCategorie = modele.getList();
 		
-		PrintWriter out = response.getWriter();
 		if (listCategorie.isEmpty()){
-			out.println("Il n'y a pas de posts pour ce sujet.");
+			request.setAttribute("error_message", "Il n'y a pas de post pour ce sujet.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		} else {
 			request.setAttribute("listCategorie", listCategorie);
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/navbar1.jsp");

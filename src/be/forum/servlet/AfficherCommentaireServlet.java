@@ -47,7 +47,10 @@ public class AfficherCommentaireServlet extends HttpServlet {
 			int nbrCommentaire = listCommentaire.size();
 
 			if (listCommentaire.isEmpty() || nbrCommentaire == 0) {
-				out.println("Il n'y a pas de commentaires pour ce sujet.");
+				request.setAttribute("error_message", "Il n'y a pas de commentaire pour ce sujet.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
 			} else {
 				request.setAttribute("listeCommentaire", listCommentaire);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
