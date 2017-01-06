@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,10 +71,16 @@ public class AjouterCommentaireServlet extends HttpServlet {
 					out.println(completeURL);
 					response.sendRedirect(completeURL);
 				} else {
-					out.println("Le commentaire est vide.");
+					request.setAttribute("error_message", "Le commentaire est vide.");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+					dispatcher.forward(request, response);
+					response.setContentType("text/html");
 				}
 			} else {
-				out.println("Connectez-vous.");
+				request.setAttribute("error_message", "Connectez-vous.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

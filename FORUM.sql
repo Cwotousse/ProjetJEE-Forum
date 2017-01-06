@@ -929,3 +929,163 @@ BEGIN
   DBMS_OUTPUT.PUT_LINE('Pas de donnees trouvee. (COMMENTAIRE)');
 END;
 /
+
+/*==============================================================*/
+/* DECLENCHEURS - TRIGGER                                       */
+/*==============================================================*/
+-- Empêche un commentaire édité d'être validé s'il est vide
+CREATE OR REPLACE TRIGGER editerCommentaire BEFORE 
+  -- Element qui va agir sur le declencheur 
+  UPDATE ON
+  -- La table sur laquelle on travaile
+  COMMENTAIRE
+
+  FOR EACH ROW
+  BEGIN
+    IF :new.texte IS NULL THEN
+      -- exception liée au serveur
+      raise_Application_ERROR(-20003, 'Nouveau commentaire vide. Ajout impossible.');    
+    END IF;
+END editerCommentaire;
+
+-- Impossible de s'inscrire si l'utilisateur a moins de 13 ans
+CREATE OR REPLACE TRIGGER verifierAgeUtilisateur BEFORE
+  INSERT ON
+  UTILISATEUR
+  
+  FOR EACH ROW
+  BEGIN
+    DECLARE
+      v_naiss DATE:= to_date(:new.DATENAISSANCE, 'DD/MM/YY');
+      v_age NUMBER;
+    BEGIN
+      -- On divise les mois par 12 afin de récupérer l'âge
+      v_age := TRUNC(MONTHS_BETWEEN(SYSDATE, v_naiss))/12;  
+      IF v_age < 13 THEN 
+        RAISE_APPLICATION_ERROR (-20010, 'UTilisateur trop jeune');
+      END IF;
+    END;
+END verifierAgeUtilisateur;
+
+/*==============================================================*/
+/* PACKAGE                                                      */
+/*==============================================================*/
+-- Stocke les types possible pour un tilisateur
+create or replace PACKAGE package_type_utilisateur IS
+  type_admin UTILISATEUR.TYPEUTILISATEUR%type  := 'Admin';
+  type_moderateur UTILISATEUR.TYPEUTILISATEUR%type  := 'Moderateur';
+  type_utilisateur UTILISATEUR.TYPEUTILISATEUR%type  := 'Utilisateur';
+END package_type_utilisateur;
+/
+
+/*==============================================================*/
+/* FONCTION STOCKEE                                             */
+/*==============================================================*/
+-- Calcule la moyenne d'age des utilisateurs
+create or replace FUNCTION calculerMoyenneAge RETURN number 
+IS age number := 0;
+  BEGIN
+    DECLARE
+      v_dateNaissanceNumber number;
+    BEGIN 
+      -- On extrait l'année de chaque personne
+      SELECT AVG(EXTRACT(YEAR FROM DATENAISSANCE)) INTO v_dateNaissanceNumber FROM UTILISATEUR;
+      -- On soustrait l'année actuelle à l'année moyenne
+      age := EXTRACT(YEAR FROM SYSDATE) -  v_dateNaissanceNumber;  
+      return age;
+    END;
+END calculerMoyenneAge;
+
+create or replace FUNCTION calculerNombreCommTotal RETURN number 
+IS total number := 0;
+  BEGIN
+    SELECT COUNT(*) INTO total FROM COMMENTAIRE;
+    RETURN total;
+END calculerNombreCommTotal;
+
+CREATE OR REPLACE FUNCTION calculerNombreSujetsTotal RETURN number 
+IS total number := 0;
+  BEGIN
+    SELECT COUNT(*) INTO total FROM SUJET;
+    RETURN total;
+END calculerNombreSujetsTotal;
+/
+
+-- Appelle les méthodes qui comptent le nombre de sujet et de commentaires
+-- Calcule la moyenne de posts par sujets créé
+create or replace FUNCTION NombreMessagesMoyenParSujet RETURN number 
+IS moyenneMessages number := 0;
+  BEGIN
+    moyenneMessages := calculerNombreCommTotal/calculerNombreSujetsTotal;
+    return moyenneMessages;
+END NombreMessagesMoyenParSujet;
+/
+
+-- Affiche les personnes qui sont de type Admin (récup grace au package + type)
+CREATE OR REPLACE FUNCTION getAdmins RETURN tab_utilisateur
+IS
+  -- tableau d'administrateurs
+  l_admin_tab tab_utilisateur := tab_utilisateur();
+  n integer := 0;
+  BEGIN
+    -- Selectionne toutes les personnes correspondant au critères 'Admin'
+    FOR r IN (SELECT 
+          IDUTILISATEUR, PSEUDO, MOTDEPASSE, NOM, PRENOM, DATENAISSANCE,
+          TYPEUTILISATEUR, MAIL
+          FROM UTILISATEUR
+          WHERE TYPEUTILISATEUR = package_type_utilisateur.type_admin
+        ) LOOP
+        -- Extend augmente la taille d'une collection
+      l_admin_tab.extend;
+      n := n + 1;
+      -- On ajoute dans le tableau le l'utilisateur trouvé
+      l_admin_tab(n) := type_utilisateur
+      (
+        r.IDUTILISATEUR, r.PSEUDO, r.MOTDEPASSE, r.NOM, r.PRENOM, r.DATENAISSANCE,
+        r.TYPEUTILISATEUR, r.MAIL
+      );
+    END LOOP;
+    -- On retourne ce tableau
+RETURN l_admin_tab;
+END getAdmins;
+/
+
+/*==============================================================*/
+/* TYPE                                                         */
+/*==============================================================*/
+-- Il faut créer un type avant d'utiliser la fonction stockée
+CREATE OR REPLACE TYPE type_utilisateur is object (
+    IDUTILISATEUR number,
+    PSEUDO varchar(50),
+    MOTDEPASSE varchar(50),
+    NOM varchar(50),
+    PRENOM varchar(50),
+    DATENAISSANCE date,
+    TYPEUTILISATEUR varchar(50),
+    MAIL varchar(50)
+  );
+  
+  -- Tableau d'utilisateurs
+ CREATE OR REPLACE TYPE tab_utilisateur is table of type_utilisateur;
+
+/*==============================================================*/
+/* VARIABLE TYPE RECORD OU TABLEAU                              */
+/*==============================================================*/
+-- Fonction stockée déjà crée précédemment mais ici utilisation du bulk
+create or replace FUNCTION getAdminsBulkCollect RETURN tab_utilisateur
+IS
+  -- tableau d'administrateurs
+  l_admin_tab tab_utilisateur := tab_utilisateur();
+  BEGIN
+  -- Il faut convertire le tout en type_utilisateur
+  -- Avant de le placer dans un bulk collect
+    SELECT type_utilisateur( 
+    IDUTILISATEUR, PSEUDO, MOTDEPASSE, NOM,
+    PRENOM,DATENAISSANCE, TYPEUTILISATEUR, MAIL)
+    BULK COLLECT INTO l_admin_tab
+    FROM UTILISATEUR
+    WHERE TYPEUTILISATEUR = package_type_utilisateur.type_admin;    
+    
+  RETURN l_admin_tab;
+END getAdminsBulkCollect;
+/

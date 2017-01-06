@@ -1,8 +1,10 @@
 package be.forum.pojo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Commentaire {
+public class Commentaire implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Variables
 	 */

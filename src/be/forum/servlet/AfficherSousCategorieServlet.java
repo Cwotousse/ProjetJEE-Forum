@@ -27,7 +27,10 @@ public class AfficherSousCategorieServlet extends HttpServlet {
 		out.println("size of ids list :"+ listSousCategorie.size());
 		//out.println(nomSousCategorie);
 		if (listSousCategorie.isEmpty() || nbrPosts == 0){
-			out.println("0");
+			request.setAttribute("error_message", "Element vide ou non trouvé.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		} else {
 			request.setAttribute("listSousCategorie", listSousCategorie);
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");

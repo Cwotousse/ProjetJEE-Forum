@@ -1,8 +1,8 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,6 @@ public class SupprimerUtilisateurServlet extends HttpServlet {
 		utilisateurSupprimé = utilisateurModele.getUtilisateur(pseudo);
 
 		
-		PrintWriter out = response.getWriter();
 		//Récupère la session
 		HttpSession session = request.getSession();
 		if(!session.isNew()){
@@ -40,10 +39,16 @@ public class SupprimerUtilisateurServlet extends HttpServlet {
 					response.sendRedirect("/ProjetJEE-Forum/VUE" + ACCES_RESTREINT);
 				}
 			} else 
-				//La personne n'est pas sensée arriver ici étant donné que la page n'est pas affichable si pas admin
-				out.println("Vous n'avez pas les droits pour supprimer une personne.");
-		} else
-			out.println("Vous n'êtes pas connecté.");
+				request.setAttribute("error_message", "Vous n'avez pas les droits pour supprimer une personne.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
+		} else{
+			request.setAttribute("error_message", "Vous n'êtes pas connecté.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

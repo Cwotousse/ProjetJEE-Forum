@@ -1,9 +1,9 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +27,14 @@ public class InscriptionServlet extends HttpServlet {
 				
 				UtilisateurModele utilisateurModele = new UtilisateurModele();
 				
-				PrintWriter out = response.getWriter();
 				if(utilisateurModele.inscription(pseudo, motdepasse, nom, prenom, mail, datePourTester))
 					this.getServletContext().getRequestDispatcher("/VUE\\index.jsp").forward(request, response);
-				else
-					out.println("Le pseudo que vous avez saisi existe déjà.");
+				else{
+					request.setAttribute("error_message", "Le pseudo saisi existe déjà.");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+					dispatcher.forward(request, response);
+					response.setContentType("text/html");
+				}
 				response.setContentType("text/html"); 
 	}
 

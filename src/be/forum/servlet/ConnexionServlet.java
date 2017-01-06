@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +16,6 @@ import be.forum.pojo.Utilisateur;
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String ACCES_PUBLIC = "/VUE\\index.jsp";
-	public static final String ACCES_RESTREINT = "/restrained_access.jsp";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,14 +25,18 @@ public class ConnexionServlet extends HttpServlet {
 		UtilisateurModele utilisateurModele = new UtilisateurModele();
 		Utilisateur utilisateurConnecté = utilisateurModele.connexion(pseudo, motdepasse);
 		
-		PrintWriter out = response.getWriter();
 		if (pseudo.equals("") || motdepasse.equals("")) {
-			out.println("Vous n'avez pas rempli les champs nécessaires.");
+			request.setAttribute("error_message", "Vous n'avez pas rempli les champs nécéssaires.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		}
 
 		if (utilisateurConnecté == null) {
-			// #TODO LISTE D'ERREUR A PASSE EN ATTRIBUT 
-			out.println("Authentification incorrecte, mauvaise saisie des informations.");
+			request.setAttribute("error_message", "Authentification incorrecte, mauvaise saisie des informations.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		} else {
 			HttpSession session = request.getSession();
 			// si pas de session, destruction et création d’une nouvelle
@@ -55,13 +57,8 @@ public class ConnexionServlet extends HttpServlet {
 			historiqueModele.creer(utilisateurConnecté);
 			
 			session.setAttribute("utilisateur", utilisateurConnecté);
-			if(utilisateurConnecté.getType().equals("Utilisateur")){
-		        RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
-		        dispatcher.forward(request, response); 
-			} else {
-		        RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
-		        dispatcher.forward(request, response); 
-			}
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(ACCES_PUBLIC);
+		    dispatcher.forward(request, response); 
 
 			response.setContentType("text/html");
 		}

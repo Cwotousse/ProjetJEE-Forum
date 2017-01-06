@@ -1,6 +1,9 @@
 package be.forum.pojo;
 
-public class Actualite {
+import java.io.Serializable;
+
+public class Actualite implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int 	idActualite;
 	private String 	titre;
 	private String 	description;

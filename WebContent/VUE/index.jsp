@@ -4,7 +4,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -263,7 +264,7 @@
 											</div>
 											<!-- titre du sujet avec un href -->
 											<a
-												href="<%=request.getContextPath()%>/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
+												href="${context}/displaycomments?nomSujet=${sujet.getTitre()}&nomSousCategorie=${sujet.getSousCategorie().getTitre()}&pseudoAuteur=${sujet.getUtilisateur().getPseudo()}&dateSujet=${sujet.getDateSujet()}"
 												id="titre-sujet" class="forum-item-title"
 												title="${sujet.getTitre()}">${sujet.getTitre()}</a>
 
@@ -469,7 +470,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/addComment"
+					<form role="form" action="${context}/addComment"
 						method="POST" class="comment-form">
 						<div class="form-group">
 							<label class="sr-only" for="form-comment">Commentaire</label> <label
@@ -545,7 +546,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="<%=request.getContextPath()%>/addsubject"
+					<form role="form" action="${context}/addsubject"
 						method="POST" class="subject-form">
 						<div class="form-group">
 							<input type="hidden" name="form-hidden-souscat"
@@ -568,9 +569,7 @@
 
 	<hr>
 
-	<footer>
-	<p>&copy; 2016 Company, Inc.</p>
-	</footer>
+	<c:import url="include/footer.jsp" />
 	<!-- /container -->
 
 

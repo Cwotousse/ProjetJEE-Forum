@@ -1,8 +1,10 @@
 package be.forum.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Utilisateur {
+public class Utilisateur implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Variables
 	 */
@@ -67,6 +69,10 @@ public class Utilisateur {
 		this.typeUtilisateur = type;
 	}
 	
+	/**
+	 * Constructeur vide
+	 */
+	
 	public Utilisateur(){}
 	/**
 	 * Constructeur de la classe Utilisateur
@@ -90,8 +96,6 @@ public class Utilisateur {
 		this.mail 				= mail;
 	}
 	
-	//equals nécessite l'hashcode override
-	// pas sur pour la date
 	@Override
 	public boolean equals(Object obj) {
 		Utilisateur utilisateur;

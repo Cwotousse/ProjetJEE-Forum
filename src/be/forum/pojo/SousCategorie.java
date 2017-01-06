@@ -1,6 +1,9 @@
 package be.forum.pojo;
 
-public class SousCategorie {
+import java.io.Serializable;
+
+public class SousCategorie implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int 		idSousCategorie;
 	private Categorie 	categorie;
 	private String 		titre;

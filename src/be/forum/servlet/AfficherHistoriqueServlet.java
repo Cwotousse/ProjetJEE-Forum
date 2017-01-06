@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.forum.modele.UtilisateurModele;
+import be.forum.modele.HistoriqueModele;
+import be.forum.pojo.Historique;
 import be.forum.pojo.Utilisateur;
 
-public class AfficherListUtilisateurServlet extends HttpServlet {
+
+public class AfficherHistoriqueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		UtilisateurModele utilisateurModele = new UtilisateurModele();
-		ArrayList<Utilisateur> listUtilisateur = utilisateurModele.getList();
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HistoriqueModele historiqueModele = new HistoriqueModele();
+		ArrayList<Historique> listHistorique = historiqueModele.getList();
 
-		if (listUtilisateur.isEmpty()) {
-			request.setAttribute("error_message", "Pas d'utilisateurs enregistré.");
+		if (listHistorique.isEmpty()) {
+			request.setAttribute("error_message", "Pas d'historique.");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
 			dispatcher.forward(request, response);
 			response.setContentType("text/html");
@@ -31,8 +32,7 @@ public class AfficherListUtilisateurServlet extends HttpServlet {
 			if (!session.isNew()) {
 				Utilisateur utilisateurConnecté = (Utilisateur) session.getAttribute("utilisateur");
 				if (utilisateurConnecté.getType().equals("Admin")) {
-					request.setAttribute("listUtilisateur", listUtilisateur);
-
+					request.setAttribute("listHistorique", listHistorique);
 					RequestDispatcher dispatcher = request
 							.getRequestDispatcher(request.getContextPath() + "/restrained_access.jsp");
 					dispatcher.forward(request, response);
@@ -52,8 +52,7 @@ public class AfficherListUtilisateurServlet extends HttpServlet {
 		response.setContentType("text/html");
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

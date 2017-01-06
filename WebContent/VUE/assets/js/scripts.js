@@ -121,14 +121,18 @@ jQuery(document)
 						$('#sub-categorie').hide();
 						$('#comments').hide();
 						$('#subject').show();
-						$('#nom-sous-categorie').text($('#sous-categorie-hidden').val());
-						// .length ici 'est utilisé pour savoir si un élément existe
-						if($('#titre-sujet').text() == '') {
-							$('#description-sujet').text("Il n'y a pas de sujets disponibles, creez-en un !");
+						$('#nom-sous-categorie').text(
+								$('#sous-categorie-hidden').val());
+						// .length ici 'est utilisé pour savoir si un élément
+						// existe
+						if ($('#titre-sujet').text() == '') {
+							$('#description-sujet')
+									.text(
+											"Il n'y a pas de sujets disponibles, creez-en un !");
 							$('#description-auteur-sujet').hide();
 							$('.forum-title small').hide();
 						}
-						
+
 					} else if ($('#elem-comment').length >= 1) {
 						// Affiche les commentaires
 						$("#body-text").hide();
@@ -178,15 +182,24 @@ jQuery(document)
 										$("#nom-sujet").text());
 								$("#date-sujet-label").text(dateSansEspaces);
 							});
+					
 
 					// Transmettre la sous-catégorie en paramètre pour l'ajout
 					// d'un sujet
-					$("#add-subject").click(function() {
-						$("#form-hidden-souscat").val($("#nom-sous-categorie").text());
-						$("#form-souscat").val($("#form-hidden-souscat").val());
-						$("#form-souscat").text($("#form-hidden-souscat").val());
-					});
+					$("#add-subject").click(
+							function() {
+								$("#form-hidden-souscat").val(
+										$("#nom-sous-categorie").text());
+								$("#form-souscat").val(
+										$("#form-hidden-souscat").val());
+								$("#form-souscat").text(
+										$("#form-hidden-souscat").val());
+							});
 
+					
+					/**
+					 * PARTIE RESTRAINED_ACCESS
+					 */
 					// Je cache l'élement de la navbar "Administration" qui est
 					// propre à l'admin
 					$('#admin-form').hide();
@@ -204,5 +217,29 @@ jQuery(document)
 						// "Administration"
 						$('#admin-form').show();
 					}
+					
+					//Je le hide de base
+					$('#table_history_list').hide();
+					//Fonction qui affiche l'historique de connexion et cache la liste des utilisateurs
+					$("#see_login_history").click(
+							function() {
+								$('#table_user_list').hide();
+								$('#table_history_list').show();
+								$('#see_login_history').hide();
+								$('#see_users').show();
+							});
+					
+					//Fonction qui affiche la liste des utilisateurs et cache l'historique de connexion
+					$("#see_users").click(
+							function() {
+								$('#table_user_list').show();
+								$('#table_history_list').hide();
+								$('#see_users').hide();
+								$('#see_login_history').show();
+							});
+					/**
+					 * FIN PARTIE RESTRAINED_ACCESS
+					 */
 				});
+
 $("[data-toggle=tooltip]").tooltip();

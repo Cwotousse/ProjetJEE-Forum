@@ -3,6 +3,7 @@ package be.forum.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,12 +43,18 @@ public class ModifierCommentaire extends HttpServlet {
 				// Redirige
 				response.sendRedirect(completeURL);
 			} else {
-				out.println("Le commentaire est vide.");
+				request.setAttribute("error_message", "Le commentaire est vide.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+				dispatcher.forward(request, response);
+				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
-			out.print("Modification non-effectuée.");
+			request.setAttribute("error_message", "Modification non effectuée.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
+			dispatcher.forward(request, response);
+			response.setContentType("text/html");
 		}			
 		
 	}
