@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.forum.modele.CommentaireModele;
+import be.forum.modele.HistoriqueModele;
 import be.forum.pojo.Commentaire;
+import be.forum.pojo.Historique;
 
 public class AfficherCommentaireServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,10 @@ public class AfficherCommentaireServlet extends HttpServlet {
 		String dateSujet			= request.getParameter("dateSujet");
 
 		CommentaireModele modele 	= new CommentaireModele();
-		PrintWriter out 			= response.getWriter();
+		
+		HistoriqueModele 		historiqueModele = new HistoriqueModele();
+		ArrayList<Historique> 	listHistorique 	 = historiqueModele.getList();
+		PrintWriter				out 			 = response.getWriter();
 		try {
 			// Il faut changer le format de la date reçue en param car celui-ci est incorrect
 			//1992-12-17
@@ -46,24 +51,18 @@ public class AfficherCommentaireServlet extends HttpServlet {
 
 			int nbrCommentaire = listCommentaire.size();
 
-			/*if (listCommentaire.isEmpty() || nbrCommentaire == 0) {
+			if (listCommentaire.isEmpty() || nbrCommentaire == 0) {
 				request.setAttribute("error_message", "Il n'y a pas de commentaire pour ce sujet.");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");
 				dispatcher.forward(request, response);
 				response.setContentType("text/html");
-			} else {*/
+			} else {
 				request.setAttribute("listeCommentaire", listCommentaire);
-				/*String completeURL = request.getContextPath() + "/displaycomments" 
-						+ "?&nomSujet=" + listCommentaire.get(0).getSujet().getTitre()
-						+ "&nomSousCategorie=" + listCommentaire.get(0).getSujet().getSousCategorie().getTitre()
-						+ "&pseudoAuteur="+ listCommentaire.get(0).getSujet().getUtilisateur().getPseudo()
-						+ "&dateSujet=" + listCommentaire.get(0).getSujet().getDateSujet();
-				//RequestDispatcher dispatcher = request.getRequestDispatcher(completeURL);*/
+				request.setAttribute("listHistorique", listHistorique);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
-				
 				dispatcher.forward(request, response);
 				response.setContentType("text/html");
-			//}
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 			out.println(e.getMessage());
