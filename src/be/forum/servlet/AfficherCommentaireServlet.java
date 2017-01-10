@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.forum.modele.CommentaireModele;
+import be.forum.modele.HistoriqueModele;
 import be.forum.pojo.Commentaire;
+import be.forum.pojo.Historique;
 
 public class AfficherCommentaireServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,10 @@ public class AfficherCommentaireServlet extends HttpServlet {
 		String dateSujet			= request.getParameter("dateSujet");
 
 		CommentaireModele modele 	= new CommentaireModele();
-		PrintWriter out 			= response.getWriter();
+		
+		HistoriqueModele 		historiqueModele = new HistoriqueModele();
+		ArrayList<Historique> 	listHistorique 	 = historiqueModele.getList();
+		PrintWriter				out 			 = response.getWriter();
 		try {
 			// Il faut changer le format de la date reçue en param car celui-ci est incorrect
 			//1992-12-17
@@ -53,6 +58,7 @@ public class AfficherCommentaireServlet extends HttpServlet {
 				response.setContentType("text/html");
 			} else {
 				request.setAttribute("listeCommentaire", listCommentaire);
+				request.setAttribute("listHistorique", listHistorique);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/index.jsp");
 				dispatcher.forward(request, response);
 				response.setContentType("text/html");

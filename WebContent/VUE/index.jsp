@@ -25,12 +25,16 @@
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 
 <link rel="stylesheet"
-	href="assets/font-awesome/css/font-awesome.min.css">
+	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
+
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
+
 <link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
+
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/bootstrap/css/lumen.css">
+
 <link href="/ProjetJEE-Forum/VUE/css/comment.css" rel="stylesheet">
 
 </head>
@@ -127,19 +131,12 @@
 	<!-- row -->
 	<div class="jumbotron" id="body-text">
 		<div class="container">
-			<div>
-				<h1>Hello, world!</h1>
-				<!-- <p>This is a template for a simple marketing or informational
-					website. It includes a large callout called a jumbotron and three
-					supporting pieces of content. Use it as a starting point to create
-					something more unique.</p>
-				<p>
-					<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-						more &raquo;</a>
-				</p>-->
-				
-				 <!-- <img class="img-responsive img-rounded" src="assets/img/tree.jpg" alt="img opening">  -->
-				 <img class="img-responsive img-rounded" src="https://wallpaperscraft.com/image/deer_minimalism_vector_background_nature_93845_1920x1080.jpg" alt="img opening"> 
+			<div id="welcome">
+				<h1>Bienvenu(e) sur notre forum !</h1>
+				<!-- <img class="img-responsive img-rounded" src="assets/img/tree.jpg" alt="img opening">  -->
+				<img class="img-responsive img-rounded"
+					src="https://wallpaperscraft.com/image/deer_minimalism_vector_background_nature_93845_1920x1080.jpg"
+					alt="img opening">
 			</div>
 		</div>
 	</div>
@@ -259,8 +256,9 @@
 										<div class="col-md-9">
 											<div class="forum-icon">
 												<input type="hidden" id="sous-categorie-hidden"
-												value="${sujet.getSousCategorie().getTitre()}">
-												<i class="${sujet.getSousCategorie().getIcone()}"></i>
+													value="${sujet.getSousCategorie().getTitre()}"> 
+												<i
+													class="${sujet.getSousCategorie().getIcone()}"></i>
 											</div>
 											<!-- titre du sujet avec un href -->
 											<a
@@ -308,81 +306,88 @@
 	<div class="jumbotron" id="comments">
 		<div class="container">
 			<c:forEach items="${listeCommentaire}" var="commentaire">
-				<section class="container" id="elem-comment"> <section
-					class="row clearfix"> <section class="col-md-12 column">
-				<div class="row clearfix">
-					<div class="col-md-12 column">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<section class="panel-title"> <time class="pull-right">
-								<i class="fa fa-calendar"></i>
-								<div id="date-creation-sujet">
-									${commentaire.getSujet().getDateSujet()}</div>
-								</time> <section class="pull-left" id="id"> <abbr
-									title="count of posts in this topic">${commentaire.getID()}</abbr>
-								</section> </section>
-							</div>
-							<section class="row panel-body"> <section
-								class="col-md-9">
-							<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
-							<hr>
-							${commentaire.getTexte()} </section> <section id="user-description"
-								class="col-md-3 "> <section class="well">
-							<div class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-									class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
-									class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#"><i class="fa fa-user"></i> See profile</a></li>
-									<li><a href="#"><i class="fa fa-envelope"></i> Send PM</a></li>
-								</ul>
-							</div>
-							<figure> <img class="img-rounded img-responsive"
-								src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
-								alt="Adista's avatar"> <figcaption class="text-center">
-							<br>
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-								class="fa fa-star-half"></i> </figcaption> </figure>
-							<dl class="dl-horizontal">
-								<dt>joined date:</dt>
-								<dd>15 September 2016</dd>
-								<dt>Posts:</dt>
-								<dd>785</dd>
-								<dt>plus:</dt>
-								<dd>+89</dd>
-								<dt>like:</dt>
-								<dd>150 like in 50 post</dd>
-							</dl>
-							</section> </section> </section>
-							<div class="panel-footer" id="panelfooter">
-								<div class="row">
-									<section class="col-md-2 "> </section>
-									<section class="col-md-6"> <small><a href="#"
-										data-toggle="tooltip" title=""> </a> </small> <br>
-									</section>
+				<section class="container" id="elem-comment">
+					<section class="row clearfix">
+						<section class="col-md-12 column">
+							<div class="row clearfix">
+								<div class="col-md-12 column">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<section class="panel-title">
+												<time class="pull-right">
+													<i class="fa fa-calendar"></i>
+													<div id="date-creation-sujet">
+														${commentaire.getSujet().getDateSujet()}</div>
+												</time>
+												<section class="pull-left" id="id">
+													<abbr title="count of posts in this topic">${commentaire.getID()}</abbr>
+												</section>
+											</section>
+										</div>
+										<section class="row panel-body">
+											<section class="col-md-9">
+												<h2 id="nom-sujet">${commentaire.getSujet().getTitre()}</h2>
+												<hr>
+												${commentaire.getTexte()}
+											</section>
+											<section id="user-description" class="col-md-3 ">
+												<section class="well">
+													<div class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+															class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
+															class="caret"></span></a>
+													</div>
+													<figure>
+														<img class="img-rounded img-responsive"
+															src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
+															alt="Adista's avatar">
+														<figcaption class="text-center">
+															<br> <i class="fa fa-star"></i> <i
+																class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																class="fa fa-star"></i> <i class="fa fa-star-half"></i>
+														</figcaption>
+													</figure>
+													<dl class="dl-horizontal">
+														<dt>Type:</dt>
+														<dd>${commentaire.getUtilisateur().getType()}</dd>
+													</dl>
+												</section>
+											</section>
+										</section>
+										<div class="panel-footer" id="panelfooter">
+											<div class="row">
+												<section class="col-md-2 "></section>
+												<section class="col-md-6">
+													<small><a href="#" data-toggle="tooltip" title="">
+													</a> </small> <br>
+												</section>
 
-									<!-- La personne connectée ne pourra modifier que ses posts -->
-									<!-- Si c'est un admin il peut tout modifier et supprimer -->
-									<c:choose>
-										<c:when
-											test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo() || utilisateur.getType() == 'Admin'}">
-											<section> <a href="#"
-												class="btn btn-primary launch-modal" id="edit" href="#"
-												data-modal-id="modal-modify-${commentaire.getID()}">
-												Modifier <i class="fa fa-edit"></i>
-											</a> <a href="#" class="btn btn-primary launch-modal" id="delete"
-												href="#" data-modal-id="modal-delete-${commentaire.getID()}">
-												Supprimer <i class="fa fa-trash-o"></i>
-											</a> </section>
-										</c:when>
-									</c:choose>
+												<!-- La personne connectée ne pourra modifier que ses posts -->
+												<!-- Si c'est un admin il peut tout modifier et supprimer -->
+												<c:choose>
+													<c:when
+														test="${commentaire.getUtilisateur().getPseudo() == utilisateur.getPseudo() || utilisateur.getType() == 'Admin'}">
+														<section>
+															<a href="#" class="btn btn-primary launch-modal"
+																id="edit" href="#"
+																data-modal-id="modal-modify-${commentaire.getID()}">
+																Modifier <i class="fa fa-edit"></i>
+															</a> <a href="#" class="btn btn-primary launch-modal"
+																id="delete" href="#"
+																data-modal-id="modal-delete-${commentaire.getID()}">
+																Supprimer <i class="fa fa-trash-o"></i>
+															</a>
+														</section>
+													</c:when>
+												</c:choose>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				</section> </section> </section>
+						</section>
+					</section>
+				</section>
 
 				<!-- MODAL MODIFY COMMENT -->
 				<div class="modal fade" id="modal-modify-${commentaire.getID()}"
@@ -470,8 +475,8 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="${context}/addComment"
-						method="POST" class="comment-form">
+					<form role="form" action="${context}/addComment" method="POST"
+						class="comment-form">
 						<div class="form-group">
 							<label class="sr-only" for="form-comment">Commentaire</label> <label
 								class="form-comment form-control" id="nom-sujet-label">nom</label>
@@ -546,8 +551,8 @@
 				</div>
 
 				<div class="modal-body">
-					<form role="form" action="${context}/addsubject"
-						method="POST" class="subject-form">
+					<form role="form" action="${context}/addsubject" method="POST"
+						class="subject-form">
 						<div class="form-group">
 							<input type="hidden" name="form-hidden-souscat"
 								id="form-hidden-souscat"></input> <label class="sr-only"

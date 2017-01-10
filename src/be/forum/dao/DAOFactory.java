@@ -2,7 +2,6 @@ package be.forum.dao;
 
 import java.sql.Connection;
 
-import be.forum.pojo.Actualite;
 import be.forum.pojo.Categorie;
 import be.forum.pojo.Commentaire;
 import be.forum.pojo.Historique;
@@ -15,9 +14,6 @@ public class DAOFactory {
 	
 	public DAO<Utilisateur> getUtilisateurDAO(){
 		return new UtilisateurDAO(conn);
-	}
-	public DAO<Actualite> getActualiteDAO(){
-		return new ActualiteDAO(conn);
 	}
 	public DAO<Categorie> getCategorieDAO(){
 		return new CategorieDAO(conn);
