@@ -128,7 +128,6 @@ ALTER TABLE ACTUALITE
    ADD CONSTRAINT FK_ACTUALITE_CATEGORIE FOREIGN KEY (IDCATEGORIE)
       REFERENCES CATEGORIE (IDCATEGORIE)
       ON DELETE CASCADE;
-      
 /*==============================================================*/
 /* SEQUENCES                                                    */
 /*==============================================================*/
@@ -249,7 +248,12 @@ BEGIN
       RAISE idIncorrect; 
     ELSE
       UPDATE UTILISATEUR
-      SET MOTDEPASSE = P_MOTDEPASSE, NOM = P_NOM, PRENOM = P_PRENOM, DATENAISSANCE = P_DATENAISSANCE, TYPEUTILISATEUR = P_TYPE, MAIL = P_MAIL
+      SET MOTDEPASSE = P_MOTDEPASSE,
+      NOM = P_NOM, 
+      PRENOM = P_PRENOM, 
+      DATENAISSANCE = P_DATENAISSANCE, 
+      TYPEUTILISATEUR = P_TYPE,
+      MAIL = P_MAIL
       WHERE PSEUDO = P_PSEUDO;
     END IF;
     
@@ -295,106 +299,6 @@ BEGIN
   EXCEPTION
   WHEN NO_DATA_FOUND THEN
   DBMS_OUTPUT.PUT_LINE('Pas de donnees trouvee. (UTILISATEUR)');
-END;
-/
-
-/*==============================================================*/
-/* PROCEDURES STOCKEES - ACTUALITE                              */
-/*==============================================================*/
-create or replace PROCEDURE INSERTACTUALITE(
-	   P_TITRE IN ACTUALITE.TITRE%TYPE,
-	   P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE,
-     P_IDCATEGORIE IN ACTUALITE.IDCATEGORIE%TYPE)
-IS
-BEGIN
-  DECLARE
-    -- Exception
-    parametre_null exception;
-  BEGIN
-    -- Si les valeurs sont nulles on throw une exception
-    IF P_TITRE IS NULL OR P_DESCRIPTION IS NULL THEN
-      -- Déclenche l'exception
-      RAISE parametre_null; 
-    ELSE
-      -- Sinon on commit
-      INSERT INTO ACTUALITE
-      VALUES (SEQ_ACTUALITE.NEXTVAL, P_TITRE, P_DESCRIPTION, P_IDCATEGORIE);
-    END IF;
-    
-    EXCEPTION
-      WHEN parametre_null THEN
-      DBMS_OUTPUT.PUT_LINE('les parametres sont nulls. (ACTUALITE)');
-    END; 
-  COMMIT;
-END;
-/
-create or replace PROCEDURE DELETEACTUALITE(
-	   P_TITRE IN ACTUALITE.TITRE%TYPE,
-     P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE)
-IS
-BEGIN
-  DELETE FROM ACTUALITE
-  WHERE P_TITRE = TITRE AND P_DESCRIPTION = DESCRIPTION;
-  
-  COMMIT;
-END;
-/
-create or replace PROCEDURE UPDATEACTUALITE(
-     P_IDACTUALITE IN ACTUALITE.IDACTUALITE%TYPE,
-	   P_TITRE IN ACTUALITE.TITRE%TYPE,
-     P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE,
-     P_IDCATEGORIE IN ACTUALITE.IDCATEGORIE%TYPE)
-IS
-BEGIN
-  DECLARE
-    -- Exception
-    idIncorrect exception;
-    nbrID number := 0;
-  BEGIN
-    -- Si l'id est inconnu, on throw une exception
-    SELECT COUNT(*) INTO nbrID FROM ACTUALITE WHERE IDACTUALITE = P_IDACTUALITE;
-    IF nbrID != 1 then 
-      -- Déclenche l'exception s'il y a 0 ou > 1 id correspondant
-      RAISE idIncorrect; 
-    ELSE
-      UPDATE ACTUALITE
-      SET TITRE = P_TITRE, DESCRIPTION = P_DESCRIPTION
-      WHERE IDACTUALITE = P_IDACTUALITE;
-    END IF;
-    
-    EXCEPTION
-      WHEN idIncorrect THEN
-      DBMS_OUTPUT.PUT_LINE('l''id n''existe pas dans la base de donnees (ACTUALITE).');
-  END;
-  COMMIT;
-END;
-/
-CREATE OR REPLACE PROCEDURE SELECTACTUALITE(
-     -- PARAMETRE ENTRANT
-	   P_IDACTUALITE IN ACTUALITE.IDACTUALITE%TYPE,
-     -- LES PARAMETRES SORTANTS
-	   O_TITRE OUT ACTUALITE.TITRE%TYPE,
-	   O_DESCRIPTION OUT ACTUALITE.DESCRIPTION%TYPE,
-     O_IDCATEGORIE OUT ACTUALITE.IDCATEGORIE%TYPE)
-IS
-BEGIN
-  SELECT TITRE, DESCRIPTION, IDCATEGORIE
-  INTO O_TITRE,  O_DESCRIPTION, O_IDCATEGORIE
-  FROM ACTUALITE WHERE IDACTUALITE = P_IDACTUALITE;
-END;
-/
-create or replace PROCEDURE GETLISTACTUALITE(
-	   CUR_ACTUALITE OUT SYS_REFCURSOR)
-IS
-BEGIN
-  --On crée un curseur
-  OPEN CUR_ACTUALITE FOR
-  SELECT * FROM ACTUALITE;
-  CLOSE CUR_ACTUALITE;
-  
-  EXCEPTION
-  WHEN NO_DATA_FOUND THEN
-  DBMS_OUTPUT.PUT_LINE('Pas de donnees trouvee. (ACTUALITE)');
 END;
 /
 
@@ -928,4 +832,386 @@ BEGIN
   WHEN NO_DATA_FOUND THEN
   DBMS_OUTPUT.PUT_LINE('Pas de donnees trouvee. (COMMENTAIRE)');
 END;
+/
+
+/*==============================================================*/
+/* PROCEDURES STOCKEES - ACTUALITE                              */
+/*==============================================================*/
+create or replace PROCEDURE INSERTACTUALITE(
+	   P_TITRE IN ACTUALITE.TITRE%TYPE,
+	   P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE,
+     P_IDCATEGORIE IN ACTUALITE.IDCATEGORIE%TYPE)
+IS
+BEGIN
+  DECLARE
+    -- Exception
+    parametre_null exception;
+  BEGIN
+    -- Si les valeurs sont nulles on throw une exception
+    IF P_TITRE IS NULL OR P_DESCRIPTION IS NULL THEN
+      -- Déclenche l'exception
+      RAISE parametre_null; 
+    ELSE
+      -- Sinon on commit
+      INSERT INTO ACTUALITE
+      VALUES (SEQ_ACTUALITE.NEXTVAL, P_TITRE, P_DESCRIPTION, P_IDCATEGORIE);
+    END IF;
+    
+    EXCEPTION
+      WHEN parametre_null THEN
+      DBMS_OUTPUT.PUT_LINE('les parametres sont nulls. (ACTUALITE)');
+    END; 
+  COMMIT;
+END;
+/
+
+create or replace PROCEDURE DELETEACTUALITE(
+	   P_TITRE IN ACTUALITE.TITRE%TYPE,
+     P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE)
+IS
+BEGIN
+  DELETE FROM ACTUALITE
+  WHERE P_TITRE = TITRE AND P_DESCRIPTION = DESCRIPTION;
+  
+  COMMIT;
+END;
+/
+
+create or replace PROCEDURE UPDATEACTUALITE(
+     P_IDACTUALITE IN ACTUALITE.IDACTUALITE%TYPE,
+	   P_TITRE IN ACTUALITE.TITRE%TYPE,
+     P_DESCRIPTION IN ACTUALITE.DESCRIPTION%TYPE,
+     P_IDCATEGORIE IN ACTUALITE.IDCATEGORIE%TYPE)
+IS
+BEGIN
+  DECLARE
+    -- Exception
+    idIncorrect exception;
+    nbrID number := 0;
+  BEGIN
+    -- Si l'id est inconnu, on throw une exception
+    SELECT COUNT(*) INTO nbrID FROM ACTUALITE WHERE IDACTUALITE = P_IDACTUALITE;
+    IF nbrID != 1 then 
+      -- Déclenche l'exception s'il y a 0 ou > 1 id correspondant
+      RAISE idIncorrect; 
+    ELSE
+      UPDATE ACTUALITE
+      SET TITRE = P_TITRE, DESCRIPTION = P_DESCRIPTION
+      WHERE IDACTUALITE = P_IDACTUALITE;
+    END IF;
+    
+    EXCEPTION
+      WHEN idIncorrect THEN
+      DBMS_OUTPUT.PUT_LINE('l''id n''existe pas dans la base de donnees (ACTUALITE).');
+  END;
+  COMMIT;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SELECTACTUALITE(
+     -- PARAMETRE ENTRANT
+	   P_IDACTUALITE IN ACTUALITE.IDACTUALITE%TYPE,
+     -- LES PARAMETRES SORTANTS
+	   O_TITRE OUT ACTUALITE.TITRE%TYPE,
+	   O_DESCRIPTION OUT ACTUALITE.DESCRIPTION%TYPE,
+     O_IDCATEGORIE OUT ACTUALITE.IDCATEGORIE%TYPE)
+IS
+BEGIN
+  SELECT TITRE, DESCRIPTION, IDCATEGORIE
+  INTO O_TITRE,  O_DESCRIPTION, O_IDCATEGORIE
+  FROM ACTUALITE WHERE IDACTUALITE = P_IDACTUALITE;
+END;
+/
+create or replace PROCEDURE GETLISTACTUALITE(
+	   CUR_ACTUALITE OUT SYS_REFCURSOR)
+IS
+BEGIN
+  --On crée un curseur
+  OPEN CUR_ACTUALITE FOR
+  SELECT * FROM ACTUALITE;
+  CLOSE CUR_ACTUALITE;
+  
+  EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+  DBMS_OUTPUT.PUT_LINE('Pas de donnees trouvee. (ACTUALITE)');
+END;
+/
+
+/*==============================================================*/
+/* DECLENCHEUR - TRIGGER                                       */
+/*==============================================================*/
+-- Empêche un commentaire édité d'être validé s'il est vide
+CREATE OR REPLACE TRIGGER editerCommentaire BEFORE 
+  -- Element qui va agir sur le declencheur 
+  UPDATE ON
+  -- La table sur laquelle on travaile
+  COMMENTAIRE
+
+  FOR EACH ROW
+  BEGIN
+    IF :new.texte IS NULL THEN
+      -- exception liée au serveur
+      raise_Application_ERROR(-20003, 'Nouveau commentaire vide. Ajout impossible.');    
+    END IF;
+END editerCommentaire;
+
+-- Impossible de s'inscrire si l'utilisateur a moins de 13 ans
+CREATE OR REPLACE TRIGGER verifierAgeUtilisateur BEFORE
+  INSERT ON
+  UTILISATEUR
+  
+  FOR EACH ROW
+  BEGIN
+    DECLARE
+      v_naiss DATE:= to_date(:new.DATENAISSANCE, 'DD/MM/YY');
+      v_age NUMBER;
+    BEGIN
+      -- On divise les mois par 12 afin de récupérer l'âge
+      v_age := TRUNC(MONTHS_BETWEEN(SYSDATE, v_naiss))/12;  
+      IF v_age < 13 THEN 
+        RAISE_APPLICATION_ERROR (-20010, 'UTilisateur trop jeune');
+      END IF;
+    END;
+END verifierAgeUtilisateur;
+
+/*==============================================================*/
+/* PACKAGE 1 - AVEC FONCTIONS ET PROCEDURES                     */
+/*==============================================================*/
+/* Fonction stockée                                             */
+/* ****************                                             */
+/* 1)Afficher les utilisateurs qui ont plus de 10 commentaires */
+/* 2)Afficher les sujets les plus commentés                     */
+/*                                                              */
+/* Procédure stockée                                            */
+/* *****************                                            */
+/* 3)Changer le type d'utilisateur après 100 connexions         */
+/*==============================================================*/
+
+--Declaration du package
+CREATE OR REPLACE PACKAGE jee_package
+IS
+  -- 1)
+  FUNCTION get_best_commentators
+  RETURN SYS_REFCURSOR;
+  -- 2)
+  FUNCTION get_best_subjects
+  RETURN SYS_REFCURSOR;
+  -- 3)
+  PROCEDURE edit_active_user;
+END jee_package;
+/
+
+--Implémentation du package
+create or replace PACKAGE BODY jee_package
+AS
+  -- 1) Affichage des utilisateurs qui ont plus de 10 commentaires
+  FUNCTION get_best_commentators
+  RETURN SYS_REFCURSOR
+  IS
+    cur1 SYS_REFCURSOR;
+  BEGIN
+    OPEN cur1 
+    FOR SELECT UTILISATEUR.IDUTILISATEUR, UTILISATEUR.PSEUDO, UTILISATEUR.MOTDEPASSE, UTILISATEUR.NOM,
+  UTILISATEUR.PRENOM, UTILISATEUR.DATENAISSANCE, UTILISATEUR.TYPEUTILISATEUR, UTILISATEUR.MAIL
+    FROM Utilisateur 
+    INNER JOIN Commentaire
+    ON Utilisateur.idUtilisateur = Commentaire.idUtilisateur
+    GROUP BY UTILISATEUR.IDUTILISATEUR, UTILISATEUR.PSEUDO, UTILISATEUR.MOTDEPASSE, UTILISATEUR.NOM,
+  UTILISATEUR.PRENOM, UTILISATEUR.DATENAISSANCE, UTILISATEUR.TYPEUTILISATEUR, UTILISATEUR.MAIL
+    HAVING COUNT(Commentaire.idUtilisateur) > 10;
+    RETURN cur1;
+  END get_best_commentators;
+  
+  -- 2) Affichage des sujets les plus commentés
+  FUNCTION get_best_subjects 
+  RETURN SYS_REFCURSOR
+  IS
+    cur2 SYS_REFCURSOR;
+  BEGIN
+    OPEN cur2 
+    FOR SELECT SUJET.IDSUJET, SUJET.IDSOUSCATEGORIE, SUJET.TITRE, SUJET.DATESUJET, SUJET.IDUTILISATEUR
+    FROM Sujet 
+    INNER JOIN Commentaire
+    ON Sujet.idSujet = Commentaire.idSujet
+    GROUP BY SUJET.DATESUJET, SUJET.IDSOUSCATEGORIE, SUJET.IDSUJET, SUJET.IDUTILISATEUR, SUJET.TITRE
+    HAVING COUNT(Commentaire.idSujet) > 10;
+    RETURN cur2;
+  END get_best_subjects;
+  
+  --Procédure stockée modifiant le type d'utilisateur s'il a dépassé 100 connexions sur le site.
+  PROCEDURE edit_active_user IS
+  TYPE TAB_UTILISATEUR IS TABLE OF UTILISATEUR%ROWTYPE INDEX BY BINARY_INTEGER;
+  active_user_tab TAB_UTILISATEUR;
+    
+  BEGIN
+    --Je récupère les utilisateurs s'étant connectés plus de 100 fois
+    SELECT UTILISATEUR.IDUTILISATEUR, UTILISATEUR.PSEUDO, UTILISATEUR.MOTDEPASSE, UTILISATEUR.NOM,
+  UTILISATEUR.PRENOM, UTILISATEUR.DATENAISSANCE, UTILISATEUR.TYPEUTILISATEUR, UTILISATEUR.MAIL
+    BULK COLLECT INTO active_user_tab
+    FROM Utilisateur 
+    INNER JOIN Historique 
+    ON Utilisateur.idUtilisateur = Historique.idUtilisateur
+    GROUP BY UTILISATEUR.IDUTILISATEUR, UTILISATEUR.PSEUDO, UTILISATEUR.MOTDEPASSE, UTILISATEUR.NOM,
+  UTILISATEUR.PRENOM, UTILISATEUR.DATENAISSANCE, UTILISATEUR.TYPEUTILISATEUR, UTILISATEUR.MAIL
+    HAVING COUNT(Historique.idUtilisateur)> 100;
+    
+    FOR x IN 1..active_user_tab.COUNT LOOP
+        UPDATE Utilisateur SET TYPEUTILISATEUR = 'Modérateur' WHERE PSEUDO = active_user_tab(x).PSEUDO;
+    END LOOP;
+    
+   END edit_active_user;
+END;
+/
+
+--BLOC PLSQL DE TEST
+SET SERVEROUTPUT ON;
+DECLARE
+  tab_utilisateur Utilisateur%ROWTYPE;
+  tab_sujet Sujet%ROWTYPE;
+  cur1 SYS_REFCURSOR;
+  cur2 SYS_REFCURSOR;
+BEGIN
+  -- Appel des fonctions du package
+  cur1 := jee_package.get_best_commentators();
+  cur2 := jee_package.get_best_subjects();
+  
+  LOOP
+    FETCH cur1 INTO tab_utilisateur;
+    EXIT WHEN cur1%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE('Pseudo: ' || tab_utilisateur.PSEUDO);
+  END LOOP;
+  CLOSE cur1;
+
+  LOOP
+    FETCH cur2 INTO tab_sujet;
+    EXIT WHEN cur2%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE('Titre du sujet: ' || tab_sujet.TITRE);
+  END LOOP;
+  CLOSE cur2;
+  --Appel de la procédure qui va directement travailler sur la table utilisateur
+  jee_package.edit_active_user();
+END;
+/
+
+/*==============================================================*/
+/* PACKAGE 2                                                    */
+/*==============================================================*/
+-- Stocke les types possible pour un utilisateur
+create or replace PACKAGE package_type_utilisateur IS
+  type_admin UTILISATEUR.TYPEUTILISATEUR%type  := 'Admin';
+  type_moderateur UTILISATEUR.TYPEUTILISATEUR%type  := 'Moderateur';
+  type_utilisateur UTILISATEUR.TYPEUTILISATEUR%type  := 'Utilisateur';
+END package_type_utilisateur;
+/
+
+/*==============================================================*/
+/* FONCTION STOCKEE                                             */
+/*==============================================================*/
+-- Calcule la moyenne d'age des utilisateurs
+create or replace FUNCTION calculerMoyenneAge RETURN number 
+IS age number := 0;
+  BEGIN
+    DECLARE
+      v_dateNaissanceNumber number;
+    BEGIN 
+      -- On extrait l'année de chaque personne
+      SELECT AVG(EXTRACT(YEAR FROM DATENAISSANCE)) INTO v_dateNaissanceNumber FROM UTILISATEUR;
+      -- On soustrait l'année actuelle à l'année moyenne
+      age := EXTRACT(YEAR FROM SYSDATE) -  v_dateNaissanceNumber;  
+      return age;
+    END;
+END calculerMoyenneAge;
+
+create or replace FUNCTION calculerNombreCommTotal RETURN number 
+IS total number := 0;
+  BEGIN
+    SELECT COUNT(*) INTO total FROM COMMENTAIRE;
+    RETURN total;
+END calculerNombreCommTotal;
+
+CREATE OR REPLACE FUNCTION calculerNombreSujetsTotal RETURN number 
+IS total number := 0;
+  BEGIN
+    SELECT COUNT(*) INTO total FROM SUJET;
+    RETURN total;
+END calculerNombreSujetsTotal;
+/
+
+-- Appelle les méthodes qui comptent le nombre de sujet et de commentaires
+-- Calcule la moyenne de posts par sujets créé
+create or replace FUNCTION NombreMessagesMoyenParSujet RETURN number 
+IS moyenneMessages number := 0;
+  BEGIN
+    moyenneMessages := calculerNombreCommTotal/calculerNombreSujetsTotal;
+    return moyenneMessages;
+END NombreMessagesMoyenParSujet;
+/
+
+-- Affiche les personnes qui sont de type Admin (récup grace au package + type)
+CREATE OR REPLACE FUNCTION getAdmins RETURN tab_utilisateur
+IS
+  -- tableau d'administrateurs
+  l_admin_tab tab_utilisateur := tab_utilisateur();
+  n integer := 0;
+  BEGIN
+    -- Selectionne toutes les personnes correspondant au critères 'Admin'
+    FOR r IN (SELECT 
+          IDUTILISATEUR, PSEUDO, MOTDEPASSE, NOM, PRENOM, DATENAISSANCE,
+          TYPEUTILISATEUR, MAIL
+          FROM UTILISATEUR
+          WHERE TYPEUTILISATEUR = package_type_utilisateur.type_admin
+        ) LOOP
+        -- Extend augmente la taille d'une collection
+      l_admin_tab.extend;
+      n := n + 1;
+      -- On ajoute dans le tableau le l'utilisateur trouvé
+      l_admin_tab(n) := type_utilisateur
+      (
+        r.IDUTILISATEUR, r.PSEUDO, r.MOTDEPASSE, r.NOM, r.PRENOM, r.DATENAISSANCE,
+        r.TYPEUTILISATEUR, r.MAIL
+      );
+    END LOOP;
+    -- On retourne ce tableau
+RETURN l_admin_tab;
+END getAdmins;
+/
+
+/*==============================================================*/
+/* TYPE                                                         */
+/*==============================================================*/
+-- Il faut créer un type avant d'utiliser la fonction stockée
+CREATE OR REPLACE TYPE type_utilisateur is object (
+    IDUTILISATEUR number,
+    PSEUDO varchar(50),
+    MOTDEPASSE varchar(50),
+    NOM varchar(50),
+    PRENOM varchar(50),
+    DATENAISSANCE date,
+    TYPEUTILISATEUR varchar(50),
+    MAIL varchar(50)
+  );
+  
+  -- Tableau d'utilisateurs
+ CREATE OR REPLACE TYPE tab_utilisateur is table of type_utilisateur;
+
+/*==============================================================*/
+/* VARIABLE TYPE RECORD OU TABLEAU                              */
+/*==============================================================*/
+-- Fonction stockée déjà crée précédemment mais ici utilisation du bulk
+create or replace FUNCTION getAdminsBulkCollect RETURN tab_utilisateur
+IS
+  -- tableau d'administrateurs
+  l_admin_tab tab_utilisateur := tab_utilisateur();
+  BEGIN
+  -- Il faut convertire le tout en type_utilisateur
+  -- Avant de le placer dans un bulk collect
+    SELECT type_utilisateur( 
+    IDUTILISATEUR, PSEUDO, MOTDEPASSE, NOM,
+    PRENOM,DATENAISSANCE, TYPEUTILISATEUR, MAIL)
+    BULK COLLECT INTO l_admin_tab
+    FROM UTILISATEUR
+    WHERE TYPEUTILISATEUR = package_type_utilisateur.type_admin;    
+    
+  RETURN l_admin_tab;
+END getAdminsBulkCollect;
 /

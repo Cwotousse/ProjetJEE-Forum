@@ -3,7 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -17,15 +17,14 @@
 
 <!-- Bootstrap core CSS -->
 <link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
+	rel="stylesheet">
 
 <link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500" >
 <link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
+	href="assets/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
+
 </head>
 <body>
 	<!-- grâce à cet import, je récupère les listes pour afficher la navbar -->
@@ -56,7 +55,10 @@
 				</c:forEach>
 			</ul>
 			<!-- Partie connexion de la navigation bar -->
-
+			<form class="navbar-form navbar-right" method="POST" id="admin-form">
+				<a class="btn btn-primary btn-sm" href="${context}/VUE/restrained_access.jsp">Administration</a>
+			</form>
+			
 			<form class="navbar-form navbar-right" method="POST" id="profil-form">
 				<a id="username-form" class="btn btn-primary btn-sm launch-modal"
 					href="#" data-modal-id="modal-profile">${sessionScope.utilisateur.getPseudo()}</a>
@@ -64,8 +66,7 @@
 
 			<form class="navbar-form navbar-right" method="POST"
 				id="deconnect-form">
-				<a class="btn btn-primary btn-sm launch-modal" href="#"
-					data-modal-id="modal-disconnect">Se déconnecter</a>
+				<a class="btn btn-primary btn-sm" href="${context}/disconnect">Se déconnecter</a>
 			</form>
 
 			<form class="navbar-form navbar-right" method="POST"
@@ -75,32 +76,13 @@
 					class="btn btn-primary btn-sm launch-modal" id="enregistrer"
 					href="#" data-modal-id="modal-register">S'enregistrer</a>
 			</form>
-
-			<!-- 			<form class="navbar-form navbar-right" method="POST" id="profil-form">
-			<input id="username-form" class="btn btn-primary btn-sm launch-modal" href="#"
-					data-modal-id="modal-profile" value="${sessionScope.utilisateur.getPseudo()}"> 
-			</form>
-			
-			<form class="navbar-form navbar-right" method="POST" id="deconnect-form">
-					<input class="btn btn-primary btn-sm launch-modal" href="#"
-					data-modal-id="modal-disconnect" value="Se déconnecter">
-			</form>
-			
-			<form class="navbar-form navbar-right" method="POST" id="connect-form">
-				<input class="btn btn-primary btn-sm launch-modal" id="connect" href="#"
-					data-modal-id="modal-login" value="Se connecter">
-					 <input
-					class="btn btn-primary btn-sm launch-modal" id="enregistrer" href="#"
-					data-modal-id="modal-register" value="S'enregistrer">
-			</form> -->
 		</div>
-		<!--/.navbar-collapse -->
+		<!-- navbar-collapse -->
 	</div>
 	</nav>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-		
 	</script>
 </body>
 </html>

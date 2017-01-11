@@ -1,8 +1,10 @@
 package be.forum.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Utilisateur {
+public class Utilisateur implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Variables
 	 */
@@ -67,6 +69,10 @@ public class Utilisateur {
 		this.typeUtilisateur = type;
 	}
 	
+	/**
+	 * Constructeur vide
+	 */
+	
 	public Utilisateur(){}
 	/**
 	 * Constructeur de la classe Utilisateur
@@ -90,13 +96,9 @@ public class Utilisateur {
 		this.mail 				= mail;
 	}
 	
-	//equals nécessite l'hashcode override
-	// pas sur pour la date
 	@Override
 	public boolean equals(Object obj) {
 		Utilisateur utilisateur;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {
@@ -105,7 +107,6 @@ public class Utilisateur {
 					&& utilisateur.getMotdepasse().equals(this.getMotdepasse())
 					&& utilisateur.getNom().equals(this.getNom())
 					&& utilisateur.getPrenom().equals(this.getPrenom())
-					//&& utilisateur.getDateNaissance().equals(this.getDateNaissance())
 					&& utilisateur.getMail().equals(this.getMail())
 					&& utilisateur.getType().equals(this.getType())) {
 				return true;
@@ -118,7 +119,7 @@ public class Utilisateur {
 	@Override
 	public int hashCode() {
 		return this.getPseudo().hashCode() + this.getMotdepasse().hashCode() + this.getNom().hashCode()
-				+ this.getPrenom().hashCode() + this.getDateNaissance().hashCode() + this.getMail().hashCode()
+				+ this.getPrenom().hashCode() + this.getMail().hashCode()
 				+ this.getType().hashCode();
 	}
 }

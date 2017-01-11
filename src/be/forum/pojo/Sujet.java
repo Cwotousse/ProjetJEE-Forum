@@ -1,16 +1,29 @@
 package be.forum.pojo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Sujet {
+public class Sujet implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int 			idSujet;
 	private SousCategorie 	sousCategorie;
 	private String 			titre;
 	private Date 			dateSujet;
 	private Utilisateur 	utilisateur;
 	
+	/**
+	 * Constructeur vide
+	 */
 	public Sujet() { }
 
+	/**
+	 * Constructeur
+	 * @param idSujet
+	 * @param sousCategorie
+	 * @param titre
+	 * @param dateSujet
+	 * @param utilisateur
+	 */
 	public Sujet(int idSujet, SousCategorie sousCategorie, String titre, Date dateSujet,
 			Utilisateur utilisateur) {
 		this.setID(idSujet);
@@ -19,7 +32,10 @@ public class Sujet {
 		this.setDateSujet(dateSujet);
 		this.setUtilisateur(utilisateur);
 	}
-
+	
+	/**
+	 * Getters et setters
+	 */
 	public int getID() {
 		return idSujet;
 	}
@@ -63,8 +79,6 @@ public class Sujet {
 	@Override
 	public boolean equals(Object obj) {
 		Sujet sujet;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {

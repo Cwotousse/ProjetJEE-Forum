@@ -1,6 +1,9 @@
 package be.forum.pojo;
 
-public class Categorie {
+import java.io.Serializable;
+
+public class Categorie implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Variables
 	 */
@@ -40,8 +43,6 @@ public class Categorie {
 	@Override
 	public boolean equals(Object obj) {
 		Categorie categorie;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {

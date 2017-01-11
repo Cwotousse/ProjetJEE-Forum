@@ -6,17 +6,17 @@ public class Sprocs {
 	 */
 	public final static String INSERTUTILISATEUR 	= "{CALL INSERTUTILISATEUR(?,?,?,?,?,?,?)}";
 	public final static String DELETEUTILISATEUR 	= "{CALL DELETEUTILISATEUR(?)}";
-	public final static String UPDATEUTILISATEUR 	= "{CALL UPDATEUTILISATEUR(?,?,?,?,?,?,?)}";
+	public final static String UPDATEUTILISATEUR 	= "{CALL UPDATEUTILISATEUR(?,?,?,?,?,?,?,?)}";
 	public final static String SELECTUTILISATEUR 	= "{CALL SELECTUTILISATEUR(?,?,?,?,?,?,?,?)}";
 	public final static String GETLISTUTILISATEUR	= "{CALL GETLISTUTILISATEUR(?)}";
 	
 	/**
 	 * PROCEDURES STOCKEES POUR LA CLASSE ACTUALITEDAO
 	 */
-	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?)}";
+	public final static String INSERTACTUALITE 		= "{CALL INSERTACTUALITE(?,?,?)}";
 	public final static String DELETEACTUALITE 		= "{CALL DELETEACTUALITE(?,?)}";
-	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?)}";
-	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?)}";
+	public final static String UPDATEACTUALITE 		= "{CALL UPDATEACTUALITE(?,?,?,?)}";
+	public final static String SELECTACTUALITE 		= "{CALL SELECTACTUALITE(?,?,?,?)}";
 	public final static String GETLISTACTUALITE		= "{CALL GETLISTACTUALITE(?)}";
 	
 	/**

@@ -19,6 +19,16 @@ public class CommentaireModele {
 	}
 	
 	/**
+	 * Récupère le premier commentaire, donc la description du sujet
+	 * @return
+	 */
+	public Commentaire getFirstComment(String nomSujet, String nomSousCategorie, Date dateSujet){
+		return this.getListCommentaireFiltered(nomSujet, nomSousCategorie, dateSujet)
+				.stream()
+				.min((p1, p2) -> Integer.compare(p1.getID(), p2.getID())).get();
+	}
+	
+	/**
 	 * Créer un commentaire et l'insère dans la base de données
 	 * @param sujet
 	 * @param texte
@@ -33,6 +43,36 @@ public class CommentaireModele {
 		commentaire.setDateCommentaire(dateCommentaire);
 		commentaire.setUtilisateur(utilisateur);
 		new DAOFactory().getCommentaireDAO().create(commentaire);
+	}
+	
+	/**
+	 * Modifier un commentaire existant
+	 * @param id
+	 * @param texte
+	 */
+	public void modifier(int id, String texte){
+		//Vérification champs vides fait en javascript
+		Commentaire commentaire = new DAOFactory().getCommentaireDAO().find(id);
+		// Il n'y a que le texte à modifier
+		commentaire.setTexte(texte);
+		new DAOFactory().getCommentaireDAO().update(commentaire);
+	}
+	
+	/**
+	 * Suppression du commentaire sur base de l'ID
+	 * @param id
+	 */
+	public void supprimer(int id){
+		new DAOFactory().getCommentaireDAO().delete(new DAOFactory().getCommentaireDAO().find(id));
+	}
+	
+	/**
+	 * Retourne un objet de type commentaire correspondant à un ID entré en paramètre
+	 * @param id
+	 * @return
+	 */
+	public static Commentaire getCommentaire(int id){
+		return new DAOFactory().getCommentaireDAO().find(id);
 	}
 	
 	/**

@@ -1,8 +1,10 @@
 package be.forum.pojo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Commentaire {
+public class Commentaire implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Variables
 	 */
@@ -15,9 +17,20 @@ public class Commentaire {
 	/**
 	 * Constructeurs
 	 */
+	/**
+	 * Constructeur vide
+	 */
 	public Commentaire() {
 	}
-
+	
+	/**
+	 * Constructeur
+	 * @param idCommentaire
+	 * @param sujet
+	 * @param texte
+	 * @param dateCommentaire
+	 * @param utilisateur
+	 */
 	public Commentaire(int idCommentaire, Sujet sujet, String texte, Date dateCommentaire, Utilisateur utilisateur) {
 		this.setID(idCommentaire);
 		this.setSujet(sujet);
@@ -26,6 +39,9 @@ public class Commentaire {
 		this.setDateCommentaire(dateCommentaire);
 	}
 
+	/**
+	 * GETTERS ET SETTERS
+	 */
 	public int getID() {
 		return idCommentaire;
 	}
