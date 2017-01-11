@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
@@ -21,8 +20,6 @@ public class AjouterSujetServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// #TODO a faire
-		PrintWriter out = response.getWriter();
 		try {
 			// Récuperation des données de session
 			HttpSession session = request.getSession();
@@ -45,17 +42,13 @@ public class AjouterSujetServlet extends HttpServlet {
 
 					if(sujetModele.creer(souscategorie, titreSujet, sqlDate, utilisateur)){
 						// On récupère le sujet créé car on en a besoin pour le commentaire
-						sujet = sujetModele.getDernierSujetCree();
-						out.print(sujet.getTitre());
 						// On crée le premier commentaire
 						comModele.creer(sujet, textComm, sqlDate, utilisateur);
-						// http://localhost:9090/ProjetJEE-Forum/displaycomments?nomSujet=Marseille%20nul&nomSousCategorie=Football&pseudoAuteur=Adista&dateSujet=2016-12-15
 						String completeURL = request.getContextPath() + "/displaycomments" 
 								+ "?&nomSujet=" + titreSujet
 								+ "&nomSousCategorie=" + souscategorie
 								+ "&pseudoAuteur="+ utilisateur.getPseudo() 
 								+ "&dateSujet=" + sqlDate;
-						out.println(completeURL);
 						response.sendRedirect(completeURL);
 					}
 					else {
@@ -77,7 +70,6 @@ public class AjouterSujetServlet extends HttpServlet {
 				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.getStackTrace();
 			request.setAttribute("error_message", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");

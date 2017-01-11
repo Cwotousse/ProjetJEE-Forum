@@ -83,7 +83,6 @@ public class AjouterCommentaireServlet extends HttpServlet {
 				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.getStackTrace();
 			out.println(e.getMessage());
 		}

@@ -1,9 +1,7 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,7 +24,6 @@ public class ModifierUtilisateurServlet extends HttpServlet {
 		String motdepasseModifié = request.getParameter("form-password-edit");
 		String prenomModifié = request.getParameter("form-first-name-edit");
 		String nomModifié = request.getParameter("form-last-name-edit");
-		String dateNaissanceModifié = request.getParameter("form-datenaissance-edit");
 		String emailModifié = request.getParameter("form-email-edit");
 		String typeModifié = request.getParameter("form-type-edit");
 		
@@ -40,18 +37,7 @@ public class ModifierUtilisateurServlet extends HttpServlet {
 		utilisateurModifié.setPrenom(prenomModifié);
 		utilisateurModifié.setMail(emailModifié);
 		utilisateurModifié.setType(typeModifié);
-		
-		// #TODO date incorrecte
-		// Pour transformer une date util.date en sql.date
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		java.util.Date utilDateNaissance = null;
-		try {
-			utilDateNaissance = df.parse(dateNaissanceModifié);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		java.sql.Date sqlDateNaissance = new java.sql.Date(utilDateNaissance.getTime());
-		utilisateurModifié.setDateNaissance(sqlDateNaissance);
+		utilisateurModifié.setDateNaissance(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 
 		//Récupère la session
 		HttpSession session = request.getSession();

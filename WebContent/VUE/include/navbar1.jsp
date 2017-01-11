@@ -3,7 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -56,7 +56,7 @@
 			</ul>
 			<!-- Partie connexion de la navigation bar -->
 			<form class="navbar-form navbar-right" method="POST" id="admin-form">
-				<a class="btn btn-primary btn-sm" href="/ProjetJEE-Forum/VUE/restrained_access.jsp">Administration</a>
+				<a class="btn btn-primary btn-sm" href="${context}/VUE/restrained_access.jsp">Administration</a>
 			</form>
 			
 			<form class="navbar-form navbar-right" method="POST" id="profil-form">
@@ -76,26 +76,8 @@
 					class="btn btn-primary btn-sm launch-modal" id="enregistrer"
 					href="#" data-modal-id="modal-register">S'enregistrer</a>
 			</form>
-
-			<!-- 			<form class="navbar-form navbar-right" method="POST" id="profil-form">
-			<input id="username-form" class="btn btn-primary btn-sm launch-modal" href="#"
-					data-modal-id="modal-profile" value="${sessionScope.utilisateur.getPseudo()}"> 
-			</form>
-			
-			<form class="navbar-form navbar-right" method="POST" id="deconnect-form">
-					<input class="btn btn-primary btn-sm launch-modal" href="#"
-					data-modal-id="modal-disconnect" value="Se déconnecter">
-			</form>
-			
-			<form class="navbar-form navbar-right" method="POST" id="connect-form">
-				<input class="btn btn-primary btn-sm launch-modal" id="connect" href="#"
-					data-modal-id="modal-login" value="Se connecter">
-					 <input
-					class="btn btn-primary btn-sm launch-modal" id="enregistrer" href="#"
-					data-modal-id="modal-register" value="S'enregistrer">
-			</form> -->
 		</div>
-		<!--/.navbar-collapse -->
+		<!-- navbar-collapse -->
 	</div>
 	</nav>
 

@@ -43,8 +43,6 @@ public class Categorie implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		Categorie categorie;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {

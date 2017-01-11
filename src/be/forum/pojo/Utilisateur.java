@@ -99,8 +99,6 @@ public class Utilisateur implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		Utilisateur utilisateur;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {
@@ -109,7 +107,6 @@ public class Utilisateur implements Serializable {
 					&& utilisateur.getMotdepasse().equals(this.getMotdepasse())
 					&& utilisateur.getNom().equals(this.getNom())
 					&& utilisateur.getPrenom().equals(this.getPrenom())
-					//&& utilisateur.getDateNaissance().equals(this.getDateNaissance())
 					&& utilisateur.getMail().equals(this.getMail())
 					&& utilisateur.getType().equals(this.getType())) {
 				return true;
@@ -122,7 +119,7 @@ public class Utilisateur implements Serializable {
 	@Override
 	public int hashCode() {
 		return this.getPseudo().hashCode() + this.getMotdepasse().hashCode() + this.getNom().hashCode()
-				+ this.getPrenom().hashCode() + this.getDateNaissance().hashCode() + this.getMail().hashCode()
+				+ this.getPrenom().hashCode() + this.getMail().hashCode()
 				+ this.getType().hashCode();
 	}
 }

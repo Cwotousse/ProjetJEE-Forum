@@ -23,7 +23,6 @@ public class SupprimerUtilisateurServlet extends HttpServlet {
 		// Je récupère l'utilisateur grâce à son pseudo
 		Utilisateur utilisateurSupprimé = new Utilisateur();
 		utilisateurSupprimé = utilisateurModele.getUtilisateur(pseudo);
-
 		
 		//Récupère la session
 		HttpSession session = request.getSession();
@@ -35,7 +34,6 @@ public class SupprimerUtilisateurServlet extends HttpServlet {
 				// Si l'utilisateur a supprimé existe bien, on peut le supprimer
 				if (utilisateurSupprimé != null) {
 					utilisateurModele.supprimer(utilisateurSupprimé);
-					//#TODO changer le chemin en getContext etc
 					response.sendRedirect("/ProjetJEE-Forum/VUE" + ACCES_RESTREINT);
 				}
 			} else 

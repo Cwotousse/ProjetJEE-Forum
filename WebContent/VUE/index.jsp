@@ -1,42 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
-
+<!-- JSTL -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="JEE Project for school">
+<meta name="author" content="Anthony DI STASIO, Adrien MOUSTY">
 <link rel="icon" href="">
 
 <title>Forum Projet JEE</title>
 
-<!-- Bootstrap core CSS -->
+<!-- core CSS -->
 <link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-
+<!-- ICONE -->
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
-
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
-
+<!--  CSS PROJECT -->
 <link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
-
+<!-- THEME LUMEN -->
 <link rel="stylesheet"
 	href="/ProjetJEE-Forum/VUE/bootstrap/css/lumen.css">
-
+<!-- TEMPLATE COMMENTS -->
 <link href="/ProjetJEE-Forum/VUE/css/comment.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -133,7 +128,6 @@
 		<div class="container">
 			<div id="welcome">
 				<h1>Bienvenu(e) sur notre forum !</h1>
-				<!-- <img class="img-responsive img-rounded" src="assets/img/tree.jpg" alt="img opening">  -->
 				<img class="img-responsive img-rounded"
 					src="https://wallpaperscraft.com/image/deer_minimalism_vector_background_nature_93845_1920x1080.jpg"
 					alt="img opening">
@@ -141,7 +135,6 @@
 		</div>
 	</div>
 
-	<!-- Main jumbotron for a primary marketing message or call to action >-->
 	<div class="jumbotron" id="sub-categorie">
 		<div class="container">
 			<!-- row -->
@@ -167,7 +160,7 @@
 									<small>Total de sous-catégorie:
 										${listSousCategorie.size()}</small>
 								</div>
-								<h3>General subjects</h3>
+								<h3>Sujets</h3>
 							</div>
 							<c:forEach items="${listSousCategorie}" var="sousCategorie">
 								<div class="forum-item active" id="elem-sub-categorie">
@@ -180,9 +173,7 @@
 												href="${context}/displaysubjects?nomSousCategorie=${sousCategorie.getTitre()}"
 												class="forum-item-title" id="btn-sub-categories"
 												onclick="$('#total-sub-categorie').hide()">${sousCategorie.getTitre()}</a>
-											<div class="forum-sub-title">Talk about sports,
-												entertainment, music, movies, your favorite color, talk
-												about enything.</div>
+											<div class="forum-sub-title">Parlez de ${sousCategorie.getTitre()} avec les personnes intéressées !</div>
 										</div>
 										<div class="col-md-1 forum-info">
 											<span class="views-number"> 1216 </span>
@@ -191,15 +182,9 @@
 											</div>
 										</div>
 										<div class="col-md-1 forum-info">
-											<span class="views-number"> 368 </span>
-											<div>
-												<small>Topics</small>
-											</div>
-										</div>
-										<div class="col-md-1 forum-info">
 											<span class="views-number"> 140 </span>
 											<div>
-												<small>Posts</small>
+												<small>Commentaires</small>
 											</div>
 										</div>
 									</div>
@@ -258,7 +243,7 @@
 												<input type="hidden" id="sous-categorie-hidden"
 													value="${sujet.getSousCategorie().getTitre()}"> 
 												<i
-													class="${sujet.getSousCategorie().getIcone()}"></i>
+													class=" ${sujet.getSousCategorie().getIcone()}"></i>
 											</div>
 											<!-- titre du sujet avec un href -->
 											<a
@@ -271,9 +256,9 @@
 										</div>
 										<div id="description-auteur-sujet">
 											<div class="col-md-1 forum-info">
-												<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
+												<span class="views-number">    .    </span>
 												<div>
-													<small>Auteur</small>
+													<small>   .   </small>
 												</div>
 											</div>
 											<div class="col-md-1 forum-info">
@@ -283,9 +268,9 @@
 												</div>
 											</div>
 											<div class="col-md-1 forum-info">
-												<span class="views-number"> 140 </span>
+												<span class="views-number">${sujet.getUtilisateur().getPseudo()}</span>
 												<div>
-													<small>Posts</small>
+													<small>Auteur</small>
 												</div>
 											</div>
 										</div>
@@ -320,7 +305,7 @@
 														${commentaire.getSujet().getDateSujet()}</div>
 												</time>
 												<section class="pull-left" id="id">
-													<abbr title="count of posts in this topic">${commentaire.getID()}</abbr>
+													<abbr title="id of the comment">${commentaire.getID()}</abbr>
 												</section>
 											</section>
 										</div>
@@ -334,13 +319,13 @@
 												<section class="well">
 													<div class="dropdown">
 														<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-															class="fa fa-cricle"></i>${commentaire.getUtilisateur().getPseudo()}<span
+															class="fa fa-circle"></i>${commentaire.getUtilisateur().getPseudo()}<span
 															class="caret"></span></a>
 													</div>
 													<figure>
 														<img class="img-rounded img-responsive"
 															src="http://mirya.clanweb.eu/infusions/last_seen_users_panel/images/noAvatar.png"
-															alt="Adista's avatar">
+															alt="${commentaire.getUtilisateur().getPseudo()}'s avatar">
 														<figcaption class="text-center">
 															<br> <i class="fa fa-star"></i> <i
 																class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -519,10 +504,6 @@
 						<strong>Prénom</strong>
 						<p id="prenom">${sessionScope.utilisateur.getPrenom()}</p>
 					</div>
-					<div class="div-datenaissance">
-						<strong>Date de naissance</strong>
-						<p id="date-naissance">${sessionScope.utilisateur.getDateNaissance()}</p>
-					</div>
 					<div class="div-email">
 						<strong>Email</strong>
 						<p id="email">${sessionScope.utilisateur.getMail()}</p>
@@ -590,6 +571,6 @@
 	</script>
 	<script src="/ProjetJEE-Forum/VUE/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/ProjetJEE-Forum/VUE/assets/js/jquery.backstretch.min.js"></script>
-	<script src="/ProjetJEE-Forum/VUE/assets/js/scripts.js"></script>
+	<script src="/ProjetJEE-Forum/VUE/js/scripts.js"></script>
 </body>
 </html>

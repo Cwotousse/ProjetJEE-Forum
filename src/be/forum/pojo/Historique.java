@@ -13,11 +13,11 @@ public class Historique implements Serializable {
 	private Date 			dateConnexion;
 	
 	/**
-	 * 
+	 * Constructeur vide
 	 */
 	public Historique(){}
 	/**
-	 * 
+	 * Constructeur
 	 * @param idHistorique
 	 * @param utilisateur
 	 * @param dateConnexion

@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -19,18 +18,15 @@ public class SupprimerCommentaire extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
 		try {
 			// Récupère les données
 			String idCommentaire = request.getParameter("id-commentaire-hidden");
 			
-		
 				// Instancie un commentaireModele
 				CommentaireModele commentaireModele = new CommentaireModele();
 			
 				// On récupère les données AVANT LA SUPPRESSION pour redidriger
 				Commentaire com = CommentaireModele.getCommentaire(Integer.parseInt(idCommentaire));
-				
 				
 				// On va comparer le commentaire supprimé, si c'est le premier (donc la description du sujet) alors on supprime le sujet
 				//String nomSujet, String nomSousCategorie, Date dateSujet
@@ -55,8 +51,7 @@ public class SupprimerCommentaire extends HttpServlet {
 					//http://localhost:9090/ProjetJEE-Forum/displaysubjects?nomSousCategorie=Football
 					String completeURL = request.getContextPath() + "/displaysubjects" + 
 							"?&nomSousCategorie=" + com.getSujet().getSousCategorie().getTitre();
-					out.println(completeURL);
-					
+				
 					// Redirige
 					response.sendRedirect(completeURL);
 				}
@@ -71,14 +66,11 @@ public class SupprimerCommentaire extends HttpServlet {
 							"&nomSousCategorie=" + com.getSujet().getSousCategorie().getTitre() +
 							"&pseudoAuteur=" + com.getUtilisateur().getPseudo() + 
 							"&dateSujet=" + com.getSujet().getDateSujet();
-					out.println(completeURL);
-					
 					// Redirige
 					response.sendRedirect(completeURL);
 				}
 				
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.getStackTrace();
 			request.setAttribute("error_message", "Suppression non effectuée.");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");

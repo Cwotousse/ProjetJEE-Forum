@@ -9,8 +9,18 @@ public class SousCategorie implements Serializable {
 	private String 		titre;
 	private String 		icone;
 	
+	/**
+	 * Constructeur vide
+	 */
 	public SousCategorie() { }
 
+	/**
+	 * Constructeur
+	 * @param idSousCategorie
+	 * @param categorie
+	 * @param titre
+	 * @param icone
+	 */
 	public SousCategorie(int idSousCategorie, Categorie categorie, String titre, String icone) {
 		this.setID(idSousCategorie);
 		this.setCategorie(categorie);
@@ -18,6 +28,10 @@ public class SousCategorie implements Serializable {
 		this.setIcone(icone);
 	}
 	
+	/**
+	 * Getters et setters
+	 * @return
+	 */
 	public int getID() {
 		return idSousCategorie;
 	}
@@ -53,14 +67,11 @@ public class SousCategorie implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		SousCategorie sousCategorie;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {
 			sousCategorie = (SousCategorie) obj;
 			if (sousCategorie.getTitre().equals(this.getTitre())
-				//Grace aux méthodes equals surchargées, ceci fonctionnera
 				&& sousCategorie.getCategorie().equals(this.getCategorie())) {
 				return true;
 			} else {

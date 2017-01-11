@@ -49,7 +49,6 @@ public class AfficherListUtilisateurServlet extends HttpServlet {
 				response.setContentType("text/html");
 			}
 		}
-		response.setContentType("text/html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

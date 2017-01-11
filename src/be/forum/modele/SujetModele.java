@@ -9,13 +9,16 @@ import be.forum.pojo.Sujet;
 import be.forum.pojo.Utilisateur;
 
 public class SujetModele {
+	/**
+	 * Récupère la liste des sujets
+	 * @return liste des sujets
+	 */
 	public ArrayList<Sujet> getList() {
 		return new DAOFactory().getSujetDAO().getList();
 	}
 
 	/**
 	 * Récupère la liste des sujets d'une sous-catégorie
-	 * 
 	 * @param sousCat
 	 *            : nom de la sous-catégorie
 	 * @return listSujetBySousCat
@@ -46,7 +49,6 @@ public class SujetModele {
 
 	/**
 	 * Créer un sujet, et vérifie si il n'existe pas déjà
-	 * 
 	 * @param sousCategorie
 	 * @param titre
 	 * @param dateSujet
@@ -72,15 +74,12 @@ public class SujetModele {
 			// Vérification du pseudo et du mail, si ils existent déjà -> erreur
 			// Renvoie true si la condition est positive sinon false
 			if (this.getList().stream().anyMatch(x -> x.getTitre().equals(titre))) {
-				// #TODO Faire une liste d'erreur
-				System.out.println("Sujet déjà existant.");
 				return false;
 			} else {
 				new DAOFactory().getSujetDAO().create(sujet);
 				return true;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.getStackTrace();
 			System.out.println(e.getMessage());
 			return false;
@@ -98,7 +97,7 @@ public class SujetModele {
 	/**
 	 * Retourne un sujet par rapport à son ID
 	 * @param id
-	 * @return
+	 * @return le sujet trouvé
 	 */
 	public Sujet find(int id){
 		return new DAOFactory().getSujetDAO().find(id);

@@ -11,8 +11,19 @@ public class Sujet implements Serializable {
 	private Date 			dateSujet;
 	private Utilisateur 	utilisateur;
 	
+	/**
+	 * Constructeur vide
+	 */
 	public Sujet() { }
 
+	/**
+	 * Constructeur
+	 * @param idSujet
+	 * @param sousCategorie
+	 * @param titre
+	 * @param dateSujet
+	 * @param utilisateur
+	 */
 	public Sujet(int idSujet, SousCategorie sousCategorie, String titre, Date dateSujet,
 			Utilisateur utilisateur) {
 		this.setID(idSujet);
@@ -21,7 +32,10 @@ public class Sujet implements Serializable {
 		this.setDateSujet(dateSujet);
 		this.setUtilisateur(utilisateur);
 	}
-
+	
+	/**
+	 * Getters et setters
+	 */
 	public int getID() {
 		return idSujet;
 	}
@@ -65,8 +79,6 @@ public class Sujet implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		Sujet sujet;
-		// vérification si obj est null ou référence une instance d’une autre
-		// classe
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		} else {

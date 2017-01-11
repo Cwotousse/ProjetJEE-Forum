@@ -17,9 +17,20 @@ public class Commentaire implements Serializable {
 	/**
 	 * Constructeurs
 	 */
+	/**
+	 * Constructeur vide
+	 */
 	public Commentaire() {
 	}
-
+	
+	/**
+	 * Constructeur
+	 * @param idCommentaire
+	 * @param sujet
+	 * @param texte
+	 * @param dateCommentaire
+	 * @param utilisateur
+	 */
 	public Commentaire(int idCommentaire, Sujet sujet, String texte, Date dateCommentaire, Utilisateur utilisateur) {
 		this.setID(idCommentaire);
 		this.setSujet(sujet);
@@ -28,6 +39,9 @@ public class Commentaire implements Serializable {
 		this.setDateCommentaire(dateCommentaire);
 	}
 
+	/**
+	 * GETTERS ET SETTERS
+	 */
 	public int getID() {
 		return idCommentaire;
 	}

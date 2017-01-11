@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +15,10 @@
 <title>Forum Projet JEE</title>
 
 <!-- Bootstrap core CSS -->
-<link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
+<link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" type="text/css"
-	href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
 <link rel="stylesheet" href="/ProjetJEE-Forum/VUE/css/restrained.css">
 <style>
 </style>
@@ -43,10 +37,11 @@
 
 			<br />
 			<div class="container">
-				<button type="submit" class="btn btn-primary btn-sm btn-warning" id="see_login_history" onclick="seeLoginHistory()">Voir
+				<button type="submit" class="btn btn-primary btn-sm btn-warning"
+					id="see_login_history" onclick="seeLoginHistory()">Voir
 					l'historique de connexion</button>
-				<button type="submit" class="btn btn-primary btn-sm btn-warning" id="see_users" onclick="seeUsers()">Voir
-					les utilisateurs</button>
+				<button type="submit" class="btn btn-primary btn-sm btn-warning"
+					id="see_users" onclick="seeUsers()">Voir les utilisateurs</button>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="main-box clearfix">
@@ -189,7 +184,44 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- MODAL PROFILE-->
+			<div class="modal fade" id="modal-profile" tabindex="-1"
+				role="dialog" aria-labelledby="modal-profile-label"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Quitter</span>
+							</button>
+							<h3 class="modal-title" id="modal-profile-label">Votre
+								profil</h3>
+						</div>
+						<div class="modal-body">
+							<div class="div-pseudo">
+								<strong>Pseudo</strong>
+								<p id="pseudo">${sessionScope.utilisateur.getPseudo()}</p>
+							</div>
+							<div class="div-nom">
+								<strong>Nom</strong>
+								<p id="nom">${sessionScope.utilisateur.getNom()}</p>
+							</div>
+							<div class="div-prenom">
+								<strong>Prénom</strong>
+								<p id="prenom">${sessionScope.utilisateur.getPrenom()}</p>
+							</div>
+							<div class="div-email">
+								<strong>Email</strong>
+								<p id="email">${sessionScope.utilisateur.getMail()}</p>
+							</div>
+							<div class="div-type">
+								<strong>Type</strong>
+								<p id="type">${sessionScope.utilisateur.getType()}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</c:when>
 		<c:otherwise>
 			<c:redirect url="/VUE/index.jsp" />
@@ -208,8 +240,6 @@
 	</script>
 	<script src="/ProjetJEE-Forum/VUE/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/ProjetJEE-Forum/VUE/assets/js/jquery.backstretch.min.js"></script>
-	<script src="/ProjetJEE-Forum/VUE/assets/js/scripts.js"></script>
-	<!-- #TODO vérif sur les champs modales ne marchent pas si vide etc -->
-	<script src="/ProjetJEE-Forum/VUE/js/restrained.js"></script>
+	<script src="/ProjetJEE-Forum/VUE/js/scripts.js"></script>
 </body>
 </html>

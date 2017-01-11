@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class AfficherCommentaireServlet extends HttpServlet {
 		
 		HistoriqueModele 		historiqueModele = new HistoriqueModele();
 		ArrayList<Historique> 	listHistorique 	 = historiqueModele.getList();
-		PrintWriter				out 			 = response.getWriter();
 		try {
 			// Il faut changer le format de la date reçue en param car celui-ci est incorrect
 			//1992-12-17
@@ -65,7 +63,6 @@ public class AfficherCommentaireServlet extends HttpServlet {
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
-			out.println(e.getMessage());
 		}
 	}
 

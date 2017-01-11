@@ -67,8 +67,6 @@ public class UtilisateurModele {
 				.stream()
 				.anyMatch(x -> x.getPseudo().equals(pseudo) 
 						|| x.getMail().equals(mail))) {
-			//#TODO Faire une liste d'erreur
-			System.out.println("Pseudo ou email déjà utilisé.");
 			return false;
 		} else {
 			new DAOFactory().getUtilisateurDAO().create(utilisateur);

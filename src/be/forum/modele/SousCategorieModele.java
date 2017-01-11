@@ -11,17 +11,27 @@ public class SousCategorieModele {
 	 * Récupère la liste des sous-catégories
 	 * @return listSousCategorie
 	 */
-	
 	public ArrayList<SousCategorie> getList(){
 		return new DAOFactory().getSousCategorieDAO().getList();
 	}
 	
+	/**
+	 * Récupère la liste des sous-catégories selon la catégorie
+	 * @param titreCat
+	 * @return liste filtrée
+	 */
 	public ArrayList<SousCategorie> getList(String titreCat){
 		return this.getList()
 				.stream()
 				.filter(x -> x.getCategorie().getTitre().equals(titreCat))
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+	
+	/**
+	 * Recherche une sous catégorie grâce à son titre
+	 * @param titreSousCat
+	 * @return objet sous-catégorie trouvé
+	 */
 	
 	public SousCategorie getSousCat(String titreSousCat){
 		// Récupère le dernier élément correspondant au filter

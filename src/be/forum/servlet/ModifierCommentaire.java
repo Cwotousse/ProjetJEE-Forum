@@ -1,7 +1,6 @@
 package be.forum.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +16,6 @@ public class ModifierCommentaire extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
 		try {
 			// Récupère les données
 			String idCommentaire = request.getParameter("id-commentaire-hidden");
@@ -38,7 +36,6 @@ public class ModifierCommentaire extends HttpServlet {
 						"&nomSousCategorie=" + com.getSujet().getSousCategorie().getTitre() +
 						"&pseudoAuteur=" + com.getUtilisateur().getPseudo() + 
 						"&dateSujet=" + com.getSujet().getDateSujet();
-				out.println(completeURL);
 				
 				// Redirige
 				response.sendRedirect(completeURL);
@@ -49,7 +46,6 @@ public class ModifierCommentaire extends HttpServlet {
 				response.setContentType("text/html");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.getStackTrace();
 			request.setAttribute("error_message", "Modification non effectuée.");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/VUE/erreur.jsp");

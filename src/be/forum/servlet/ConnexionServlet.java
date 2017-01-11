@@ -45,13 +45,7 @@ public class ConnexionServlet extends HttpServlet {
 				session = request.getSession();
 			}
 			
-			// stocker les paramètres de l’utilisateur dans la session
-			// Je cherche l'utilisateur grâce à son pseudo et mot de passe et je
-			// retourne toutes ses infos dans l'objet utilisateurConnecté
-			utilisateurConnecté = utilisateurModele.getList().stream()
-					.filter(x -> x.getPseudo().equals(pseudo) && x.getMotdepasse().equals(motdepasse))
-					.findAny()
-					.orElse(null);
+			utilisateurConnecté = utilisateurModele.getUtilisateur(pseudo);
 			//J'insère dans la table bd Historique
 			HistoriqueModele historiqueModele = new HistoriqueModele();
 			historiqueModele.creer(utilisateurConnecté);

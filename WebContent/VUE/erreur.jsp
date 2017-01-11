@@ -17,19 +17,12 @@
 <title>Forum Projet JEE</title>
 
 <!-- Bootstrap core CSS -->
-<link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-
-<link rel="stylesheet"
-	href="assets/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
+<link href="/ProjetJEE-Forum/VUE/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/form-elements.css">
 <link rel="stylesheet" href="/ProjetJEE-Forum/VUE/assets/css/style.css">
-<link rel="stylesheet"
-	href="/ProjetJEE-Forum/VUE/bootstrap/css/lumen.css">
+<link rel="stylesheet" href="/ProjetJEE-Forum/VUE/bootstrap/css/lumen.css">
 <link href="/ProjetJEE-Forum/VUE/css/comment.css" rel="stylesheet">
 
 </head>
@@ -154,7 +147,7 @@
 	</script>
 	<script src="/ProjetJEE-Forum/VUE/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/ProjetJEE-Forum/VUE/assets/js/jquery.backstretch.min.js"></script>
-	<script src="/ProjetJEE-Forum/VUE/assets/js/scripts.js"></script>
+	<script src="/ProjetJEE-Forum/VUE/js/scripts.js"></script>
 </body>
 </html>
 

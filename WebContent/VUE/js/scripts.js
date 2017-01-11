@@ -208,7 +208,6 @@ jQuery(document)
 					var nom = $('nom').text();
 					var prenom = $('prenom').text();
 					var email = $('email').text();
-					var dateNaissance = $('date-naissance').text();
 
 					// Je récupère le type de la personne connectée
 					var type = $('#type').text();
